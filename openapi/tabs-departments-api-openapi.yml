@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Departments API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Departments
+paths:
+  /v3/departments:
+    get:
+      description: Departments synced from the connected ERP (QuickBooks, NetSuite, or Sage Intacct). Can be populated on an obligation or billing term.
+      operationId: IntegratorsApiDepartmentsController_getDepartments
+      parameters: []
+      responses:
+        '200':
+          description: Get departments
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      properties:
+                        data:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/DepartmentModelDto'
+      summary: List departments
+      tags:
+      - Departments
+components:
+  schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    DepartmentModelDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the department
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the department
+          example: Engineering
+        fullName:
+          type: string
+          description: The fully qualified name of the department
+          example: Operations:Engineering
+        externalId:
+          type: string
+          description: The external ID of the department in the source ERP
+          example: '123'
+      required:
+      - id
+      - name
+      - fullName
+      - externalId
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

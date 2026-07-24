@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Billing Terms
+paths:
+  /v3/billing-terms:
+    get:
+      operationId: IntegratorsApiBillingTermsController_getBillingTerms
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: contractId, customerId, startDate, endDate, billingTermGroupId, productId\n\n        Dates should be in YYYY-MM-DD format\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Billing Terms by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/GetBillingTermItemDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List billing terms
+      tags:
+      - Billing Terms
+components:
+  schemas:
+    GetBillingTermItemDto:
+      type: object
+      properties:
+        billingTermId:
+          type: string
+          description: Billing term ID
+          format: uuid
+        contractId:
+          type: string
+          description: Contract ID
+          format: uuid
+        name:
+          type: string
+          description: Billing term name
+        description:
+          type: string
+          description: Billing term description
+          nullable: true
+        itemId:
+          type: string
+          description: ERP item ID
+          format: uuid
+          nullable: true
+        productId:
+          type: string
+          description: Product ID from /v3/products. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          format: uuid
+          nullable: true
+        billingStartDate:
+          type: string
+          description: Billing start date
+        billingEndDate:
+          type: string
+          description: Billing end date
+        quantity:
+          type: number
+          description: Quantity; 0 for UNIT billingType
+          example: 1
+        duration:
+          type: number
+          description: Number of billing periods (0 = open-ended / not set)
+          example: 12
+        intervalFrequency:
+          type: number
+          description: Interval frequency
+        interval:
+          type: string
+          description: Interval unit
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+          example: MONTH
+          nullable: true
+        invoiceDateStrategy:
+          type: string
+          description: Invoice date strategy
+          enum:
+          - FIRST_OF_PERIOD
+          - LAST_OF_PERIOD
+          - ARREARS
+          - ADVANCED_DUE_START
+          example: FIRST_OF_PERIOD
+        netPaymentTerms:
+          type: number
+          description: Days between invoice issue and due date
+          example: 30
+          nullable: true
+        billingType:
+          type: string
+          description: Billing type
+          example: FLAT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Pricing type
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        isRecurring:
+          type: boolean
+          description: Whether the billing term is recurring
+        isArrears:
+          type: boolean
+          description: Whether the billing term is in arrears
+        eventTypeId:
+          type: string
+          description: Usage event type ID
+          format: uuid
+          nullable: true
+        classId:
+          type: string
+          description: ERP class ID
+          format: uuid
+          nullable: true
+        departmentId:
+          type: string
+          description: Department ID
+          format: uuid
+          nullable: true
+        projectId:
+          type: string
+          description: Project ID
+          format: uuid
+          nullable: true
+        pricing:
+          description: Pricing tiers
+          example:
+          - tier: 1
+            amount: 120000
+            amountType: TOTAL_INVOICE
+            tierMinimum: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingTierDto'
+        billingTermGroupId:
+          type: string
+          description: Billing term group (BTG) ID
+          format: uuid
+          nullable: true
+        commitmentId:
+          type: string
+          description: Commitment ID
+          format: uuid
+          nullable: true
+        commitmentBillingTermType:
+          type: string
+          description: Commitment billing term type
+          nullable: true
+        discounts:
+          description: Billing term discounts.
+          example:
+          - type: PERCENTAGE
+            amount: '0.10'
+            note: Partner discount
+          - type: FIXED
+            amount: '100'
+            note: Early payment discount
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountDto'
+      required:
+      - billingTermId
+      - contractId
+      - name
+      - description
+      - itemId
+      - productId
+      - billingStartDate
+      - billingEndDate
+      - quantity
+      - duration
+      - intervalFrequency
+      - interval
+      - invoiceDateStrategy
+      - netPaymentTerms
+      - billingType
+      - pricingType
+      - isRecurring
+      - isArrears
+      - eventTypeId
+      - classId
+      - departmentId
+      - projectId
+      - pricing
+      - billingTermGroupId
+      - commitmentId
+      - commitmentBillingTermType
+      - discounts
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    PricingTierDto:
+      type: object
+      properties:
+        tier:
+          type: number
+          description: Tier Number
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        amountType:
+          type: string
+          description: Amount Type
+          example: PER_ITEM
+          enum:
+          - PER_ITEM
+          - TOTAL_INVOICE
+        tierMinimum:
+          type: number
+          description: Tier Minimum
+          example: 0
+      required:
+      - tier
+      - amount
+      - amountType
+      - tierMinimum
+    DiscountDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

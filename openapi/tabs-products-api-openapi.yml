@@ -1,0 +1,331 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Products API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Products
+paths:
+  /v3/products/{id}:
+    get:
+      operationId: IntegratorsApiProductsController_getProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Product ID
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: Returns the product information
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/ProductV3Dto'
+        '404':
+          description: Product not found
+        '500':
+          description: Internal Server Error
+      summary: Get a product by ID
+      tags:
+      - Products
+    patch:
+      operationId: IntegratorsApiProductsController_updateProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Product ID
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductV3Dto'
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/ProductV3Dto'
+        '400':
+          description: Bad Request - validation failed
+        '404':
+          description: Product not found
+        '500':
+          description: Internal Server Error
+      summary: Update a product
+      tags:
+      - Products
+  /v3/products:
+    post:
+      operationId: IntegratorsApiProductsController_createProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductV3Dto'
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/ProductV3Dto'
+        '400':
+          description: Bad Request - validation failed
+        '404':
+          description: Merchant not found
+        '500':
+          description: Internal Server Error
+      summary: Create a new product
+      tags:
+      - Products
+    get:
+      operationId: IntegratorsApiProductsController_listProducts
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: name, status\n\n        - name: Product name (case insensitive, partial match) - use \"like\" rule\n        - status: Product status (ACTIVE, INACTIVE) - use \"eq\" rule\n        "
+        schema:
+          example: name:like:Enterprise,status:eq:ACTIVE
+          type: string
+      responses:
+        '200':
+          description: List all products
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/ProductV3Dto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '404':
+          description: Merchant not found
+        '500':
+          description: Internal Server Error
+      summary: List all products for merchant
+      tags:
+      - Products
+components:
+  schemas:
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    CreateProductV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: string
+        displayName:
+          type: string
+          description: Customer-facing display name. If omitted, defaults to `name`.
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        description:
+          type: string
+          description: Product description
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        erpClassId:
+          type: string
+          description: ERP class ID
+      required:
+      - name
+      - status
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    UpdateProductV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: string
+        displayName:
+          type: string
+          description: Customer-facing display name of the product
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        description:
+          type: string
+          description: Product description
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        erpClassId:
+          type: string
+          description: ERP class ID
+    ProductV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Product ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Merchant ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: Enterprise License
+        displayName:
+          type: string
+          description: Customer-facing display name of the product
+          example: Enterprise License
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        createdAt:
+          format: date-time
+          type: string
+          description: Product creation date
+          example: '2023-01-01T00:00:00.000Z'
+        updatedAt:
+          format: date-time
+          type: string
+          description: Product last updated date
+          example: '2023-01-01T00:00:00.000Z'
+          nullable: true
+        description:
+          type: string
+          description: Product description
+          nullable: true
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        integrationItemName:
+          type: string
+          description: ERP integration item name
+          nullable: true
+        erpClassId:
+          type: string
+          description: ERP class ID
+        erpClassName:
+          type: string
+          description: ERP class name
+          nullable: true
+      required:
+      - id
+      - manufacturerId
+      - name
+      - displayName
+      - status
+      - createdAt
+      - updatedAt
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

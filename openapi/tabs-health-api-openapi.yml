@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Health API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Health
+paths:
+  /health/live:
+    get:
+      operationId: HealthController_live
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      summary: Liveness check
+      tags:
+      - Health
+  /health:
+    get:
+      operationId: HealthController_check
+      parameters: []
+      responses:
+        '200':
+          description: The Health Check is successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  info:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                      - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example: {}
+                    additionalProperties:
+                      type: object
+                      required:
+                      - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                      - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+        '503':
+          description: The Health Check is not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  info:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                      - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example:
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                      - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                      - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+      summary: Health check
+      tags:
+      - Health
+  /info:
+    get:
+      tags:
+      - Health
+      summary: Application information
+      description: Returns basic information about the application including name, version, and description
+      operationId: info
+      responses:
+        '200':
+          description: Application information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
+              examples:
+                Info Response:
+                  description: Info Response
+                  value:
+                    application: events-api
+                    version: 0.0.1-SNAPSHOT
+                    description: Event Ingestion API for usage in Tabs
+components:
+  schemas:
+    InfoResponse:
+      type: object
+      properties:
+        application:
+          type: string
+          description: Application name
+          example: events-api
+        version:
+          type: string
+          description: Application version
+          example: 0.0.1-SNAPSHOT
+        description:
+          type: string
+          description: Application description
+          example: Event Ingestion API for usage in Tabs
+      description: Application information response
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

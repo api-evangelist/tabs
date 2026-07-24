@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Jobs API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Jobs
+paths:
+  /v3/jobs/{id}:
+    get:
+      operationId: IntegratorsApiJobsControllerV3_getJobStatusById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Job Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: Job Status
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/JobDto'
+        '404':
+          description: Job not found
+      summary: Get job by ID
+      tags:
+      - Jobs
+components:
+  schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    JobDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the job
+          example: 123e4567-e89b-12d3-a456-426614174000
+        status:
+          type: string
+          description: Current status of the job
+          enum:
+          - FAILURE
+          - SUCCESS
+          - IN_PROGRESS
+          - NEW
+          example: NEW
+        type:
+          type: string
+          description: Type of the job
+          enum:
+          - SYNC
+          - SYNC_DELETE
+          - LLM_RENEWALS
+          - INVOICE_PDF_EXPORT
+          - INTEGRATORS_CUSTOMER_IMPORT
+          - SEND_CUSTOMER_ADDRESS_TO_ERP
+          - SEND_PAYMENT_TO_ERP
+          - CREATE_CUSTOMER
+          - PROCESS_INBOUND_CUSTOMER_EMAIL
+          - GENERATE_REVENUE
+          - INTEGRATORS_ITEM_IMPORT
+          - QBO_AST_TAX_ESTIMATE_INVOICE_DELETE
+          - CREATE_SALES_ORDER
+          - UPDATE_SALES_ORDER
+          - DELETE_SALES_ORDER
+          - DUPLICATE_SANDBOX_DATA
+          - PROCESS_CSV
+          - DELETE_EVENT_CSV
+          - ERP_CANCEL_PAYMENT
+          - PROCESS_USAGE_AI
+          - PROCESS_TRANSACTION_CSV
+          - STRIPE_BULK_PAYOUT_APPLICATION
+          - TRANSACTION_RECOMMENDATIONS
+          - INVOICE_VECTOR_DB
+          - SEND_RECONCILIATION_TO_ERP
+          - REMOVE_RECONCILIATION_TO_ERP
+          - SEND_INVOICE_PAID_COMMUNICATIONS
+          - GENERATE_INVOICES
+          - SEND_CUSTOMER_ADDRESS_TO_ERP_WITH_ROLLBACK
+          - SEND_INVOICE_ACTION
+          - RECALCULATE_INVOICES_FOR_EVENTS
+          - AUTOMATIC_CONTRACT_PROCESSING
+          - CREATE_CONTRACT
+          example: SYNC
+        processStartedAt:
+          format: date-time
+          type: string
+          description: When the job processing started
+          example: '2024-03-20T10:00:00Z'
+        startedAt:
+          format: date-time
+          type: string
+          description: When the job was initially created
+          example: '2024-03-20T10:00:00Z'
+        finishedAt:
+          format: date-time
+          type: string
+          description: When the job completed processing
+          example: '2024-03-20T10:05:00Z'
+        details:
+          type: string
+          description: Additional details about the job execution
+          example: Processing 100 records
+        results:
+          type: object
+          description: Results of the job execution
+          example:
+            data:
+              customerId: '123'
+            status: SUCCESS
+      required:
+      - id
+      - status
+      - type
+      - processStartedAt
+      - startedAt
+      - finishedAt
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

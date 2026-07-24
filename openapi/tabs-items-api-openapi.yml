@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Items API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Items
+paths:
+  /v3/items:
+    get:
+      operationId: IntegratorsApiItemsController_getItems
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: name, externalId, externalIdType\n\n        Acceptable externalIdTypes: QUICKBOOKS, NETSUITE, RILLET, SAGE_INTACCT, SALESFORCE, HUBSPOT, AVALARA, ANROK, STRIPE\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Items by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/ItemV3Dto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List items
+      tags:
+      - Items
+  /v3/items/{id}:
+    get:
+      operationId: IntegratorsApiItemsController_getItemById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Item Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: The item
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/ItemV3Dto'
+        '404':
+          description: Item not found
+      summary: Get item by ID
+      tags:
+      - Items
+components:
+  schemas:
+    ExternalIdV3Dto:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    ItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the item
+          example: Item 1
+        displayName:
+          type: string
+          description: Display name of the item, as shown in the Tabs app. Null when not set.
+          example: Item 1 (Annual)
+          nullable: true
+        externalIds:
+          description: List of external identifiers associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+      required:
+      - id
+      - name
+      - externalIds
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

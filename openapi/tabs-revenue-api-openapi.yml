@@ -1,0 +1,357 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Revenue API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Revenue
+paths:
+  /v3.1/revenue:
+    get:
+      operationId: IntegratorsAPIRevenueV31Controller_getRevenues
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n            Supported items for filter: startMonth, endMonth, customerId, currency.\n\n            Months should be in YYYY-MM format.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Revenues by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/GetRevenueV31'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List revenue
+      tags:
+      - Revenue
+components:
+  schemas:
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    GetRevenueV31:
+      type: object
+      properties:
+        customer:
+          type: object
+          description: Customer information
+          example:
+            id: '123'
+            name: John Doe
+            externalIds:
+            - id: '123'
+              type: salesforce
+              sourceType: salesforce
+        timeframe:
+          type: string
+          description: Revenue timeframe
+          example: 2026-01
+        categories:
+          description: Array of categories with their revenue amounts
+          example:
+          - name: Platform
+            revenue: 5861.5
+          - name: Service
+            revenue: 208.33
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryRevenue'
+        currency:
+          type: string
+          description: ISO 4217 currency code for the revenue amounts
+          example: USD
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWG
+          - ZWL
+        total:
+          type: number
+          description: Total revenue amount across all categories
+          example: 6069.83
+        deferredTotal:
+          type: number
+          description: Deferred total amount in currency associated with the customer
+          example: 57211.49
+        unbilledTotal:
+          type: number
+          description: Unbilled total amount in currency associated with the customer
+          example: 0
+      required:
+      - customer
+      - timeframe
+      - categories
+      - currency
+      - total
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    CategoryRevenue:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Revenue category name
+          example: Platform
+        revenue:
+          type: number
+          description: Revenue amount for this category
+          example: 5861.5
+      required:
+      - name
+      - revenue
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,200 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Merchant API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Merchant
+paths:
+  /v3/merchant/info:
+    get:
+      operationId: IntegratorsApiMerchantsControllerV3_getMerchantInfo
+      parameters: []
+      responses:
+        '200':
+          description: Merchant Info
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/MerchantInfoDto'
+        '404':
+          description: Merchant not found
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      type: object
+                      nullable: true
+                    success:
+                      type: boolean
+                      example: false
+                    message:
+                      type: string
+                      example: Operation failed
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 404
+                        message:
+                          type: string
+                          example: Merchant not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      type: object
+                      nullable: true
+                    success:
+                      type: boolean
+                      example: false
+                    message:
+                      type: string
+                      example: Operation failed
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: number
+                          example: 500
+                        message:
+                          type: string
+                          example: Internal server error
+      summary: Get merchant info
+      tags:
+      - Merchant
+  /v3/merchant/book-close-date:
+    get:
+      operationId: IntegratorsApiMerchantsControllerV3_getBookCloseDate
+      parameters: []
+      responses:
+        '200':
+          description: Merchant book close date
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/BookCloseDateDto'
+      summary: Get book close date
+      tags:
+      - Merchant
+components:
+  schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    BookCloseDateDto:
+      type: object
+      properties:
+        isSet:
+          type: boolean
+          description: Whether a book close date is set for the merchant.
+          example: true
+        bookCloseDate:
+          type: string
+          description: The merchant's book close date. Null when no accounting period is enforced or closed.
+          format: date-time
+          nullable: true
+          example: '2025-12-31T00:00:00.000Z'
+      required:
+      - isSet
+    MerchantInfoDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Merchant ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        preferredName:
+          type: string
+          description: Merchant Preferred Name
+          example: Merchant 1
+        internalName:
+          type: string
+          description: Merchant Internal Name
+          example: Merchant 1
+        billingContact:
+          type: object
+          description: Merchant Billing Contact
+          example:
+            email: billing@merchant.com
+            phone: +1-555-123-4567
+          properties:
+            email:
+              type: string
+              example: billing@merchant.com
+            phone:
+              type: string
+              example: +1-555-123-4567
+        logo:
+          type: string
+          description: Merchant Logo as Data URL
+          example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+      required:
+      - id
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

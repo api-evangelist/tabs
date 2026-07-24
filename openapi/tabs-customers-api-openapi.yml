@@ -1,0 +1,2411 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Customers API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Customers
+paths:
+  /v3/customers/{id}:
+    get:
+      operationId: IntegratorsApiCustomersController_getCustomerById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: The Customer
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/CustomerV3Dto'
+        '404':
+          description: Customer not found
+      summary: Get customer by ID
+      tags:
+      - Customers
+    delete:
+      operationId: IntegratorsApiCustomersController_deleteCustomer
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: Deleted customer
+        '404':
+          description: Customer not found
+      summary: Delete customer
+      tags:
+      - Customers
+  /v3/customers:
+    get:
+      operationId: IntegratorsApiCustomersController_getCustomers
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: 'Supported items for filter: name, externalIds.externalId, lastUpdatedAt. Date format for lastUpdatedAt: YYYY-MM-DD'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Customers by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/CustomerV3Dto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List customers
+      tags:
+      - Customers
+    post:
+      operationId: IntegratorsApiCustomersController_createCustomer
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerV3Dto'
+      responses:
+        '202':
+          description: Created customer
+        '500':
+          description: Internal server error
+      summary: Create customer
+      tags:
+      - Customers
+  /v3/customers/{id}/sub-customers:
+    post:
+      operationId: IntegratorsApiCustomersController_createSubCustomer
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubCustomerDto'
+      responses:
+        '201':
+          description: Created sub customer
+        '500':
+          description: Internal server error
+      summary: Create sub-customer
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}:
+    get:
+      operationId: IntegratorsApiCustomersController_getInvoice
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: The invoice
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/InvoiceV3Dto'
+        '404':
+          description: Invoice not found
+      summary: Get customer invoice by ID
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/external-ids:
+    patch:
+      operationId: IntegratorsApiCustomersController_updateInvoiceExternalIds
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateInvoiceExternalIdsDto'
+      responses:
+        '200':
+          description: Updated invoice external IDs
+        '404':
+          description: Invoice not found
+      summary: Update invoice external IDs
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/pdf:
+    get:
+      operationId: IntegratorsApiCustomersController_getInvoiceAsPdf
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: type
+        required: true
+        in: query
+        description: Type of the response either pdf or buffer
+        schema:
+          example: pdf
+          type: string
+      responses:
+        '200':
+          description: PDF file download
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+      summary: Download invoice PDF
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/actions:
+    post:
+      operationId: IntegratorsApiCustomersController_invoiceActions
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        description: 'Invoice actions for sending an invoice. Validation rules:
+
+          1. At least one of sendToErp or sendToCustomer must be true
+
+          2. sendToErp can be true while sendToCustomer is false (push to ERP only)
+
+          3. sendToCustomer can be true while sendToErp is false (email customer only; useful when no ERP is connected)
+
+          4. If sendToErp is true but the merchant has no ERP integration connected, the request is rejected
+
+          5. the field overrideInvoiceDate is optional'
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/SendInvoiceDto'
+              - $ref: '#/components/schemas/MarkInvoiceAsPendingDto'
+              - $ref: '#/components/schemas/MarkInvoiceToSentOffTabsDto'
+              - $ref: '#/components/schemas/MarkInvoiceAsScheduledDto'
+              - $ref: '#/components/schemas/MarkInvoiceAsVoidDto'
+              - $ref: '#/components/schemas/SendReminderEmailDto'
+            examples:
+              sendToBothWithoutOverrideInvoiceDate:
+                summary: Send to both ERP and customer without overrideInvoiceDate
+                value:
+                  action: SEND
+                  sendToErp: true
+                  sendToCustomer: true
+                  overrideInvoiceDate: false
+              sendToBothWithOverrideInvoiceDate:
+                summary: Send to both ERP and customer with overrideInvoiceDate
+                value:
+                  action: SEND
+                  sendToErp: true
+                  sendToCustomer: true
+                  overrideInvoiceDate: true
+              sendToErpOnly:
+                summary: Send only to ERP
+                value:
+                  action: SEND
+                  sendToErp: true
+                  sendToCustomer: false
+                  overrideInvoiceDate: false
+              sendToCustomerOnly:
+                summary: Send only to customer (e.g. merchant has no ERP connected)
+                value:
+                  action: SEND
+                  sendToErp: false
+                  sendToCustomer: true
+                  overrideInvoiceDate: false
+              markAsPending:
+                summary: Mark invoice as pending
+                value:
+                  action: MARK_INVOICE_AS_PENDING
+                  markInvoiceAsPending: true
+              markAsSentOffTabs:
+                summary: Mark invoice as sent off Tabs
+                value:
+                  action: MARK_INVOICE_TO_SENT_OFF_TABS
+                  markInvoiceToSentOffTabs: true
+              markAsScheduled:
+                summary: Mark invoice as scheduled
+                value:
+                  action: MARK_INVOICE_AS_SCHEDULED
+                  markInvoiceAsScheduled: true
+              markAsVoid:
+                summary: Mark invoice as void
+                value:
+                  action: MARK_INVOICE_AS_VOID
+                  markInvoiceAsVoid: true
+              sendReminderEmail:
+                summary: Send reminder email
+                value:
+                  action: SEND_REMINDER_EMAIL
+                  sendReminderEmail: true
+      responses:
+        '200':
+          description: Invoice marked as pending or sent off Tabs successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/InvoiceV3Dto'
+        '201':
+          description: Invoice send job created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Invoice send job created, jobId: 123e4567-e89b-12d3-a456-426614174000, please check the job status via /jobs/:jobId'
+        '400':
+          description: 'Invalid combination: at least one of sendToErp or sendToCustomer must be true, or sendToErp was requested but the merchant has no ERP integration connected'
+        '500':
+          description: Internal server error
+      summary: Perform invoice action
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/payments/{paymentId}:
+    get:
+      operationId: IntegratorsApiCustomersController_getPayment
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: paymentId
+        required: true
+        in: path
+        description: Payment Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: The payment
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaymentsV3Dto'
+        '404':
+          description: Payment not found
+      summary: Get invoice payment by ID
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/payments:
+    post:
+      operationId: IntegratorsApiCustomersController_createPayment
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentV3Dto'
+      responses:
+        '200':
+          description: Created payment
+      summary: Create invoice payment
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/attachments:
+    post:
+      operationId: IntegratorsApiCustomersController_uploadAttachmentToInvoice
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: attachment uploaded successfully
+        '404':
+          description: Invoice not found
+        '500':
+          description: Internal server error
+      summary: Upload invoice attachment
+      tags:
+      - Customers
+  /v3/customers/{id}/autocharge:
+    put:
+      operationId: IntegratorsApiCustomersController_updateCustomerAutoCharge
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerAutoChargeV3Dto'
+      responses:
+        '200':
+          description: Updated customer auto charge
+        '404':
+          description: Customer not found
+        '500':
+          description: Internal server error
+      summary: Update customer auto-charge
+      tags:
+      - Customers
+  /v3/customers/{id}/cc-fees-exemption:
+    put:
+      operationId: IntegratorsApiCustomersController_updateCustomerCCFeesExemption
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerCCFeesExemptionV3Dto'
+      responses:
+        '200':
+          description: Updated customer CC fees exemption
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegratorsApiResponse'
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegratorsApiResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegratorsApiResponse'
+      summary: Update customer credit card fees exemption
+      tags:
+      - Customers
+  /v3/customers/{id}/custom-field:
+    put:
+      operationId: IntegratorsApiCustomersController_updateCustomerCustomField
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateCustomerCustomFieldV3Dto'
+      responses:
+        '200':
+          description: Updated customer custom field
+        '400':
+          description: Invalid request body structure or UUID format
+        '404':
+          description: Customer or custom field not found
+        '500':
+          description: Internal server error
+      summary: Update customer custom fields
+      tags:
+      - Customers
+  /v3/customers/{id}/contacts:
+    post:
+      operationId: IntegratorsApiCustomersController_createContacts
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateContactV3Dto'
+      responses:
+        '200':
+          description: Created contacts
+        '400':
+          description: Invalid email address was provided or top level customers cannot be modified
+        '404':
+          description: Customer not found
+        '500':
+          description: Internal server error
+      summary: Create customer contacts
+      tags:
+      - Customers
+    get:
+      operationId: IntegratorsApiCustomersController_getContacts
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: 'Supported items for filter: firstName, lastName, email, isPrimaryContact, isCCEmail, lastUpdatedAt. Date format for lastUpdatedAt: YYYY-MM-DD'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Customers by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/ContactV3Dto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '404':
+          description: Customer not found
+        '500':
+          description: Internal server error
+      summary: List customer contacts
+      tags:
+      - Customers
+  /v3/customers/{id}/address:
+    post:
+      operationId: IntegratorsApiCustomersController_createAddress
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertAddressV3Dto'
+      responses:
+        '200':
+          description: Created address
+        '400':
+          description: Top level customers cannot be modified
+        '404':
+          description: Customer not found
+        '500':
+          description: Internal server error
+      summary: Create customer address
+      tags:
+      - Customers
+  /v3/customers/{id}/contacts/{contactId}:
+    patch:
+      operationId: IntegratorsApiCustomersController_updateContact
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: contactId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContactV3Dto'
+      responses:
+        '200':
+          description: Updated contact
+        '400':
+          description: Top level customers cannot be modified
+        '404':
+          description: Contact not found
+        '500':
+          description: Internal server error
+      summary: Update customer contact
+      tags:
+      - Customers
+  /v3/customers/{id}/external-ids:
+    post:
+      operationId: IntegratorsApiCustomersController_upsertCustomerExternalId
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertCustomerExternalIdV3Dto'
+      responses:
+        '200':
+          description: Customer external ID upserted successfully
+          content:
+            application/json:
+              schema:
+                properties:
+                  payload:
+                    $ref: '#/components/schemas/UpsertCustomerExternalIdV3Dto'
+        '400':
+          description: Bad request
+        '404':
+          description: Customer not found
+      summary: Upsert customer external ID
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/credit-memos:
+    get:
+      operationId: IntegratorsApiCustomersController_getCreditMemosByInvoice
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer ID
+        schema:
+          format: uuid
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice ID
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Credit memos retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CreditMemoDto'
+        '404':
+          description: Credit memos for invoice not found
+        '500':
+          description: Internal server error - Failed to get credit memo by invoice
+      summary: List invoice credit memos
+      tags:
+      - Customers
+  /v3/customers/{id}/name:
+    patch:
+      operationId: IntegratorsApiCustomersController_updateCustomerName
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '200':
+          description: Updated customer name
+        '400':
+          description: Top level customers cannot be modified
+        '404':
+          description: Customer not found
+        '500':
+          description: Internal server error
+      summary: Update customer name
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/po:
+    put:
+      operationId: IntegratorsApiCustomersController_updateInvoicePO
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer ID
+        schema:
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice ID
+        schema:
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateInvoicePODto'
+      responses:
+        '200':
+          description: Updated PO number
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/UpdateInvoicePOResponseDto'
+        '404':
+          description: Customer not found or invoice not found
+        '500':
+          description: Internal server error
+      summary: Update invoice PO number
+      tags:
+      - Customers
+  /v3/customers/{id}/invoices/{invoiceId}/memo:
+    put:
+      operationId: IntegratorsApiCustomersController_updateInvoiceMemo
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Customer ID
+        schema:
+          format: uuid
+          type: string
+      - name: invoiceId
+        required: true
+        in: path
+        description: Invoice ID
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateInvoiceMemoBodyDto'
+      responses:
+        '200':
+          description: Updated memo successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/UpdateInvoiceMemoResponseDto'
+        '404':
+          description: Customer not found or invoice not found
+        '500':
+          description: Internal server error
+      summary: Update invoice memo
+      tags:
+      - Customers
+components:
+  schemas:
+    UpdateCustomerCCFeesExemptionV3Dto:
+      type: object
+      properties:
+        ccFeesExempt:
+          type: boolean
+          description: CC Fees Exemption updated
+          example: true
+      required:
+      - ccFeesExempt
+    CreditMemoExternalIdDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+        sourceType:
+          type: string
+          description: Source type
+          example: NETSUITE
+      required:
+      - externalId
+      - sourceType
+    CreditMemoApplicationDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Application ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoId:
+          type: string
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        amountApplied:
+          type: number
+          description: Amount applied
+          example: 100
+        invoiceNumber:
+          type: string
+          description: Invoice number
+          example: INV-001
+        invoicePrefix:
+          type: string
+          description: Invoice prefix
+          example: INV
+        appliedAt:
+          format: date-time
+          type: string
+          description: Applied at
+          example: '2023-01-01T00:00:00.000Z'
+      required:
+      - id
+      - creditMemoId
+      - invoiceId
+      - amountApplied
+      - invoiceNumber
+      - invoicePrefix
+      - appliedAt
+    UpdateInvoicePODto:
+      type: object
+      properties:
+        poNumber:
+          type: string
+          description: Purchase Order number for the invoice
+          example: PO-12345
+          maxLength: 30
+      required:
+      - poNumber
+    UpdateContactV3Dto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Contact First Name
+          example: John
+        lastName:
+          type: string
+          description: Contact Last Name
+          example: Doe
+        email:
+          type: string
+          description: Contact Email
+          example: john.doe@example.com
+        isPrimaryContact:
+          type: boolean
+          description: Is Primary Contact
+          example: true
+        isCCEmail:
+          type: boolean
+          description: Is CC Email
+          example: false
+    CreateContactV3Dto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Contact First Name
+          example: John
+        lastName:
+          type: string
+          description: Contact Last Name
+          example: Doe
+        email:
+          type: string
+          description: Contact Email
+          example: john.doe@example.com
+      required:
+      - email
+    SendInvoiceDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        sendToErp:
+          type: boolean
+          description: Send the invoice to the ERP
+          example: true
+        sendToCustomer:
+          type: boolean
+          description: Send the invoice to the customer
+          example: true
+        overrideInvoiceDate:
+          type: boolean
+          description: Override and update the invoice issue date to today. The due date will also be recalculated to preserve the original net payment terms. For example, if an invoice has Net 30 terms, the due date will be set to 30 days after today.
+          example: true
+      required:
+      - action
+      - sendToErp
+      - sendToCustomer
+    ContactV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Contact ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        firstName:
+          type: string
+          description: Contact First Name
+          example: John
+        lastName:
+          type: string
+          description: Contact Last Name
+          example: Doe
+        email:
+          type: string
+          description: Contact Email
+          example: john.doe@example.com
+        isPrimaryContact:
+          type: boolean
+          description: Is Primary Contact
+          example: true
+        isCCEmail:
+          type: boolean
+          description: Is CC Email
+          example: false
+      required:
+      - id
+      - email
+      - isPrimaryContact
+      - isCCEmail
+    CreateCustomerV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Preferred company name
+          example: Acme Inc.
+        companyName:
+          type: string
+          description: Legal company name
+          example: Acme Inc.
+        primaryBillingContactEmail:
+          type: string
+          description: Email of primary billing contact
+          example: john.doe@example.com
+        billingAddress:
+          description: Customer's billing address
+          allOf:
+          - $ref: '#/components/schemas/CreateAddressV3Dto'
+        shippingAddress:
+          description: Customer's shipping address
+          allOf:
+          - $ref: '#/components/schemas/CreateAddressV3Dto'
+        defaultCurrency:
+          type: string
+          description: Default currency code for the customer, if omitted will default to USD
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWG
+          - ZWL
+          example: USD
+        customFields:
+          description: Custom fields to pass during customer creation (NetSuite only). Each field key should match the internal field id.
+          example:
+          - customFieldKey: custentity_department
+            customFieldValue: Sales
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateCustomerErpCustomFieldV3Dto'
+      required:
+      - name
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
+    IntegrationsExternalId:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: QUICKBOOKS
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: pi_1234567890
+      required:
+      - type
+      - id
+    CreateCustomerErpCustomFieldV3Dto:
+      type: object
+      properties:
+        customFieldKey:
+          type: string
+          description: The NetSuite custom field key
+          example: custentity_department
+        customFieldValue:
+          type: string
+          description: The value to set for the custom field
+          example: Sales
+      required:
+      - customFieldKey
+      - customFieldValue
+    PurchaseOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Purchase Order ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        value:
+          type: string
+          description: Purchase Order number
+          example: PO-12345
+      required:
+      - id
+      - value
+    MarkInvoiceToSentOffTabsDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceToSentOffTabs:
+          type: boolean
+          description: Mark the invoice as sent off Tabs
+          example: true
+      required:
+      - action
+      - markInvoiceToSentOffTabs
+    CreditMemoItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Item name
+          example: Product A
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+      required:
+      - id
+      - name
+    CreateAddressV3Dto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: Primary street address
+          example: 123 Main St
+        line2:
+          type: string
+          description: Secondary address line (apt, suite, etc)
+          example: Apt 1
+        postalCode:
+          type: string
+          description: Postal/ZIP code
+          example: '10001'
+        city:
+          type: string
+          description: City name
+          example: New York
+        state:
+          type: string
+          description: State/province name
+          example: NY
+        country:
+          type: string
+          description: Country Code
+          example: US
+        addressee:
+          type: string
+          description: Name of recipient/addressee
+          example: John Doe
+      required:
+      - line1
+      - postalCode
+      - city
+      - state
+    InvoiceV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the invoice
+          example: 123e4567-e89b-12d3-a456-426614174000
+        issueDate:
+          type: string
+          description: Date the invoice was issued
+          example: '2021-01-01'
+        dueDate:
+          type: string
+          description: Date the invoice is due
+          example: '2021-01-01'
+        sentDate:
+          type: string
+          description: Date the invoice was sent to the customer
+          example: '2021-01-01'
+        createdAt:
+          type: string
+          description: Date the invoice was created
+          example: '2021-01-01'
+        status:
+          type: string
+          description: Current status of the invoice
+          enum:
+          - DRAFT
+          - APPROVED
+          - SENT
+          - PAID
+          - PARTIALLY_PAID
+          - VOID
+          - SENT_OFF_TABS
+          - PENDING
+          - DONE
+          example: DRAFT
+        invoiceNumber:
+          type: string
+          description: Invoice number
+          example: '1234'
+        memo:
+          type: string
+          description: Invoice memo
+          example: A memo / note on the invoice
+        customFields:
+          description: Invoice custom fields
+          example:
+          - name: Custom Field 1
+            value: A value for the custom field
+          type: array
+          items:
+            type: string
+        source:
+          type: string
+          description: Source of the invoice
+          enum:
+          - TABS
+          - QBO
+          - NETSUITE
+          - AVALARA
+          - SALESFORCE
+          - HUBSPOT
+          - STRIPE
+          - RILLET
+          - SAGE_INTACCT
+          - CAMPFIRE
+          example: TABS
+        customerId:
+          type: string
+          description: ID of the customer this invoice belongs to
+          example: 123e4567-e89b-12d3-a456-426614174000
+        originalDueDate:
+          type: string
+          description: Original due date before any modifications
+          example: '2021-01-01'
+        originalIssueDate:
+          type: string
+          description: Original issue date before any modifications
+          example: '2021-01-01'
+        total:
+          type: number
+          description: Total amount in currency associated with the customer
+          example: 100
+        balanceRemaining:
+          type: number
+          description: Remaining balance in currency associated with the customer
+          example: 100
+        externalIds:
+          description: List of external identifiers
+          example:
+          - id: 123e4567-e89b-12d3-a456-426614174000
+            type: customer
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+        lineItems:
+          description: Line items on this invoice
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItemV3Dto'
+        paymentLink:
+          type: string
+          description: Payment link for the invoice (Optional)
+        poNumber:
+          type: string
+          description: PO number
+          example: '1234'
+        paidOn:
+          type: string
+          description: Date the invoice was fully paid
+          example: '2024-01-15T00:00:00.000Z'
+          nullable: true
+        uncollectibleOn:
+          type: string
+          description: Date the invoice was marked as uncollectible
+          example: '2024-02-01T00:00:00.000Z'
+          nullable: true
+        lastUpdatedAt:
+          type: string
+          description: Timestamp of last update
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - id
+      - issueDate
+      - dueDate
+      - createdAt
+      - status
+      - source
+      - customerId
+      - originalDueDate
+      - originalIssueDate
+      - total
+      - balanceRemaining
+      - externalIds
+      - lineItems
+      - poNumber
+      - paidOn
+      - uncollectibleOn
+      - lastUpdatedAt
+    CreditMemoLineItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Line item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Line item name
+          example: Product A
+        note:
+          type: string
+          description: Line item note
+          example: Credit for defective product
+        quantity:
+          type: number
+          description: Quantity
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        salesTaxAmount:
+          type: number
+          description: Sales tax amount
+          example: 8.25
+        item:
+          description: Item details
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoItemDto'
+        erpClass:
+          description: ERP Class details
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoErpClassDto'
+        contraRevenueScheduleId:
+          type: string
+          description: Contra revenue schedule ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - id
+      - name
+      - quantity
+      - amount
+      - salesTaxAmount
+      - contraRevenueScheduleId
+    ExternalIdV3Dto:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
+    CreditMemoErpClassDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ERP Class ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: ERP Class name
+          example: Revenue
+      required:
+      - id
+      - name
+    UpdateInvoiceExternalIdsDto:
+      type: object
+      properties:
+        externalIds:
+          description: List of external identifiers
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceExternalIdV3Dto'
+      required:
+      - externalIds
+    AddressV3Dto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External identifier for the address
+          example: '10'
+        city:
+          type: string
+          description: City name
+          example: New York
+        state:
+          type: string
+          description: State/province name
+          example: NY
+        country:
+          type: string
+          description: Country Code
+          example: US
+        postalCode:
+          type: string
+          description: Postal/ZIP code
+          example: '10001'
+        line1:
+          type: string
+          description: Primary street address
+          example: 123 Main St
+        line2:
+          type: string
+          description: Secondary address line (apt, suite, etc)
+          example: Apt 1
+        addressee:
+          type: string
+          description: Name of recipient/addressee
+          example: John Doe
+      required:
+      - externalId
+      - city
+      - state
+      - postalCode
+      - line1
+      - line2
+    UpsertCustomerExternalIdV3Dto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+        sourceType:
+          description: Type of external ID source
+          example: SALESFORCE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+      required:
+      - externalId
+      - sourceType
+    CreditMemoCustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Customer name
+          example: Acme Corp
+        nameWithPrefix:
+          type: string
+          description: Customer name with prefix
+          example: CUST-001 Acme Corp
+      required:
+      - id
+      - name
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    ItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the item
+          example: Item 1
+        displayName:
+          type: string
+          description: Display name of the item, as shown in the Tabs app. Null when not set.
+          example: Item 1 (Annual)
+          nullable: true
+        externalIds:
+          description: List of external identifiers associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+      required:
+      - id
+      - name
+      - externalIds
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    UpsertAddressV3Dto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: Primary street address
+          example: 123 Main St
+        line2:
+          type: string
+          description: Secondary address line (apt, suite, etc)
+          example: Apt 1
+        postalCode:
+          type: string
+          description: Postal/ZIP code
+          example: '10001'
+        city:
+          type: string
+          description: City name
+          example: New York
+        state:
+          type: string
+          description: State/province name
+          example: NY
+        country:
+          type: string
+          description: Country Code
+          example: US
+        addressee:
+          type: string
+          description: Name of recipient/addressee
+          example: John Doe
+        isDefaultBilling:
+          type: boolean
+          description: Is default billing address
+          example: true
+        isDefaultShipping:
+          type: boolean
+          description: Is default shipping address
+          example: true
+      required:
+      - line1
+      - postalCode
+      - city
+      - state
+      - isDefaultBilling
+      - isDefaultShipping
+    CreateSubCustomerDto:
+      type: object
+      properties:
+        customerName:
+          type: string
+          description: Customer Name
+          example: John Doe
+        currency:
+          type: string
+          description: Currency
+          example: USD
+        useParentContactInfo:
+          type: boolean
+          description: Use Parent Customer's Contact Info
+          example: true
+        billingEmail:
+          type: string
+          description: Billing Email
+          example: john.doe@example.com
+        billingAddress:
+          description: Billing Address
+          allOf:
+          - $ref: '#/components/schemas/AddressV3Dto'
+      required:
+      - customerName
+      - currency
+      - useParentContactInfo
+    SendReminderEmailDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        sendReminderEmail:
+          type: boolean
+          description: Send the reminder email
+          example: true
+      required:
+      - action
+      - sendReminderEmail
+    CustomerV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the customer
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Preferred company name
+          example: Acme Inc.
+        parentCustomerId:
+          type: string
+          description: Parent Customer Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        defaultCurrency:
+          type: string
+          description: Default currency code for the customer, if omitted will default to USD
+          example: USD
+        primaryBillingContactName:
+          type: string
+          description: Name of primary billing contact
+          example: John Doe
+        primaryBillingContactEmail:
+          type: string
+          description: Email of primary billing contact
+          example: john.doe@example.com
+        secondaryBillingContacts:
+          description: List of secondary billing contact emails
+          example:
+          - jane.doe@example.com
+          - jim.doe@example.com
+          type: array
+          items:
+            type: string
+        billingAddress:
+          description: Customer's billing address
+          allOf:
+          - $ref: '#/components/schemas/AddressV3Dto'
+        shippingAddress:
+          description: Customer's shipping address
+          allOf:
+          - $ref: '#/components/schemas/AddressV3Dto'
+        externalIds:
+          description: List of external identifiers
+          example:
+          - type: NETSUITE
+            id: 123e4567-e89b-12d3-a456-426614174000
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+        lastUpdatedAt:
+          type: string
+          description: Timestamp of last update
+          example: '2024-01-01T00:00:00.000Z'
+        customFields:
+          description: Customer's custom fields
+          type: array
+          items:
+            type: string
+        autoCharge:
+          type: boolean
+          description: Whether auto charge is enabled for the customer. If true and customer has a default payment method defined in their billing settings, that payment method will be autocharged
+          example: true
+        dunningDisabled:
+          type: boolean
+          description: 'Whether reminder emails (dunning) are disabled for this customer. When true, no automated payment reminder emails will be sent to this customer. Note: The initial invoice email is still sent even when this is true.'
+          example: false
+        customerTaxInfo:
+          description: Customer tax information
+          allOf:
+          - $ref: '#/components/schemas/CustomerTaxInfoV3Dto'
+      required:
+      - id
+      - name
+      - parentCustomerId
+      - defaultCurrency
+      - primaryBillingContactName
+      - primaryBillingContactEmail
+      - secondaryBillingContacts
+      - lastUpdatedAt
+    MarkInvoiceAsPendingDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceAsPending:
+          type: boolean
+          description: Mark the invoice as pending
+          example: true
+      required:
+      - action
+      - markInvoiceAsPending
+    InvoiceExternalIdV3Dto:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    MarkInvoiceAsVoidDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceAsVoid:
+          type: boolean
+          description: Mark the invoice as void
+          example: true
+      required:
+      - action
+      - markInvoiceAsVoid
+    PaymentsV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the payment
+          example: 123e4567-e89b-12d3-a456-426614174000
+        invoiceId:
+          type: string
+          description: List of invoices associated with this payment
+          example: 123e4567-e89b-12d3-a456-426614174000
+        total:
+          type: number
+          description: Total amount of the payment
+          example: 99.99
+        stripeId:
+          type: string
+          description: Stripe payment ID if payment was processed through Stripe
+          example: pi_1234567890
+        receivedAt:
+          format: date-time
+          type: string
+          description: Date when payment was received
+          example: '2023-01-01T00:00:00.000Z'
+        status:
+          type: string
+          description: Current status of the payment
+          enum:
+          - OPEN
+          - COMPLETED
+          - EXPIRED
+          - FAILED
+          - CANCELED
+          - UNCOLLECTIBLE
+          example: COMPLETED
+        type:
+          type: string
+          description: Type of payment
+          enum:
+          - MANUAL
+          - STRIPE
+          - RECONCILIATION
+          - REFUND
+          - CREDIT_MEMO_FROM_ERP
+          example: MANUAL
+        reference:
+          type: string
+          description: Payment reference number
+          example: REF123456
+        method:
+          type: string
+          description: Payment method used
+          enum:
+          - CREDIT_CARD
+          - ACH_DEBIT
+          - ACH_CREDIT
+          - CHECK
+          - LINK
+          example: CREDIT_CARD
+        externalIds:
+          description: List of external system identifiers
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationsExternalId'
+      required:
+      - id
+      - invoiceId
+      - total
+      - receivedAt
+      - status
+      - type
+      - method
+      - externalIds
+    UpdateCustomerCustomFieldV3Dto:
+      type: object
+      properties:
+        manufacturerCustomFieldId:
+          type: string
+          description: Manufacturer custom field ID. Required when `isPurchaseOrder` is not true.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customFieldValue:
+          type: string
+          description: 'Custom field value. For purchase order entries (`isPurchaseOrder: true`), this is the new PO number. Pass an empty string to unset the PO. Max 48 characters apply to PO values.'
+          example: Sales
+        isPurchaseOrder:
+          type: boolean
+          description: Set to `true` to update the customer's active purchase order instead of a manufacturer-defined custom field. When `true`, `manufacturerCustomFieldId` is ignored and `customFieldValue` is used as the PO number.
+          example: false
+      required:
+      - customFieldValue
+    UpdateCustomerAutoChargeV3Dto:
+      type: object
+      properties:
+        autocharge:
+          type: boolean
+          description: Auto Charge enabled
+          example: true
+      required:
+      - autocharge
+    MarkInvoiceAsScheduledDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceAsScheduled:
+          type: boolean
+          description: Mark the invoice as scheduled
+          example: true
+      required:
+      - action
+      - markInvoiceAsScheduled
+    UpdateInvoiceMemoBodyDto:
+      type: object
+      properties:
+        memo:
+          type: string
+          description: Memo for the invoice
+          example: This is a memo
+          maxLength: 4095
+      required:
+      - memo
+    CustomerTaxInfoV3Dto:
+      type: object
+      properties:
+        vatId:
+          type: string
+          description: VAT identifier
+          example: DE123456789
+        ein:
+          type: string
+          description: EIN identifier
+          example: 12-3456789
+        isTaxExempt:
+          type: boolean
+          description: Whether customer is tax exempt
+          example: false
+      required:
+      - isTaxExempt
+    InvoiceItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the invoice item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the invoice item
+          example: Item 1
+        description:
+          type: string
+          description: Description of the invoice item
+        quantity:
+          type: number
+          description: Quantity of items
+          example: 1
+        unitPrice:
+          type: number
+          description: Unit price in currency associated with the customer
+          example: 100
+        subtotal:
+          type: number
+          description: Subtotal before discounts in currency associated with the customer
+          example: 110
+        discountTotal:
+          type: number
+          description: Total discount amount for this line item in currency associated with the customer
+          example: 10
+        total:
+          type: number
+          description: Total in currency associated with the customer
+          example: 100
+        salesTaxRate:
+          type: string
+          description: Sales tax rate percentage for this line item
+          example: '8.5'
+          nullable: true
+        item:
+          description: Associated item details
+          allOf:
+          - $ref: '#/components/schemas/ItemV3Dto'
+      required:
+      - id
+      - name
+      - description
+      - quantity
+      - unitPrice
+      - subtotal
+      - discountTotal
+      - total
+      - salesTaxRate
+      - item
+    UpdateInvoicePOResponseDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        purchaseOrder:
+          description: Purchase Order
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrderDto'
+      required:
+      - invoiceId
+      - customerId
+      - manufacturerId
+      - purchaseOrder
+    UpdateInvoiceMemoResponseDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        memo:
+          type: string
+          description: Memo
+          example: This is a memo
+      required:
+      - invoiceId
+      - customerId
+      - manufacturerId
+      - memo
+    CreditMemoDto:
+      type: object
+      properties:
+        creditMemoId:
+          type: string
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoNumber:
+          type: string
+          description: Credit memo number
+          example: CM-001
+        creditMemoPrefix:
+          type: string
+          description: Credit memo prefix
+          example: CM
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        issueDate:
+          format: date-time
+          type: string
+          description: Issue date
+          example: '2023-01-01T00:00:00.000Z'
+        total:
+          type: number
+          description: Total amount
+          example: 100
+        memo:
+          type: string
+          description: Memo
+          example: Credit for defective product
+        reason:
+          type: string
+          description: Reason
+          example: Product defect
+        status:
+          type: string
+          description: Status
+          example: OPEN
+        customer:
+          description: Customer information
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoCustomerDto'
+        items:
+          description: Line items
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoLineItemDto'
+        applications:
+          description: Applications
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoApplicationDto'
+        externalIds:
+          description: External IDs
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoExternalIdDto'
+        createdAt:
+          format: date-time
+          type: string
+          description: Created at
+          example: '2023-01-01T00:00:00.000Z'
+        lastUpdatedAt:
+          format: date-time
+          type: string
+          description: Last updated at
+          example: '2023-01-01T00:00:00.000Z'
+        syncStatus:
+          type: string
+          description: Sync status
+          example: NOT_SYNCED
+      required:
+      - creditMemoId
+      - creditMemoNumber
+      - creditMemoPrefix
+      - customerId
+      - manufacturerId
+      - issueDate
+      - total
+      - status
+      - customer
+      - items
+      - applications
+      - externalIds
+      - createdAt
+      - lastUpdatedAt
+      - syncStatus
+    CreatePaymentV3Dto:
+      type: object
+      properties:
+        receivedAt:
+          format: date-time
+          type: string
+          description: Date when payment was received
+          example: '2023-01-01T00:00:00.000Z'
+        method:
+          type: string
+          description: Payment method used
+          enum:
+          - CREDIT_CARD
+          - ACH_DEBIT
+          - ACH_CREDIT
+          - CHECK
+          - LINK
+          example: CREDIT_CARD
+        reference:
+          type: string
+          description: Payment reference number
+          example: REF123456
+      required:
+      - receivedAt
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

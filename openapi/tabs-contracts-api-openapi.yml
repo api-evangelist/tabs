@@ -1,0 +1,2705 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Contracts API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Contracts
+paths:
+  /v3/contracts:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getContracts
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: 'Supported items for filter: name, externalIds.externalId, externalIds.sourceType, source, status, customerId, createdAt, lastUpdatedAt. Date format for createdAt and lastUpdatedAt: YYYY-MM-DD'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Contracts by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - type: object
+                  properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/ContractsV3Dto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List contracts
+      tags:
+      - Contracts
+    post:
+      operationId: IntegratorsApiContractsv3Controller_createContract
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContractV3Dto'
+      responses:
+        '201':
+          description: Created contract
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractsV3Dto'
+        '400':
+          description: Invalid request body
+        '500':
+          description: Internal server error
+      summary: Create contract
+      tags:
+      - Contracts
+  /v3/contracts/{id}:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getContractById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: The contract
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/ContractsV3Dto'
+        '400':
+          description: Contract is deleted
+        '404':
+          description: Contract not found
+      summary: Get contract by ID
+      tags:
+      - Contracts
+    patch:
+      operationId: IntegratorsApiContractsv3Controller_updateContract
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContractV3Dto'
+      responses:
+        '200':
+          description: Contract updated successfully
+        '404':
+          description: Contract not found
+        '500':
+          description: Internal server error
+      summary: Update contract
+      tags:
+      - Contracts
+  /v3/contracts/{id}/file:
+    post:
+      operationId: IntegratorsApiContractsv3Controller_uploadContractFile
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: shouldProcess
+        required: false
+        in: query
+        description: Whether to trigger contract processing after file upload. Defaults to true.
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Contract file was replaced successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/ContractsV3Dto'
+      summary: Upload contract file
+      tags:
+      - Contracts
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getContractFile
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: PDF file download
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: Internal server error or contract has no file
+      summary: Download contract file
+      tags:
+      - Contracts
+  /v3/contracts/{id}/obligations:
+    post:
+      operationId: IntegratorsApiContractsv3Controller_createObligation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateObligationDto'
+      responses:
+        '201':
+          description: The obligation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObligationDto'
+        '400':
+          description: Invalid request body
+      summary: Create contract obligation
+      tags:
+      - Contracts
+  /v3/contracts/{id}/obligations/{obligationId}:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getObligation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: obligationId
+        required: true
+        in: path
+        description: Obligation Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: The obligation
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/ObligationDto'
+        '404':
+          description: Obligation not found
+      summary: Get contract obligation by ID
+      tags:
+      - Contracts
+    delete:
+      operationId: IntegratorsApiContractsv3Controller_deleteObligation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: obligationId
+        required: true
+        in: path
+        description: Obligation Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: Deleted obligation
+        '400':
+          description: Obligation not found
+        '500':
+          description: Internal server error
+      summary: Delete contract obligation
+      tags:
+      - Contracts
+  /v3/contracts/{id}/actions:
+    post:
+      operationId: IntegratorsApiContractsv3Controller_contractActions
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        description: 'For Rillet merchants only: Close Date is required when marking contracts as processed.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractActionDto'
+            examples:
+              valid1:
+                summary: Mark as processed
+                value:
+                  action: MARK_AS_PROCESSED
+              valid2:
+                summary: Mark as deleted
+                value:
+                  action: MARK_AS_DELETED
+      responses:
+        '200':
+          description: Contract actions executed successfully
+        '400':
+          description: Invalid request body
+      summary: Perform contract action
+      tags:
+      - Contracts
+  /v3/contracts/{id}/obligation/{obligationId}:
+    patch:
+      operationId: IntegratorsApiContractsv3Controller_updateObligation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: obligationId
+        required: true
+        in: path
+        description: Obligation Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateObligationDto'
+      responses:
+        '200':
+          description: Obligation updated successfully
+        '404':
+          description: Obligation not found
+        '500':
+          description: Internal server error
+      summary: Update contract obligation
+      tags:
+      - Contracts
+  /v3/contracts/{id}/obligation/{obligationId}/custom-revenue:
+    post:
+      operationId: IntegratorsApiContractsv3Controller_upsertCustomRevenue
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract id
+        schema:
+          type: string
+      - name: obligationId
+        required: true
+        in: path
+        description: Obligation id
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomRevenue'
+      responses:
+        '200':
+          description: Upsert custom revenue
+        '400':
+          description: Bad request body, e.g. invalid timeframe
+        '404':
+          description: Contract or obligation not found
+        '500':
+          description: Internal server error
+      summary: Upsert obligation custom revenue
+      tags:
+      - Contracts
+  /v3/contracts/{id}/billing-term-groups:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getBillingTermGroups
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Billing term groups for the contract
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/BillingTermGroupDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '400':
+          description: Invalid contract ID or performance obligation features not enabled for this merchant
+        '404':
+          description: Contract not found
+        '500':
+          description: Internal Server Error
+      summary: List contract billing term groups
+      tags:
+      - Contracts
+  /v3/contracts/{id}/billing-term-groups/{groupId}:
+    delete:
+      operationId: IntegratorsApiContractsv3Controller_deleteBillingTermGroup
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: groupId
+        required: true
+        in: path
+        description: Billing Term Group Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: Billing term group and associated entities deleted successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+        '400':
+          description: Invalid contract/group ID or performance obligation features not enabled for this merchant
+        '404':
+          description: Contract or billing term group not found
+        '500':
+          description: Internal Server Error
+      summary: Delete contract billing term group
+      tags:
+      - Contracts
+  /v3/contracts/{id}/performance-obligations:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getPerformanceObligationsWithRevenue
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: billingTermGroupId
+        required: false
+        in: query
+        description: Optional billing term group ID to filter results
+        schema:
+          type: string
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Performance obligations with recognized revenue for the contract
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/PerformanceObligationDetailResponseDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+                          totalTransactionPrice:
+                            type: number
+        '400':
+          description: Performance obligation features not enabled for this merchant
+        '404':
+          description: Contract not found
+        '500':
+          description: Internal Server Error
+      summary: List contract performance obligations
+      tags:
+      - Contracts
+    post:
+      operationId: IntegratorsApiContractsv3Controller_batchSavePobsForContract
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        description: Batch create, update, and delete performance obligations scoped to a billing term group
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchSavePobsForContractDto'
+      responses:
+        '200':
+          description: Batch save completed successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/BatchSavePerformanceObligationsResponseDto'
+        '400':
+          description: Validation error or performance obligation features not enabled
+        '404':
+          description: Contract not found
+        '500':
+          description: Internal Server Error
+      summary: Bulk save contract performance obligations
+      tags:
+      - Contracts
+  /v3/contracts/{id}/performance-obligations/{pobId}:
+    patch:
+      operationId: IntegratorsApiContractsv3Controller_updatePerformanceObligation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: pobId
+        required: true
+        in: path
+        description: Performance Obligation Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        description: Fields to update on the performance obligation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePerformanceObligationForContractDto'
+      responses:
+        '200':
+          description: Performance obligation updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/PerformanceObligationDetailResponseDto'
+        '400':
+          description: Validation error or performance obligation features not enabled
+        '404':
+          description: Contract or performance obligation not found
+        '500':
+          description: Internal Server Error
+      summary: Update contract performance obligation
+      tags:
+      - Contracts
+  /v3/contracts/{id}/billing-terms:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getBillingTerms
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: billingTermGroupId
+        required: false
+        in: query
+        description: Optional billing term group (BTG) ID to filter by
+        schema:
+          type: string
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      responses:
+        '200':
+          description: Billing terms for the contract
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/GetBillingTermItemDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '404':
+          description: Contract not found
+        '500':
+          description: Internal Server Error
+      summary: List contract billing terms
+      tags:
+      - Contracts
+    post:
+      operationId: IntegratorsApiContractsv3Controller_createBillingTerm
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBillingTermDto'
+      responses:
+        '201':
+          description: Billing term created
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/BillingTermResponseDto'
+        '400':
+          description: Bad Request - validation failed
+        '404':
+          description: Contract not found
+        '500':
+          description: Internal Server Error
+      summary: Create contract billing term
+      tags:
+      - Contracts
+  /v3/contracts/{id}/billing-terms/{billingTermId}:
+    patch:
+      operationId: IntegratorsApiContractsv3Controller_patchBillingTerm
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: billingTermId
+        required: true
+        in: path
+        description: Billing Term Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchBillingTermDto'
+      responses:
+        '200':
+          description: Billing term updated
+        '400':
+          description: Bad Request - validation failed
+        '404':
+          description: Contract or billing term not found
+        '500':
+          description: Internal Server Error
+      summary: Update contract billing term
+      tags:
+      - Contracts
+    delete:
+      operationId: IntegratorsApiContractsv3Controller_deleteBillingTerm
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: billingTermId
+        required: true
+        in: path
+        description: Billing Term Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      responses:
+        '200':
+          description: Billing term deleted
+        '404':
+          description: Contract or billing term not found
+        '409':
+          description: 'Cannot delete: a POB with matching event type exists in the group'
+        '500':
+          description: Internal Server Error
+      summary: Delete contract billing term
+      tags:
+      - Contracts
+  /v3.1/contracts/{id}/obligation/{obligationId}:
+    patch:
+      operationId: IntegratorsApiContractsV31Controller_updateObligation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: obligationId
+        required: true
+        in: path
+        description: Obligation Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateObligationDto'
+      responses:
+        '200':
+          description: Obligation updated successfully
+        '404':
+          description: Obligation not found
+        '500':
+          description: Internal server error
+      summary: Update contract obligation
+      tags:
+      - Contracts
+  /v3/contracts/deleted:
+    get:
+      operationId: IntegratorsApiContractsv3Controller_getDeletedContracts
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: 'Supported items for filter: name, externalIds.externalId, externalIds.sourceType, source, status, customerId, createdAt, lastUpdatedAt, deletedAt. Date format for createdAt, lastUpdatedAt, and deletedAt: YYYY-MM-DD'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all deleted Contracts by filter, sorted by deletedAt desc
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - type: object
+                  properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/ContractsV3Dto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List deleted contracts
+      tags:
+      - Contracts
+  /v3/contracts/{id}/billing-term-groups/{groupId}/event-type:
+    patch:
+      operationId: IntegratorsApiContractsv3Controller_changeBillingTermGroupEventType
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Contract Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      - name: groupId
+        required: true
+        in: path
+        description: Billing Term Group Id
+        schema:
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeBillingTermGroupEventTypeDto'
+      responses:
+        '200':
+          description: Event type changed for the selected billing terms and performance obligations within the group; any rows not listed in the request are left untouched. The change is applied atomically and is only accepted if the group's event types stay in sync afterward.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/ChangeBillingTermGroupEventTypeResponseDto'
+        '400':
+          description: Invalid request, or a provided BT/POB does not belong to the group
+        '404':
+          description: Contract, billing term group, or target event type not found
+        '409':
+          description: Change would break the event-type invariant for the group
+        '500':
+          description: Internal Server Error
+      summary: Change event type for selected billing terms and POBs in a group
+      tags:
+      - Contracts
+components:
+  schemas:
+    GetBillingTermItemDto:
+      type: object
+      properties:
+        billingTermId:
+          type: string
+          description: Billing term ID
+          format: uuid
+        contractId:
+          type: string
+          description: Contract ID
+          format: uuid
+        name:
+          type: string
+          description: Billing term name
+        description:
+          type: string
+          description: Billing term description
+          nullable: true
+        itemId:
+          type: string
+          description: ERP item ID
+          format: uuid
+          nullable: true
+        productId:
+          type: string
+          description: Product ID from /v3/products. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          format: uuid
+          nullable: true
+        billingStartDate:
+          type: string
+          description: Billing start date
+        billingEndDate:
+          type: string
+          description: Billing end date
+        quantity:
+          type: number
+          description: Quantity; 0 for UNIT billingType
+          example: 1
+        duration:
+          type: number
+          description: Number of billing periods (0 = open-ended / not set)
+          example: 12
+        intervalFrequency:
+          type: number
+          description: Interval frequency
+        interval:
+          type: string
+          description: Interval unit
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+          example: MONTH
+          nullable: true
+        invoiceDateStrategy:
+          type: string
+          description: Invoice date strategy
+          enum:
+          - FIRST_OF_PERIOD
+          - LAST_OF_PERIOD
+          - ARREARS
+          - ADVANCED_DUE_START
+          example: FIRST_OF_PERIOD
+        netPaymentTerms:
+          type: number
+          description: Days between invoice issue and due date
+          example: 30
+          nullable: true
+        billingType:
+          type: string
+          description: Billing type
+          example: FLAT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Pricing type
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        isRecurring:
+          type: boolean
+          description: Whether the billing term is recurring
+        isArrears:
+          type: boolean
+          description: Whether the billing term is in arrears
+        eventTypeId:
+          type: string
+          description: Usage event type ID
+          format: uuid
+          nullable: true
+        classId:
+          type: string
+          description: ERP class ID
+          format: uuid
+          nullable: true
+        departmentId:
+          type: string
+          description: Department ID
+          format: uuid
+          nullable: true
+        projectId:
+          type: string
+          description: Project ID
+          format: uuid
+          nullable: true
+        pricing:
+          description: Pricing tiers
+          example:
+          - tier: 1
+            amount: 120000
+            amountType: TOTAL_INVOICE
+            tierMinimum: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingTierDto'
+        billingTermGroupId:
+          type: string
+          description: Billing term group (BTG) ID
+          format: uuid
+          nullable: true
+        commitmentId:
+          type: string
+          description: Commitment ID
+          format: uuid
+          nullable: true
+        commitmentBillingTermType:
+          type: string
+          description: Commitment billing term type
+          nullable: true
+        discounts:
+          description: Billing term discounts.
+          example:
+          - type: PERCENTAGE
+            amount: '0.10'
+            note: Partner discount
+          - type: FIXED
+            amount: '100'
+            note: Early payment discount
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountDto'
+      required:
+      - billingTermId
+      - contractId
+      - name
+      - description
+      - itemId
+      - productId
+      - billingStartDate
+      - billingEndDate
+      - quantity
+      - duration
+      - intervalFrequency
+      - interval
+      - invoiceDateStrategy
+      - netPaymentTerms
+      - billingType
+      - pricingType
+      - isRecurring
+      - isArrears
+      - eventTypeId
+      - classId
+      - departmentId
+      - projectId
+      - pricing
+      - billingTermGroupId
+      - commitmentId
+      - commitmentBillingTermType
+      - discounts
+    BillingScheduleDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Line Item Name
+          example: Line Item Name
+        description:
+          type: string
+          description: Line Item Description
+          example: Line Item Description
+        startDate:
+          type: string
+          description: Billing Start Date
+          example: '2024-01-01'
+        endDate:
+          type: string
+          description: Billing End Date
+          example: '2024-01-01'
+        duration:
+          type: number
+          description: Billing Duration
+          example: 1
+          default: 0
+        isArrears:
+          type: boolean
+          description: "Is Arrears (DEPRECATED: Use invoiceDateStrategy instead). \n      Either this field OR invoiceDateStrategy must be provided, but not both."
+          example: false
+          deprecated: true
+        invoiceDateStrategy:
+          type: string
+          description: "Strategy for determining when to send invoices. Either this field OR \n      isArrears must be provided, but not both. FIRST_OF_PERIOD (invoice at start of\n      billing period), LAST_OF_PERIOD (invoice at end of billing period), ARREARS\n      (invoice after service delivery) or ADVANCED_DUE_START (invoice date at start of\n      billing period minus netPaymentTerms days, due start of service)."
+          example: FIRST_OF_PERIOD
+          enum:
+          - FIRST_OF_PERIOD
+          - LAST_OF_PERIOD
+          - ARREARS
+          - ADVANCED_DUE_START
+        isRecurring:
+          type: boolean
+          description: Is Recurring
+          example: true
+        interval:
+          type: string
+          description: Type of recurring interval
+          example: MONTH
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+        intervalFrequency:
+          type: number
+          description: Frequency of recurring interval to invoice
+          example: 1
+        netPaymentTerms:
+          type: number
+          description: Time between issue and due date
+          example: 1
+        quantity:
+          type: number
+          description: Quantity; set to 0 for UNIT billingType
+          example: 1
+        billingType:
+          type: string
+          description: Billing Type
+          example: UNIT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Single, multiple, or volume-based pricing tiers
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        eventTypeId:
+          type: string
+          description: Usage Event Type Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itemId:
+          type: string
+          description: The item in the ERP that the line items will belong to
+          example: 123e4567-e89b-12d3-a456-426614174000
+        productId:
+          type: string
+          description: Product ID from /v3/products that links this billing term to an entry in the merchant's product catalog. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+        invoiceType:
+          type: string
+          description: INVOICE or BILL for remittance. Use INVOICE for all instances
+          example: INVOICE
+          enum:
+          - INVOICE
+          - BILL
+        pricing:
+          description: Pricing tiers
+          example:
+          - tier: 1
+            amount: 100
+            amountType: PER_ITEM
+            tierMinimum: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingTierDto'
+        classId:
+          type: string
+          description: Class Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        departmentId:
+          type: string
+          description: Department Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        projectId:
+          type: string
+          description: Project Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - name
+      - startDate
+      - endDate
+      - isRecurring
+      - interval
+      - intervalFrequency
+      - netPaymentTerms
+      - quantity
+      - billingType
+      - pricingType
+      - invoiceType
+      - pricing
+    ChangeBillingTermGroupEventTypeResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable summary of what was updated
+          example: Updated event type for 1 billing term(s) and 1 performance obligation(s) in group ...
+        updatedBillingTermIds:
+          description: IDs of the billing terms whose event type was changed
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          type: array
+          items:
+            type: string
+        updatedPerformanceObligationIds:
+          description: IDs of the performance obligations whose event type was changed
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          type: array
+          items:
+            type: string
+      required:
+      - message
+      - updatedBillingTermIds
+      - updatedPerformanceObligationIds
+    BatchSavePobsForContractDto:
+      type: object
+      properties:
+        billingTermGroupId:
+          type: string
+          description: Billing term group ID (BTG) that all operations are scoped to
+          example: 123e4567-e89b-12d3-a456-426614174000
+        toCreate:
+          description: Performance obligations to create within the billing term group
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractScopedCreatePobDto'
+        toUpdate:
+          description: Performance obligations to update (must belong to the billing term group)
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractScopedUpdatePobDto'
+        toDelete:
+          description: Performance obligation IDs to delete
+          type: array
+          items:
+            type: string
+      required:
+      - billingTermGroupId
+      - toCreate
+      - toUpdate
+      - toDelete
+    ContractScopedUpdatePobDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the performance obligation to update
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the performance obligation
+          nullable: true
+        itemId:
+          type: string
+          description: The ID of the associated integration item
+          nullable: true
+        erpClassId:
+          type: string
+          description: The ID of the ERP class
+          nullable: true
+        category:
+          type: string
+          description: The revenue category name
+          nullable: true
+        considerationType:
+          type: string
+          description: The consideration type for the performance obligation
+          nullable: true
+        recognitionPattern:
+          type: string
+          description: The revenue recognition pattern
+          nullable: true
+        eventTypeId:
+          type: string
+          description: Event type ID for RECOGNIZE_AS_CONSUMED pattern
+          nullable: true
+        productId:
+          type: string
+          description: The ID of the product this performance obligation is for
+          nullable: true
+        serviceStartDate:
+          type: string
+          description: Service start date as YYYY-MM-DD string
+        serviceEndDate:
+          type: string
+          description: Service end date as YYYY-MM-DD string
+        transactionPrice:
+          type: string
+          description: Transaction price as a decimal string
+          example: '1000.50'
+      required:
+      - id
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
+    DiscountDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
+    CreateContractV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Contract
+          example: Contract
+        customerId:
+          type: string
+          description: customer identifier(UUID)
+          example: 123e4567-e89b-12d3-a456-426614174000
+        externalId:
+          description: External identification details, only used for Netsuite Sales Orders
+          example:
+            externalId: any-external-id
+            sourceType: NETSUITE
+            metadata:
+              orderId: '1234567890'
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdDto'
+        shouldProcess:
+          type: boolean
+          description: 'Deprecated: has no effect. Use shouldProcess query param on the file upload endpoint instead.'
+          default: false
+          example: false
+          deprecated: true
+        closeDate:
+          type: string
+          description: Close date of the contract
+          example: '2024-01-01'
+      required:
+      - name
+      - customerId
+    RecognizedRevenueAtomResponseDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Month in YYYY-MM format
+          example: 2024-01
+        total:
+          type: string
+          description: Recognized revenue amount as a decimal string
+          example: '1000.50'
+      required:
+      - timeframe
+      - total
+    ContractsV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the contract
+          example: 123e4567-e89b-12d3-a456-426614174000
+        fileName:
+          type: string
+          description: Name of the contract file
+          example: Contract.pdf
+        name:
+          type: string
+          description: Display name of the contract
+          example: Contract
+        status:
+          type: string
+          description: Current status of the contract
+          example: ACTIVE
+        customerId:
+          type: string
+          description: Identifier of the customer associated with this contract
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerName:
+          type: string
+          description: Name of the customer associated with this contract
+          example: John Doe
+        createdAt:
+          format: date-time
+          type: string
+          description: Timestamp when the contract was created
+          example: '2024-01-01T00:00:00.000Z'
+        closeDate:
+          type: string
+          description: Close date of the contract
+          example: '2024-01-01'
+        lastUpdatedAt:
+          type: string
+          description: Timestamp when the contract was last updated
+          example: '2024-01-01T00:00:00.000Z'
+        deletedAt:
+          format: date-time
+          type: string
+          description: Timestamp when the contract was deleted. Null for live contracts; populated on the deleted-contracts endpoint.
+          example: '2024-01-01T00:00:00.000Z'
+        externalIds:
+          description: External IDs and external source types of the contract
+          example:
+          - externalId: 123e4567-e89b-12d3-a456-426614174000
+            sourceType: NETSUITE
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdDto'
+        source:
+          type: string
+          description: The source of the contract
+          enum:
+          - CRM
+          - EMAIL
+          - UPLOAD
+          - API
+          - ERP
+          - INTERNAL
+        jobId:
+          type: string
+          description: The workflow job ID for the contract processing
+          example: wf-123e4567-e89b-12d3-a456-426614174000
+      required:
+      - id
+      - fileName
+      - name
+      - status
+      - customerId
+    RecognizedRevenueDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Timeframe
+          example: 2024-01
+        total:
+          type: number
+          description: Total
+          example: 1000
+        booksClosed:
+          type: boolean
+          description: Books closed
+          example: false
+      required:
+      - timeframe
+      - total
+      - booksClosed
+    UpdateContractV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Contract
+          example: Contract
+        closeDate:
+          format: date-time
+          type: string
+          description: Close date of the contract
+          example: '2024-01-01'
+        externalId:
+          type: string
+          description: External ID of the contract
+          example: 123e4567-e89b-12d3-a456-426614174000
+        sourceType:
+          type: string
+          description: External ID source type
+          example: NETSUITE
+    RevenueScheduleDto:
+      type: object
+      properties:
+        categoryId:
+          type: string
+          description: Category Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        recognizedRevenue:
+          description: Recognized Revenue in each month
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueDto'
+      required:
+      - recognizedRevenue
+    UpdatePerformanceObligationForContractDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the performance obligation
+          example: Enterprise License
+          maxLength: 255
+        erpClassId:
+          type: string
+          description: The ID of the integration / ERP class (integration class) for this performance obligation
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+        itemId:
+          type: string
+          description: The ID of the integration item
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+        serviceStartDate:
+          type: string
+          description: Service start date
+          example: '2024-01-01'
+        serviceEndDate:
+          type: string
+          description: Service end date
+          example: '2024-12-31'
+        considerationType:
+          type: string
+          description: Consideration type
+          example: FIXED
+          enum:
+          - FIXED
+          - VARIABLE
+        recognitionPattern:
+          type: string
+          description: Recognition pattern
+          example: STRAIGHT_LINE
+          enum:
+          - STRAIGHT_LINE
+          - RECOGNIZE_AS_CONSUMED
+          - RECOGNIZE_AS_BILLED
+    ExternalIdDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: The external identifier
+          example: 123e4567-e89b-12d3-a456-426614174000
+        sourceType:
+          description: The source type of the external identifier
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        metadata:
+          type: object
+          description: Additional metadata for the external identifier
+          example:
+            orderId: '1234567890'
+    ContractActionDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: The action to perform
+          enum:
+          - MARK_AS_PROCESSED
+          - MARK_AS_DELETED
+      required:
+      - action
+    BillingTermGroupDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Billing term group ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+        name:
+          type: string
+          description: Billing term group name
+          example: Platform Services
+          nullable: true
+        billingTermIds:
+          description: Billing term IDs assigned to this group
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          type: array
+          items:
+            type: string
+        performanceObligationIds:
+          description: Performance obligation IDs assigned to this group
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+          description: Timestamp when the billing term group was created
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          format: date-time
+          type: string
+          description: Timestamp when the billing term group was last updated
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - id
+      - name
+      - billingTermIds
+      - performanceObligationIds
+      - createdAt
+      - updatedAt
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    UpdateObligationDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Billing term name
+          example: Name
+        description:
+          type: string
+          description: Billing term description
+          example: Description
+        itemId:
+          type: string
+          description: Item Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        productId:
+          type: string
+          description: Product ID from /v3/products that links this billing term to an entry in the merchant's product catalog. Omit to leave unchanged, provide a UUID to link, or null to unlink. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+        classId:
+          type: string
+          description: Class Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        categoryId:
+          type: string
+          description: Category Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        eventTypeId:
+          type: string
+          description: Event Type Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        price:
+          type: string
+          description: Price
+          example: '100.00'
+        invoiceDateStrategy:
+          type: string
+          description: "Strategy for determining when to send invoices. FIRST_OF_PERIOD (invoice at start of \n      billing period), LAST_OF_PERIOD (invoice at end of billing period), ARREARS \n      (invoice after service delivery) or ADVANCED_DUE_START (invoice date at start of \n      billing period minus netPaymentTerms days, due start of service)."
+          example: FIRST_OF_PERIOD
+        netPaymentTerms:
+          type: number
+          description: Net Payment Terms
+          example: 1
+        billingStartDate:
+          type: string
+          description: Billing Start Date
+          example: '2024-01-01'
+        billingFrequency:
+          type: number
+          description: Billing Frequency
+          example: 1
+        billingFrequencyUnit:
+          type: string
+          description: Billing Frequency Unit
+          example: MONTH
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+        totalNumberOfInvoices:
+          type: number
+          description: Total Number of Invoices
+          example: 1
+        revenueStartDate:
+          type: string
+          description: Revenue Start Date
+          example: '2024-01-01'
+        revenueEndDate:
+          type: string
+          description: Revenue End Date
+          example: '2024-01-01'
+        discount:
+          description: 'Discount configuration. Pass empty object {} to remove existing discount, omit field to leave discount untouched, or provide values to update discount. Examples: { type: ''FIXED'', amount: ''5.00'' } for a $5.00 fixed discount, { type: ''PERCENTAGE'', amount: ''0.10'' } for a 10% percentage discount, or {} to remove discount'
+          example:
+            type: FIXED
+            amount: '5.00'
+          allOf:
+          - $ref: '#/components/schemas/DiscountDto'
+        regenerateInvoices:
+          type: boolean
+          description: Regenerate Invoices
+          example: true
+    PricingTierDto:
+      type: object
+      properties:
+        tier:
+          type: number
+          description: Tier Number
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        amountType:
+          type: string
+          description: Amount Type
+          example: PER_ITEM
+          enum:
+          - PER_ITEM
+          - TOTAL_INVOICE
+        tierMinimum:
+          type: number
+          description: Tier Minimum
+          example: 0
+      required:
+      - tier
+      - amount
+      - amountType
+      - tierMinimum
+    CreateObligationDto:
+      type: object
+      properties:
+        serviceStartDate:
+          type: string
+          description: Revenue Start Date
+          example: '2024-01-01'
+        serviceEndDate:
+          type: string
+          description: Revenue End Date
+          example: '2024-01-01'
+        categoryId:
+          type: string
+          description: Category Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        billingSchedule:
+          description: Billing Schedule
+          allOf:
+          - $ref: '#/components/schemas/CreateBillingScheduleDto'
+        discount:
+          description: 'Discount configuration. Examples: { type: ''FIXED'', amount: ''5.00'' } for a $5.00 fixed discount, or { type: ''PERCENTAGE'', amount: ''0.10'' } for a 10% percentage discount'
+          example:
+            type: FIXED
+            amount: '5.00'
+          allOf:
+          - $ref: '#/components/schemas/DiscountDto'
+        seatConfig:
+          description: Seat-based obligation configuration
+          allOf:
+          - $ref: '#/components/schemas/SeatBasedObligationConfigDto'
+      required:
+      - serviceStartDate
+      - serviceEndDate
+      - billingSchedule
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    ObligationDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Obligation Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        contractId:
+          type: string
+          description: Contract Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        serviceStartDate:
+          type: string
+          description: Revenue Start Date
+          example: '2024-01-01'
+        serviceEndDate:
+          type: string
+          description: Revenue End Date
+          example: '2024-01-01'
+        categoryId:
+          type: string
+          description: Category Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        billingSchedule:
+          description: Billing Schedule
+          allOf:
+          - $ref: '#/components/schemas/BillingScheduleDto'
+        revenueSchedule:
+          description: Revenue Schedule
+          allOf:
+          - $ref: '#/components/schemas/RevenueScheduleDto'
+        discount:
+          description: 'Discount configuration. Examples: { type: ''FIXED'', amount: ''5.00'' } for a $5.00 fixed discount, or { type: ''PERCENTAGE'', amount: ''0.10'' } for a 10% percentage discount'
+          example:
+            type: FIXED
+            amount: '5.00'
+          allOf:
+          - $ref: '#/components/schemas/DiscountDto'
+        seatConfig:
+          description: Seat-based obligation configuration
+          allOf:
+          - $ref: '#/components/schemas/SeatBasedObligationConfigDto'
+      required:
+      - id
+      - contractId
+      - serviceStartDate
+      - serviceEndDate
+      - billingSchedule
+      - revenueSchedule
+    CreateBillingScheduleDto:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Line Item Description
+          example: Line Item Description
+        startDate:
+          type: string
+          description: Billing Start Date
+          example: '2024-01-01'
+        duration:
+          type: number
+          description: Billing Duration
+          example: 1
+          default: 0
+        isArrears:
+          type: boolean
+          description: "Is Arrears (DEPRECATED: Use invoiceDateStrategy instead). \n      Either this field OR invoiceDateStrategy must be provided, but not both."
+          example: false
+          deprecated: true
+        invoiceDateStrategy:
+          type: string
+          description: "Strategy for determining when to send invoices. Either this field OR \n      isArrears must be provided, but not both. FIRST_OF_PERIOD (invoice at start of\n      billing period), LAST_OF_PERIOD (invoice at end of billing period), ARREARS\n      (invoice after service delivery) or ADVANCED_DUE_START (invoice date at start of\n      billing period minus netPaymentTerms days, due start of service)."
+          example: FIRST_OF_PERIOD
+          enum:
+          - FIRST_OF_PERIOD
+          - LAST_OF_PERIOD
+          - ARREARS
+          - ADVANCED_DUE_START
+        isRecurring:
+          type: boolean
+          description: Is Recurring
+          example: true
+        interval:
+          type: string
+          description: Type of recurring interval
+          example: MONTH
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+        intervalFrequency:
+          type: number
+          description: Frequency of recurring interval to invoice
+          example: 1
+        netPaymentTerms:
+          type: number
+          description: Time between issue and due date
+          example: 1
+        quantity:
+          type: number
+          description: Quantity; set to 0 for UNIT billingType
+          example: 1
+        billingType:
+          type: string
+          description: Billing Type
+          example: UNIT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Single, multiple, or volume-based pricing tiers
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        eventTypeId:
+          type: string
+          description: Usage Event Type Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itemId:
+          type: string
+          description: The item in the ERP that the line items will belong to
+          example: 123e4567-e89b-12d3-a456-426614174000
+        productId:
+          type: string
+          description: Product ID from /v3/products that links this billing term to an entry in the merchant's product catalog. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+        invoiceType:
+          type: string
+          description: INVOICE or BILL for remittance. Use INVOICE for all instances
+          example: INVOICE
+          enum:
+          - INVOICE
+          - BILL
+        pricing:
+          description: Pricing tiers
+          example:
+          - tier: 1
+            amount: 100
+            amountType: PER_ITEM
+            tierMinimum: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingTierDto'
+        classId:
+          type: string
+          description: Class Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        departmentId:
+          type: string
+          description: Department Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        projectId:
+          type: string
+          description: Project Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Line item name. Required unless productId is provided, in which case it is populated from the product's display name.
+          example: Line Item Name
+      required:
+      - startDate
+      - isRecurring
+      - interval
+      - intervalFrequency
+      - netPaymentTerms
+      - quantity
+      - billingType
+      - pricingType
+      - invoiceType
+      - pricing
+    PatchBillingTermDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Line item name. Required unless `productId` is provided, in which case it is populated from the product's display name.
+          example: Annual Platform License
+        description:
+          type: string
+          description: Line item description
+          example: Enterprise platform license
+        billingStartDate:
+          type: string
+          description: Billing start date
+          example: '2025-01-01'
+        isRecurring:
+          type: boolean
+          description: Is recurring billing
+          example: true
+        interval:
+          type: string
+          description: Interval unit
+          example: MONTH
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+        intervalFrequency:
+          type: number
+          description: Interval frequency
+          example: 1
+        duration:
+          type: number
+          description: Number of billing periods
+          example: 0
+          default: 0
+        invoiceDateStrategy:
+          type: string
+          description: Invoice date strategy
+          example: FIRST_OF_PERIOD
+          enum:
+          - FIRST_OF_PERIOD
+          - LAST_OF_PERIOD
+          - ARREARS
+          - ADVANCED_DUE_START
+        netPaymentTerms:
+          type: number
+          description: Days between invoice issue and due date
+          example: 30
+        quantity:
+          type: number
+          description: Quantity; set to 0 for UNIT billingType
+          example: 1
+        billingType:
+          type: string
+          description: Billing type
+          example: FLAT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Pricing type. For TIERED and VOLUME, supply 2+ pricing entries with `tier` indices that are 0-indexed and contiguous (0, 1, 2, …) and `tierMinimum` values starting at 0 and strictly increasing.
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        itemId:
+          type: string
+          description: ERP item ID for the line item
+          example: d4e5f6a7-8901-4abc-8def-555555555555
+        productId:
+          type: string
+          description: Product ID from /v3/products. When set, name/description/itemId/classId are populated from the product for any not provided on the billing term. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          example: c5f6a7b8-9012-4abc-8def-444444444444
+          nullable: true
+        classId:
+          type: string
+          description: ERP class ID
+          example: e5f6a7b8-9012-4abc-8def-666666666666
+        departmentId:
+          type: string
+          description: Department ID
+          example: e5f6a7b8-9012-4abc-8def-777777777777
+        projectId:
+          type: string
+          description: Project ID
+          example: f6a7b8c9-0123-4abc-8def-888888888888
+        pricing:
+          description: Pricing tiers
+          example:
+          - tier: 1
+            amount: 10000
+            amountType: TOTAL_INVOICE
+            tierMinimum: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingTierDto'
+        discount:
+          description: Discount configuration
+          example:
+            type: PERCENTAGE
+            amount: '0.10'
+          allOf:
+          - $ref: '#/components/schemas/DiscountDto'
+    ChangeBillingTermGroupEventTypeDto:
+      type: object
+      properties:
+        billingTermIds:
+          description: IDs of the billing terms (within the group) whose event type should be set to toEventTypeId. Pick exactly the rows to change — in a many-to-many group the others are left untouched. May be empty when only performance obligations are being changed.
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          default: []
+          type: array
+          items:
+            type: string
+        performanceObligationIds:
+          description: IDs of the performance obligations (within the group) whose event type should be set to toEventTypeId. May be empty when only billing terms are being changed.
+          example:
+          - 123e4567-e89b-12d3-a456-426614174001
+          default: []
+          type: array
+          items:
+            type: string
+        toEventTypeId:
+          type: string
+          description: The event type to assign to the selected billing terms and performance obligations. Must belong to the merchant.
+          example: 123e4567-e89b-12d3-a456-426614174002
+          format: uuid
+      required:
+      - billingTermIds
+      - performanceObligationIds
+      - toEventTypeId
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    PerformanceObligationDetailResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the performance obligation
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the performance obligation
+          nullable: true
+          example: Annual Subscription
+        billingTermGroupId:
+          type: string
+          description: Billing term group ID (foreign key)
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        billingTermGroupName:
+          type: string
+          description: Billing term group name
+          nullable: true
+          example: Towing Services
+        itemId:
+          type: string
+          description: ID of the associated integrationitem
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itemName:
+          type: string
+          description: Name of the associated integrationitem
+          nullable: true
+          example: Enterprise License
+        erpClassId:
+          type: string
+          description: ID of the ERP class
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        erpClassName:
+          type: string
+          description: Name of the ERP class
+          nullable: true
+          example: Software Revenue
+        category:
+          type: string
+          description: Revenue category
+          nullable: true
+          example: SaaS
+        productId:
+          type: string
+          description: ID of the associated product
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        productName:
+          type: string
+          description: Name of the associated product
+          nullable: true
+          example: Enterprise Plan
+        serviceStartDate:
+          format: date-time
+          type: string
+          description: Service start date
+          example: '2024-01-01'
+        serviceEndDate:
+          format: date-time
+          type: string
+          description: Service end date
+          example: '2024-12-31'
+        transactionPrice:
+          type: string
+          description: Transaction price as a decimal string
+          example: '1000.50'
+        billingTermIds:
+          description: Array of billing term IDs linked to this POB via the BTG
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          type: array
+          items:
+            type: string
+        considerationType:
+          type: string
+          description: Consideration type
+          nullable: true
+          example: FIXED
+        recognitionPattern:
+          type: string
+          description: Revenue recognition pattern
+          nullable: true
+          example: STRAIGHT_LINE
+        eventTypeId:
+          type: string
+          description: Event type ID
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        eventTypeName:
+          type: string
+          description: Event type name
+          nullable: true
+          example: Tow Completion
+        hasSentInvoice:
+          type: boolean
+          description: Whether POB has any invoice sent to ERP (SENT, PAID, PARTIALLY_PAID, DONE)
+        recognizedRevenue:
+          description: Monthly recognized revenue entries for this performance obligation
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueAtomResponseDto'
+        createdAt:
+          format: date-time
+          type: string
+          description: Timestamp when the performance obligation was created
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          format: date-time
+          type: string
+          description: Timestamp when the performance obligation was last updated
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - id
+      - name
+      - billingTermGroupId
+      - billingTermGroupName
+      - itemId
+      - itemName
+      - erpClassId
+      - erpClassName
+      - category
+      - productId
+      - productName
+      - serviceStartDate
+      - serviceEndDate
+      - transactionPrice
+      - billingTermIds
+      - considerationType
+      - recognitionPattern
+      - eventTypeId
+      - eventTypeName
+      - hasSentInvoice
+      - recognizedRevenue
+      - createdAt
+      - updatedAt
+    ContractScopedCreatePobDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the performance obligation
+          nullable: true
+        itemId:
+          type: string
+          description: The ID of the associated integration item
+          nullable: true
+        erpClassId:
+          type: string
+          description: The ID of the ERP class
+          nullable: true
+        category:
+          type: string
+          description: The revenue category name
+          nullable: true
+        considerationType:
+          type: string
+          description: The consideration type for the performance obligation
+          nullable: true
+        recognitionPattern:
+          type: string
+          description: The revenue recognition pattern
+          nullable: true
+        eventTypeId:
+          type: string
+          description: Event type ID for RECOGNIZE_AS_CONSUMED pattern
+          nullable: true
+        productId:
+          type: string
+          description: The ID of the product this performance obligation is for
+          nullable: true
+        serviceStartDate:
+          type: string
+          description: Service start date as YYYY-MM-DD string
+        serviceEndDate:
+          type: string
+          description: Service end date as YYYY-MM-DD string
+        transactionPrice:
+          type: string
+          description: Transaction price as a decimal string
+          example: '1000.50'
+      required:
+      - serviceStartDate
+      - serviceEndDate
+      - transactionPrice
+    BatchSavePerformanceObligationsResponseDto:
+      type: object
+      properties:
+        errors:
+          description: Array of errors if any operations failed
+          type: array
+          items:
+            type: object
+    SeatBasedObligationConfigDto:
+      type: object
+      properties:
+        isMovingMinimum:
+          type: boolean
+          description: Whether we need to update minimums on a moving basis
+          example: false
+        minQuantity:
+          type: number
+          description: 'Minimum quantity to bill for, regardless of current # of seats'
+          example: 0
+        defaultProrationPolicy:
+          type: string
+          description: Default proration policy
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - YEAR
+        defaultTrueUpTiming:
+          type: string
+          description: Default true up timing
+          enum:
+          - IMMEDIATE
+          - CO_TERM
+      required:
+      - isMovingMinimum
+      - minQuantity
+      - defaultProrationPolicy
+      - defaultTrueUpTiming
+    CreateBillingTermDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Line item name. Required unless `productId` is provided, in which case it is populated from the product's display name.
+          example: Annual Platform License
+        description:
+          type: string
+          description: Line item description
+          example: Enterprise platform license
+        billingStartDate:
+          type: string
+          description: Billing start date
+          example: '2025-01-01'
+        isRecurring:
+          type: boolean
+          description: Is recurring billing
+          example: true
+        interval:
+          type: string
+          description: Interval unit
+          example: MONTH
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+        intervalFrequency:
+          type: number
+          description: Interval frequency
+          example: 1
+        duration:
+          type: number
+          description: Number of billing periods
+          example: 0
+          default: 0
+        invoiceDateStrategy:
+          type: string
+          description: Invoice date strategy
+          example: FIRST_OF_PERIOD
+          enum:
+          - FIRST_OF_PERIOD
+          - LAST_OF_PERIOD
+          - ARREARS
+          - ADVANCED_DUE_START
+        netPaymentTerms:
+          type: number
+          description: Days between invoice issue and due date
+          example: 30
+        quantity:
+          type: number
+          description: Quantity; set to 0 for UNIT billingType
+          example: 1
+        billingType:
+          type: string
+          description: Billing type
+          example: FLAT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Pricing type. For TIERED and VOLUME, supply 2+ pricing entries with `tier` indices that are 0-indexed and contiguous (0, 1, 2, …) and `tierMinimum` values starting at 0 and strictly increasing.
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        eventTypeId:
+          type: string
+          description: Usage event type ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itemId:
+          type: string
+          description: ERP item ID for the line item
+          example: d4e5f6a7-8901-4abc-8def-555555555555
+        productId:
+          type: string
+          description: Product ID from /v3/products. When set, name/description/itemId/classId are populated from the product for any not provided on the billing term. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          example: c5f6a7b8-9012-4abc-8def-444444444444
+          nullable: true
+        classId:
+          type: string
+          description: ERP class ID
+          example: e5f6a7b8-9012-4abc-8def-666666666666
+        departmentId:
+          type: string
+          description: Department ID
+          example: e5f6a7b8-9012-4abc-8def-777777777777
+        projectId:
+          type: string
+          description: Project ID
+          example: f6a7b8c9-0123-4abc-8def-888888888888
+        pricing:
+          description: Pricing tiers
+          example:
+          - tier: 1
+            amount: 10000
+            amountType: TOTAL_INVOICE
+            tierMinimum: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingTierDto'
+        discount:
+          description: Discount configuration
+          example:
+            type: PERCENTAGE
+            amount: '0.10'
+          allOf:
+          - $ref: '#/components/schemas/DiscountDto'
+        billingTermGroupId:
+          type: string
+          description: Billing term group ID. If provided, the BT joins an existing group. If omitted, a new group is created.
+          example: f0e1d2c3-4567-4abc-8def-222222222222
+        seatConfig:
+          description: 'Seat-based billing configuration. When provided, the billing term is created as seat-based and seat changes are managed via the seat-amendment endpoints. '
+          allOf:
+          - $ref: '#/components/schemas/SeatBasedObligationConfigDto'
+      required:
+      - billingStartDate
+      - isRecurring
+      - interval
+      - intervalFrequency
+      - invoiceDateStrategy
+      - netPaymentTerms
+      - quantity
+      - billingType
+      - pricingType
+      - pricing
+    BillingTermResponseDto:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Line item description
+          example: Enterprise platform license
+        billingStartDate:
+          type: string
+          description: Billing start date
+          example: '2025-01-01'
+        isRecurring:
+          type: boolean
+          description: Is recurring billing
+          example: true
+        interval:
+          type: string
+          description: Interval unit
+          example: MONTH
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - HOUR
+          - YEAR
+          - QUARTER
+          - SEMI_MONTH
+          - WEEK
+        intervalFrequency:
+          type: number
+          description: Interval frequency
+          example: 1
+        duration:
+          type: number
+          description: Number of billing periods
+          example: 0
+          default: 0
+        netPaymentTerms:
+          type: number
+          description: Days between invoice issue and due date
+          example: 30
+        quantity:
+          type: number
+          description: Quantity; set to 0 for UNIT billingType
+          example: 1
+        billingType:
+          type: string
+          description: Billing type
+          example: FLAT
+          enum:
+          - UNIT
+          - FLAT
+        pricingType:
+          type: string
+          description: Pricing type. For TIERED and VOLUME, supply 2+ pricing entries with `tier` indices that are 0-indexed and contiguous (0, 1, 2, …) and `tierMinimum` values starting at 0 and strictly increasing.
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - TIERED
+          - VOLUME
+        eventTypeId:
+          type: string
+          description: Usage event type ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itemId:
+          type: string
+          description: ERP item ID for the line item
+          example: d4e5f6a7-8901-4abc-8def-555555555555
+        productId:
+          type: string
+          description: Product ID from /v3/products. When set, name/description/itemId/classId are populated from the product for any not provided on the billing term. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
+          example: c5f6a7b8-9012-4abc-8def-444444444444
+          nullable: true
+        classId:
+          type: string
+          description: ERP class ID
+          example: e5f6a7b8-9012-4abc-8def-666666666666
+        departmentId:
+          type: string
+          description: Department ID
+          example: e5f6a7b8-9012-4abc-8def-777777777777
+        projectId:
+          type: string
+          description: Project ID
+          example: f6a7b8c9-0123-4abc-8def-888888888888
+        billingTermGroupId:
+          type: string
+          description: Billing term group ID. If provided, the BT joins an existing group. If omitted, a new group is created.
+          example: f0e1d2c3-4567-4abc-8def-222222222222
+        seatConfig:
+          description: 'Seat-based billing configuration. When provided, the billing term is created as seat-based and seat changes are managed via the seat-amendment endpoints. '
+          allOf:
+          - $ref: '#/components/schemas/SeatBasedObligationConfigDto'
+        id:
+          type: string
+          description: Billing term ID
+        contractId:
+          type: string
+          description: Contract ID
+        name:
+          type: string
+          description: Billing term name. Populated from the linked product's display name when not set on the billing term.
+        billingEndDate:
+          type: string
+          description: Billing end date
+        createdAt:
+          type: string
+          description: Created at
+      required:
+      - billingStartDate
+      - isRecurring
+      - interval
+      - intervalFrequency
+      - netPaymentTerms
+      - quantity
+      - billingType
+      - pricingType
+      - id
+      - contractId
+      - name
+      - billingEndDate
+      - createdAt
+    CustomRevenue:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Timeframe
+          example: 2024-03
+        total:
+          type: number
+          description: Total
+          example: 10000
+      required:
+      - timeframe
+      - total
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

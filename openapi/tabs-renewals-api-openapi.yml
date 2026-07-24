@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Renewals API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Renewals
+paths:
+  /v3/renewals:
+    get:
+      operationId: IntegratorsApiRenewalsController_getRenewals
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: contractId, type, status, contractEndDate\n\n        - contractId: Contract ID to filter by\n        - type: Renewal type (AUTOMATIC, UNILATERAL, MUTUAL, NONE)\n        - status: Renewal status (DRAFT, APPROVED, DECLINED)\n        - contractEndDate: Filter by term end date in YYYY-MM-DD format\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Renewals by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/RenewalDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List renewals
+      tags:
+      - Renewals
+components:
+  schemas:
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    RenewalDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Renewal Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        contractId:
+          type: string
+          description: Contract Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        type:
+          type: string
+          description: Renewal Type
+          enum:
+          - MUTUAL
+          - AUTOMATIC
+          - UNILATERAL
+          example: AUTOMATIC
+        status:
+          type: string
+          description: Renewal Status
+          enum:
+          - DRAFT
+          - APPROVED
+          - DECLINED
+          example: DRAFT
+        noticePeriod:
+          type: number
+          description: Notice Period
+          example: 30
+        noticePeriodUnits:
+          type: string
+          description: Notice Period Units
+          enum:
+          - DAY
+          - MONTH
+          - YEAR
+          example: DAY
+        renewalLength:
+          type: number
+          description: Renewal Length
+          example: 12
+        renewalLengthUnits:
+          type: string
+          description: Renewal Length Units
+          enum:
+          - DAY
+          - MONTH
+          - YEAR
+          example: MONTH
+        maxNumberOfRenewals:
+          type: number
+          description: Max Number of Renewals
+          example: 3
+        sameConditions:
+          type: boolean
+          description: Same Conditions
+          example: true
+        priceIncrease:
+          type: number
+          description: Price Increase
+          example: 5.5
+        priceIncreaseUnits:
+          type: string
+          description: Price Increase Units
+          enum:
+          - PERCENT
+          - DOLLAR
+          example: PERCENT
+        recurringPeriod:
+          type: number
+          description: Recurring Period
+          example: 12
+        recurringPeriodUnits:
+          type: string
+          description: Recurring Period Units
+          enum:
+          - DAY
+          - MONTH
+          - YEAR
+          example: MONTH
+        escalatorConditions:
+          type: string
+          description: Escalator Conditions
+          example: Based on CPI
+        renewalCriteria:
+          type: string
+          description: Renewal Criteria
+          example: Performance metrics
+        renewalCriteriaDetails:
+          type: string
+          description: Renewal Criteria Details
+          example: Must meet 95% SLA
+        termEndDate:
+          type: string
+          description: Term End Date
+          example: '2024-12-31'
+        escalatorClauseSummary:
+          type: string
+          description: Escalator Clause Summary
+          example: Annual increase
+        summary:
+          type: string
+          description: Summary
+          example: Automatic renewal with 30 day notice
+        quotes:
+          type: string
+          description: Quotes
+      required:
+      - id
+      - contractId
+      - status
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,1176 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Events API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Events
+paths:
+  /v3/events/bulk:
+    post:
+      operationId: IntegratorsApiEventsController_createEvents
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkCreateEventDto'
+      responses:
+        '200':
+          description: The Events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedEventsDto'
+        '400':
+          description: Some events failed validation
+        '500':
+          description: Internal server error
+      summary: Bulk create events (legacy)
+      tags:
+      - Events
+    delete:
+      operationId: IntegratorsApiEventsController_deleteEventsBulk
+      parameters: []
+      requestBody:
+        required: true
+        description: Array of event IDs to delete
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+              example:
+              - event-id-1
+              - event-id-2
+              - event-id-3
+      responses:
+        '200':
+          description: All events deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    example: 200
+        '400':
+          description: Bad request - invalid event IDs or other validation errors
+        '404':
+          description: One or more events not found - no events will be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 404
+                  message:
+                    type: string
+                    example: 'Events not found: event-id-1, event-id-2'
+        '500':
+          description: Internal server error - transaction failed
+      summary: Bulk delete events (legacy)
+      tags:
+      - Events
+  /v3/events:
+    post:
+      operationId: IntegratorsApiEventsController_createEvent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventDto'
+      responses:
+        '201':
+          description: The Event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedEventsDto'
+        '400':
+          description: Event already exists
+      summary: Create event (legacy)
+      tags:
+      - Events
+    get:
+      operationId: IntegratorsApiEventsController_getEvents
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n      Supported items for filter: eventTypeId, customerId, differentiator, datetime\n\n      Datetime should be in YYYY-MM-DD format"
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Events by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/CreatedEventsDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List events (legacy)
+      tags:
+      - Events
+  /v3/events/{id}:
+    delete:
+      operationId: IntegratorsApiEventsController_deleteEvents
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Events
+      summary: Delete event (legacy)
+      tags:
+      - Events
+  /v3/events/types:
+    get:
+      operationId: IntegratorsApiEventsController_getEventTypes
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: 'Supported items for filter: name'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Event Types
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/EventTypeDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List event types
+      tags:
+      - Events
+    post:
+      operationId: IntegratorsApiEventsController_createEventType
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventTypeDto'
+      responses:
+        '200':
+          description: The Event Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventTypeDto'
+        '400':
+          description: Event Type already exists
+      summary: Create event type
+      tags:
+      - Events
+  /v3/events/types/{eventTypeId}:
+    get:
+      operationId: IntegratorsApiEventsController_getEventTypeByEventTypeId
+      parameters:
+      - name: eventTypeId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Event Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventTypeDto'
+        '404':
+          description: Event Type not found
+      summary: Get event type by ID
+      tags:
+      - Events
+    delete:
+      operationId: IntegratorsApiEventsController_deleteEventType
+      parameters:
+      - name: eventTypeId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Event Type
+        '400':
+          description: Event Type is still in use and cannot be deleted
+        '404':
+          description: Event Type not found
+      summary: Delete event type
+      tags:
+      - Events
+  /v1/events:
+    get:
+      tags:
+      - Events
+      summary: Get all events
+      description: Fetches all usage events, and can be filtered as needed. Reach out to your account manager if you would like to participate in the Beta for the new Usage API.
+      operationId: getEvents
+      parameters:
+      - name: startDate
+        in: query
+        description: 'Start date for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)'
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: 'End date for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)'
+        required: false
+        schema:
+          type: string
+      - name: ingestStartDate
+        in: query
+        description: 'Start ingest timestamp for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)'
+        required: false
+        schema:
+          type: string
+      - name: ingestEndDate
+        in: query
+        description: 'End ingest timestamp for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)'
+        required: false
+        schema:
+          type: string
+      - name: customerId
+        in: query
+        description: Tabs Customer ID to filter events
+        required: false
+        schema:
+          type: string
+      - name: eventTypeId
+        in: query
+        description: Event type ID to filter events
+        required: false
+        schema:
+          type: string
+      - name: source
+        in: query
+        description: Source to filter events
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: 'Number of events to return (default: 50, max: 1000)'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: Cursor for pagination
+        required: false
+        schema:
+          type: string
+      - name: orderDirection
+        in: query
+        description: Sort direction (asc/desc)
+        required: false
+        schema:
+          type: string
+      - name: skipDeletionEvents
+        in: query
+        description: 'Include deleted events in the response (default: true)'
+        required: false
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: Events retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsQueryResponse'
+              examples:
+                Success Response:
+                  description: Success Response
+                  value:
+                    events:
+                    - customerId: 550e8400-e29b-41d4-a716-446655440000
+                      eventTypeId: 550e8400-e29b-41d4-a716-446655440000
+                      datetime: '2024-01-15T10:30:00Z'
+                      idempotencyKey: 018c1234-5678-7abc-def0-123456789abc
+                      value: 1
+                      differentiator: mobile
+                      invoiceSplitKey: invoice-123
+                      deleted: false
+                    count: 100
+                    nextCursor: next-page-cursor
+                    hasMore: true
+        '400':
+          description: Bad request - Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Bad Request Error:
+                  description: Bad Request Error
+                  value:
+                    success: false
+                    message: Validation failed
+                    error:
+                      code: 400
+                      message: Validation failed
+                      details:
+                        startDate:
+                        - Invalid date format. Expected YYYY-MM-DDTHH:mm:ss
+                        limit:
+                        - Limit must be between 1 and 1000
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitResponse'
+              examples:
+                Rate Limit Error:
+                  description: Rate Limit Error
+                  value:
+                    statusCode: 429
+                    message: Rate limit exceeded. Maximum 10000 requests per minute allowed.
+                    timestamp: '2024-01-15T10:30:00Z'
+                    path: /v1/events
+                    method: GET
+                    retryAfter: 30
+        '500':
+          description: Internal server error - Failed to retrieve events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Internal Server Error:
+                  description: Internal Server Error
+                  value:
+                    success: false
+                    message: Failed to retrieve events
+                    error:
+                      code: 500
+                      message: Failed to retrieve events
+                      details:
+                        error:
+                        - Internal server error
+      security:
+      - custom-header: []
+    post:
+      tags:
+      - Events
+      summary: Create an event
+      description: Creates a new usage event. Requires valid authentication and unique idempotency key. Reach out to your account manager if you would like to participate in the Beta for the new Usage API.
+      operationId: ingestEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: Event created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventCreateResponse'
+              examples:
+                Success Response:
+                  description: Success Response
+                  value:
+                    success: true
+                    message: Event created successfully
+                    data:
+                      events:
+                        manufacturerId: 550e8400-e29b-41d4-a716-446655440000
+                        customerId: 550e8400-e29b-41d4-a716-446655440000
+                        eventTypeId: 550e8400-e29b-41d4-a716-446655440000
+                        datetime: '2024-01-15T10:30:00Z'
+                        idempotencyKey: 018c1234-5678-7abc-def0-123456789abc
+                        value: 1
+                        differentiator: mobile
+                        invoiceSplitKey: invoice-123
+        '400':
+          description: Bad request - Invalid event data or duplicate idempotency key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Idempotency Key Error:
+                  description: Idempotency Key Error
+                  value:
+                    success: false
+                    message: Validation failed
+                    error:
+                      code: 400
+                      message: Validation failed
+                      details:
+                        idempotencyKey:
+                        - Idempotency key 018c1234-5678-7abc-def0-123456789abc already exists
+        '401':
+          description: Unauthorized - Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                Unauthorized Response:
+                  description: Unauthorized Response
+                  value:
+                    statusCode: 401
+                    message: 'Invalid or missing API key. Use ''Authorization: Bearer <your-key>'''
+                    timestamp: '2024-01-15T10:30:00Z'
+                    path: /v1/events
+                    method: POST
+        '422':
+          description: Unprocessable Entity - Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Validation Error:
+                  description: Validation Error
+                  value:
+                    success: false
+                    message: Validation failed
+                    error:
+                      code: 422
+                      message: Validation failed
+                      details:
+                        customerId:
+                        - Customer ID is required
+                        eventTypeId:
+                        - Event type is required
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitResponse'
+              examples:
+                Rate Limit Error:
+                  description: Rate Limit Error
+                  value:
+                    statusCode: 429
+                    message: Rate limit exceeded. Maximum 10000 requests per minute allowed.
+                    timestamp: '2024-01-15T10:30:00Z'
+                    path: /v1/events
+                    method: POST
+                    retryAfter: 30
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Internal Server Error:
+                  description: Internal Server Error
+                  value:
+                    success: false
+                    message: Internal server error
+                    error:
+                      code: 500
+                      message: An unexpected error occurred
+                      details:
+                        error:
+                        - Internal server error
+      security:
+      - custom-header: []
+  /v1/version:
+    get:
+      tags:
+      - Events
+      summary: Get API version information
+      description: Returns the current API version, name, and description
+      operationId: getVersion
+      responses:
+        '200':
+          description: Version information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+              examples:
+                Version Response:
+                  description: Version Response
+                  value:
+                    version: v1
+                    api: Events API
+                    description: Event Ingestion API for usage in Tabs
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitResponse'
+              examples:
+                Rate Limit Error:
+                  description: Rate Limit Error
+                  value:
+                    statusCode: 429
+                    message: Rate limit exceeded. Maximum 10000 requests per minute allowed.
+                    timestamp: '2024-01-15T10:30:00Z'
+                    path: /v1/version
+                    method: GET
+                    retryAfter: 30
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Internal Server Error:
+                  description: Internal Server Error
+                  value:
+                    success: false
+                    message: Internal server error
+                    error:
+                      code: 500
+                      message: An unexpected error occurred
+                      details:
+                        error:
+                        - Internal server error
+      security:
+      - custom-header: []
+  /v1/events/{idempotencyKey}:
+    delete:
+      tags:
+      - Events
+      summary: Delete an event
+      description: Deletes a usage event by creating a new deletion event that links back to the original event. Requires valid authentication. Reach out to your account manager if you would like to participate in the Beta for the new Usage API.
+      operationId: deleteEvent
+      parameters:
+      - name: idempotencyKey
+        in: path
+        description: Event key of the event that should be deleted
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Event deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDeleteResponse'
+              examples:
+                Success Response:
+                  description: Success Response
+                  value:
+                    success: true
+                    message: Event deleted successfully
+                    data:
+                      events:
+                        customerId: 550e8400-e29b-41d4-a716-446655440000
+                        eventTypeId: 550e8400-e29b-41d4-a716-446655440000
+                        datetime: '2024-01-15T10:30:00Z'
+                        idempotencyKey: 018c1234-5678-7abc-def0-123456789abc
+                        value: -1
+                        parentEventId: 018c1234-5678-7abc-def0-123456789000
+        '400':
+          description: Bad request - Event not found or invalid idempotency key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Not Found Error:
+                  description: Not Found Error
+                  value:
+                    success: false
+                    message: Validation failed
+                    error:
+                      code: 400
+                      message: Validation failed
+                      details:
+                        idempotencyKey:
+                        - Event with idempotency key 018c1234-5678-7abc-def0-123456789abc not found
+        '401':
+          description: Unauthorized - Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitResponse'
+              examples:
+                Rate Limit Error:
+                  description: Rate Limit Error
+                  value:
+                    statusCode: 429
+                    message: Rate limit exceeded. Maximum 10000 requests per minute allowed.
+                    timestamp: '2024-01-15T10:30:00Z'
+                    path: /v1/events/018c1234-5678-7abc-def0-123456789abc
+                    method: DELETE
+                    retryAfter: 30
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                Internal Server Error:
+                  description: Internal Server Error
+                  value:
+                    success: false
+                    message: Internal server error
+                    error:
+                      code: 500
+                      message: An unexpected error occurred
+                      details:
+                        error:
+                        - Internal server error
+      security:
+      - custom-header: []
+components:
+  schemas:
+    ErrorDetail:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int32
+          example: 400
+        message:
+          type: string
+          description: Error message
+          example: Validation failed
+        details:
+          type: object
+          additionalProperties:
+            type: array
+            description: Map of field names to array of error messages
+            items:
+              type: string
+              description: Map of field names to array of error messages
+          description: Map of field names to array of error messages
+      description: Detailed error information
+    EventTypeDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the event type
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the event type
+          example: Event Type Name
+      required:
+      - id
+      - name
+    VersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+          description: API version
+          example: v1
+        api:
+          type: string
+          description: API name
+          example: Events API
+        description:
+          type: string
+          description: API description
+          example: Event Ingestion API for usage in Tabs
+      description: API version information response
+    UnauthorizedResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code
+          format: int32
+          example: 401
+        message:
+          type: string
+          description: Error message
+          example: 'Invalid or missing API key. Use ''Authorization: Bearer <your-key>'''
+        timestamp:
+          type: string
+          description: Timestamp when the error occurred
+          example: '2024-01-15T10:30:00Z'
+        path:
+          type: string
+          description: Request path
+          example: /v1/events
+        method:
+          type: string
+          description: HTTP method
+          example: POST
+      description: Unauthorized error response
+    CreateEventTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the event type
+          example: Event Type Name
+      required:
+      - name
+    EventResponse:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Tabs Customer ID - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        eventTypeId:
+          type: string
+          description: Type of event being recorded - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        datetime:
+          type: string
+          description: 'Timestamp when the event occurred (UTC) (format: ISO-8601 datetime string)'
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        idempotencyKey:
+          type: string
+          description: Unique key to prevent duplicate event processing - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        value:
+          type: number
+          description: Numeric value of the event
+          format: double
+          example: 1.5
+        differentiator:
+          type: string
+          description: Optional key to separate events with the same event type and customer into different invoice line items; differentiator will be appended to the description of the new invoice line item
+          example: mobile
+        invoiceSplitKey:
+          type: string
+          description: Optional key to split events into a new invoice; the split key will be appended to the new invoice number
+          example: invoice-123
+        parentEventId:
+          type: string
+          description: Parent event ID - the idempotency key of the original event that was deleted (only present in DELETE responses)
+          format: uuid
+          example: 018c1234-5678-7abc-def0-123456789000
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+            description: Optional metadata in JSON format
+            example:
+              key: value
+          description: Optional metadata in JSON format
+          example:
+            key: value
+      description: Event response data
+    CreateEventDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer
+          example: 123e4567-e89b-12d3-a456-426614174000
+        datetime:
+          format: date-time
+          type: string
+          description: The date and time of the event
+          example: '2021-01-01T00:00:00.000Z'
+        eventTypeId:
+          type: string
+          description: The type of event
+          example: 123e4567-e89b-12d3-a456-426614174000
+        value:
+          type: string
+          description: The value of the event, usually a number
+          example: '123'
+        differentiator:
+          type: string
+          description: The differentiator of the event
+          example: DIFF
+        metadata:
+          type: object
+          description: event metadata
+          example: '{"key":"value"}'
+        invoiceGroup:
+          type: string
+          description: The invoice group for split invoicing
+          example: '123'
+      required:
+      - customerId
+      - datetime
+      - eventTypeId
+      - value
+      - metadata
+    EventDto:
+      type: object
+      properties:
+        manufacturerId:
+          type: string
+        eventTypeId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+        value:
+          type: string
+        differentiator:
+          type: string
+        invoiceGroup:
+          type: string
+        idempotencyKey:
+          type: string
+        datetime:
+          type: string
+        customerId:
+          type: string
+        parentEventId:
+          type: string
+        source:
+          type: string
+        deleted:
+          type: boolean
+          description: Whether the event is deleted
+          example: true
+      description: Event data transfer object
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    EventsQueryResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          description: List of events
+          items:
+            $ref: '#/components/schemas/EventDto'
+        count:
+          type: integer
+          description: Total count of events
+          format: int32
+          example: 100
+        nextCursor:
+          type: string
+          description: Cursor for the next page of results
+          example: next-page-cursor
+        hasMore:
+          type: boolean
+          description: Whether there are more results available
+          example: true
+      description: Response containing a list of events with pagination information
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    CreatedEventsDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer
+          example: 123e4567-e89b-12d3-a456-426614174000
+        datetime:
+          format: date-time
+          type: string
+          description: The date and time of the event
+          example: '2021-01-01T00:00:00.000Z'
+        eventTypeId:
+          type: string
+          description: The type of event
+          example: 123e4567-e89b-12d3-a456-426614174000
+        value:
+          type: string
+          description: The value of the event, usually a number
+          example: '123'
+        differentiator:
+          type: string
+          description: The differentiator of the event
+          example: DIFF
+        metadata:
+          type: object
+          description: event metadata
+          example: '{"key":"value"}'
+        invoiceGroup:
+          type: string
+          description: The invoice group for split invoicing
+          example: '123'
+        id:
+          type: string
+          description: The id of the event
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - customerId
+      - datetime
+      - eventTypeId
+      - value
+      - metadata
+      - id
+    BulkCreateEventDto:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEventDto'
+      required:
+      - events
+    EventDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: true
+        message:
+          type: string
+          description: Human-readable message about the operation result
+          example: Event deleted successfully
+        data:
+          $ref: '#/components/schemas/EventData'
+      description: Response for successful event deletion
+    RateLimitResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code
+          format: int32
+          example: 429
+        message:
+          type: string
+          description: Error message
+          example: Rate limit exceeded. Maximum 10000 requests per minute allowed.
+        timestamp:
+          type: string
+          description: Timestamp when the error occurred
+          example: '2024-01-15T10:30:00Z'
+        path:
+          type: string
+          description: Request path
+          example: /v1/events
+        method:
+          type: string
+          description: HTTP method
+          example: POST
+        retryAfter:
+          type: integer
+          description: Number of seconds to wait before retrying
+          format: int32
+          example: 30
+      description: Rate limit exceeded error response
+    EventCreateRequest:
+      required:
+      - customerId
+      - datetime
+      - eventTypeId
+      - idempotencyKey
+      - value
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Tabs Customer ID - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        eventTypeId:
+          type: string
+          description: Type of event being recorded - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        datetime:
+          type: string
+          description: 'Timestamp when the event occurred (UTC) (format: ISO-8601 datetime string)'
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        idempotencyKey:
+          type: string
+          description: Unique key to prevent duplicate event processing - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        value:
+          type: number
+          description: Numeric value of the event
+          format: double
+          example: 1.5
+        differentiator:
+          type: string
+          description: Optional key to separate events with the same event type and customer into different invoice line items; differentiator will be appended to the description of the new invoice line item
+          example: mobile
+        invoiceSplitKey:
+          type: string
+          description: Optional key to split events into a new invoice; the split key will be appended to the new invoice number
+          example: invoice-123
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+            description: Optional metadata in JSON format
+            example:
+              key: value
+          description: Optional metadata in JSON format
+          example:
+            key: value
+      description: Event data to be ingested
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    EventData:
+      type: object
+      properties:
+        events:
+          $ref: '#/components/schemas/EventResponse'
+      description: Event data wrapper
+    ValidationErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: false
+        message:
+          type: string
+          description: Human-readable error message
+          example: Validation failed
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+      description: Error response for validation failures
+    EventCreateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: true
+        message:
+          type: string
+          description: Human-readable message about the operation result
+          example: Event created successfully
+        data:
+          $ref: '#/components/schemas/EventData'
+      description: Response for successful event creation
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

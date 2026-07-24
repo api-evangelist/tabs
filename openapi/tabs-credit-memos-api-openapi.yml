@@ -1,0 +1,510 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Credit Memos API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Credit Memos
+paths:
+  /v3/credit-memos/{id}:
+    get:
+      operationId: IntegratorsApiCreditMemosController_getCreditMemo
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Credit memo retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      $ref: '#/components/schemas/CreditMemoDto'
+        '404':
+          description: Credit memo not found
+        '500':
+          description: Internal server error - Failed to get credit memo
+      summary: Get credit memo by ID
+      tags:
+      - Credit Memos
+  /v3/credit-memos:
+    get:
+      operationId: IntegratorsApiCreditMemosController_getCreditMemos
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported properties: creditMemoNumber, customerId, issueDateFrom, issueDateTo, status, lastUpdatedAt\n\n        Supported rules: eq: equals, in: in, gt: greater than, gte: greater than or equals, lt: less than, lte: less than or equals\n\n        Dates should be in YYYY-MM-DD format. lastUpdatedAt also accepts ISO 8601 timestamps (e.g. 2023-01-01T00:00:00.000Z).\n\n        lastUpdatedAt supports gt, gte, lt, lte, and eq rules, and can be combined (e.g. gte + lt) by specifying it multiple times.\n\n        For multiple filters use \"property:rule:value,property:rule:value\".\n\n        Example: \"lastUpdatedAt:gte:2023-01-01T00:00:00.000Z,lastUpdatedAt:lt:2024-01-01T00:00:00.000Z,status:in:OPEN|APPLIED|VOID\".\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Credit Memos by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/CreditMemoDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: List credit memos
+      tags:
+      - Credit Memos
+    post:
+      operationId: IntegratorsApiCreditMemosController_createCreditMemo
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCreditMemoRequestDto'
+      responses:
+        '201':
+          description: Credit memo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditMemoDto'
+        '400':
+          description: Bad request - Invalid input data
+        '500':
+          description: Internal server error - Failed to create credit memo
+      summary: Create credit memo
+      tags:
+      - Credit Memos
+  /v3/credit-memos/{id}/applications:
+    post:
+      operationId: IntegratorsApiCreditMemosController_applyCreditMemo
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Credit memo ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyCreditMemoRequestDto'
+      responses:
+        '201':
+          description: Credit memo application created successfully
+        '400':
+          description: Bad request - Invalid input data
+        '404':
+          description: Not found - Credit memo or invoice not found
+        '500':
+          description: Internal server error - Failed to apply credit memo
+      summary: Apply credit memo
+      tags:
+      - Credit Memos
+components:
+  schemas:
+    CreateCreditMemoItemDto:
+      type: object
+      properties:
+        invoiceLineItemId:
+          type: string
+          description: Invoice line item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        quantity:
+          type: number
+          description: Quantity
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        itemId:
+          type: string
+          description: Integration item ID. Optional if invoiceLineItemId is provided.
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - quantity
+      - amount
+    ApplyOnCreateDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID to apply credit memo to
+          example: 123e4567-e89b-12d3-a456-426614174000
+    CreditMemoLineItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Line item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Line item name
+          example: Product A
+        note:
+          type: string
+          description: Line item note
+          example: Credit for defective product
+        quantity:
+          type: number
+          description: Quantity
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        salesTaxAmount:
+          type: number
+          description: Sales tax amount
+          example: 8.25
+        item:
+          description: Item details
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoItemDto'
+        erpClass:
+          description: ERP Class details
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoErpClassDto'
+        contraRevenueScheduleId:
+          type: string
+          description: Contra revenue schedule ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - id
+      - name
+      - quantity
+      - amount
+      - salesTaxAmount
+      - contraRevenueScheduleId
+    CreditMemoExternalIdDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+        sourceType:
+          type: string
+          description: Source type
+          example: NETSUITE
+      required:
+      - externalId
+      - sourceType
+    ApplyCreditMemoRequestDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        amount:
+          type: number
+          description: Amount to apply. Required for all integrations except Rillet; Rillet does not support partial credit memo applications.
+          example: 100
+      required:
+      - invoiceId
+    CreditMemoErpClassDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ERP Class ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: ERP Class name
+          example: Revenue
+      required:
+      - id
+      - name
+    CreditMemoApplicationDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Application ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoId:
+          type: string
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        amountApplied:
+          type: number
+          description: Amount applied
+          example: 100
+        invoiceNumber:
+          type: string
+          description: Invoice number
+          example: INV-001
+        invoicePrefix:
+          type: string
+          description: Invoice prefix
+          example: INV
+        appliedAt:
+          format: date-time
+          type: string
+          description: Applied at
+          example: '2023-01-01T00:00:00.000Z'
+      required:
+      - id
+      - creditMemoId
+      - invoiceId
+      - amountApplied
+      - invoiceNumber
+      - invoicePrefix
+      - appliedAt
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    CreditMemoCustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Customer name
+          example: Acme Corp
+        nameWithPrefix:
+          type: string
+          description: Customer name with prefix
+          example: CUST-001 Acme Corp
+      required:
+      - id
+      - name
+    CreateCreditMemoRequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        issueDate:
+          type: string
+          description: Issue date
+          example: '2023-01-10'
+        memo:
+          type: string
+          description: Memo
+          example: Credit for defective product
+        reason:
+          type: string
+          description: Reason
+          example: Product defect
+        items:
+          description: Credit memo items
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateCreditMemoItemDto'
+        applyOnCreate:
+          description: Apply on create parameters. Do not include if you want to apply the credit memo to an invoice later.
+          allOf:
+          - $ref: '#/components/schemas/ApplyOnCreateDto'
+      required:
+      - customerId
+      - issueDate
+      - reason
+      - items
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    CreditMemoDto:
+      type: object
+      properties:
+        creditMemoId:
+          type: string
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoNumber:
+          type: string
+          description: Credit memo number
+          example: CM-001
+        creditMemoPrefix:
+          type: string
+          description: Credit memo prefix
+          example: CM
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        issueDate:
+          format: date-time
+          type: string
+          description: Issue date
+          example: '2023-01-01T00:00:00.000Z'
+        total:
+          type: number
+          description: Total amount
+          example: 100
+        memo:
+          type: string
+          description: Memo
+          example: Credit for defective product
+        reason:
+          type: string
+          description: Reason
+          example: Product defect
+        status:
+          type: string
+          description: Status
+          example: OPEN
+        customer:
+          description: Customer information
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoCustomerDto'
+        items:
+          description: Line items
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoLineItemDto'
+        applications:
+          description: Applications
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoApplicationDto'
+        externalIds:
+          description: External IDs
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoExternalIdDto'
+        createdAt:
+          format: date-time
+          type: string
+          description: Created at
+          example: '2023-01-01T00:00:00.000Z'
+        lastUpdatedAt:
+          format: date-time
+          type: string
+          description: Last updated at
+          example: '2023-01-01T00:00:00.000Z'
+        syncStatus:
+          type: string
+          description: Sync status
+          example: NOT_SYNCED
+      required:
+      - creditMemoId
+      - creditMemoNumber
+      - creditMemoPrefix
+      - customerId
+      - manufacturerId
+      - issueDate
+      - total
+      - status
+      - customer
+      - items
+      - applications
+      - externalIds
+      - createdAt
+      - lastUpdatedAt
+      - syncStatus
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    CreditMemoItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Item name
+          example: Product A
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+      required:
+      - id
+      - name
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

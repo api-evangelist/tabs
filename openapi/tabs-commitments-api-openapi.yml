@@ -1,0 +1,811 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Commitments API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Commitments
+paths:
+  /v3/commitments:
+    get:
+      operationId: IntegratorsApiCommitmentsController_getAllCommitments
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: customerId, contractId\n\n        - customerId: Filter by customer ID (use \"eq\" rule, e.g., customerId:eq:customer-id)\n\n        - contractId: Filter by contract IDs (use \"in\" rule with pipe-separated values, e.g., contractId:in:id1|id2|id3)\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all commitments with optional customer and contract filtering
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/CommitmentDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '500':
+          description: Internal Server Error
+      summary: List commitments
+      tags:
+      - Commitments
+    post:
+      operationId: IntegratorsApiCommitmentsController_createUsageCommitments
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUsageCommitmentsV3RequestDto'
+      responses:
+        '201':
+          description: Usage commitments created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      type: object
+                      properties:
+                        success:
+                          type: boolean
+                        commitmentIds:
+                          type: array
+                          items:
+                            type: string
+        '400':
+          description: Validation error or BT lockdown
+        '404':
+          description: Contract not found
+      summary: Create commitments
+      tags:
+      - Commitments
+  /v3/commitments/{commitmentId}:
+    patch:
+      operationId: IntegratorsApiCommitmentsController_updateUsageCommitment
+      parameters:
+      - name: commitmentId
+        required: true
+        in: path
+        description: Commitment ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUsageCommitmentV3RequestDto'
+      responses:
+        '200':
+          description: Commitment updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegratorsApiResponse'
+        '400':
+          description: Validation error or locked
+        '404':
+          description: Commitment not found
+      summary: Update commitment
+      tags:
+      - Commitments
+components:
+  schemas:
+    EventTypeOverageDto:
+      type: object
+      properties:
+        eventTypeId:
+          type: string
+          description: Event type ID
+          example: 550e8400-e29b-41d4-a716-446655440000
+        eventTypeName:
+          type: string
+          description: Event type name
+          example: API Calls
+        cumulative:
+          description: Cumulative metrics for this event type across all periods
+          allOf:
+          - $ref: '#/components/schemas/MetricsDto'
+        overages:
+          description: Overage metrics for this event type in this specific period
+          allOf:
+          - $ref: '#/components/schemas/MetricsDto'
+      required:
+      - eventTypeId
+      - cumulative
+      - overages
+    CreateUsageCommitmentsV3RequestDto:
+      type: object
+      properties:
+        contractId:
+          type: string
+          description: The contract ID
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        commitments:
+          description: Array of commitments to create
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUsageCommitmentV3Dto'
+      required:
+      - contractId
+      - commitments
+    CommitmentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Commitment ID
+          example: 550e8400-e29b-41d4-a716-446655440000
+        contractId:
+          type: string
+          description: Contract ID this commitment belongs to
+          example: 550e8400-e29b-41d4-a716-446655440000
+        customerId:
+          type: string
+          description: Customer ID for this commitment's contract
+          example: 550e8400-e29b-41d4-a716-446655440000
+        prepaidEnabled:
+          type: boolean
+          description: Whether prepaid is enabled
+          example: false
+        prepaidValue:
+          type: string
+          description: Prepaid value if prepaid is enabled
+          example: '5000.00'
+        commitmentValue:
+          type: string
+          description: Commitment value
+          example: '10000.00'
+        commitmentUnitType:
+          type: string
+          description: Commitment unit type
+          enum:
+          - DOLLARS
+          - UNITS
+          example: CURRENCY
+        commitmentStartDate:
+          type: string
+          description: Commitment start date
+          example: '2024-01-01T00:00:00.000Z'
+        commitmentEndDate:
+          type: string
+          description: Commitment end date (inclusive — the last day of the commitment)
+          example: '2024-12-31T00:00:00.000Z'
+        commitmentPeriodInterval:
+          type: string
+          description: Commitment period interval
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - YEARLY
+          example: MONTHLY
+        commitmentCustomInterval:
+          type: string
+          description: Custom interval specification
+          example: 3_MONTHS
+        nextSequentialCommitmentId:
+          type: string
+          description: ID of the next sequential commitment
+          example: 550e8400-e29b-41d4-a716-446655440000
+        pricePriority:
+          type: string
+          description: Price priority for this commitment
+          enum:
+          - LOW
+          - HIGH
+          example: FIRST
+        prepaymentScheduleType:
+          type: string
+          description: Prepayment schedule type
+          enum:
+          - FULL_UPFRONT
+          - PER_COMMITMENT_PERIOD
+          - SPLIT_ACROSS_BILLING_PERIODS
+          example: FULL_UPFRONT
+        eventTypesIncluded:
+          description: List of event types included in this commitment
+          example:
+          - id: 550e8400-e29b-41d4-a716-446655440000
+            name: API Calls
+          - id: 660e8400-e29b-41d4-a716-446655440001
+            name: Storage
+          type: array
+          items:
+            type: string
+        currentCumulative:
+          description: Current cumulative usage metrics
+          allOf:
+          - $ref: '#/components/schemas/MetricsDto'
+        totals:
+          description: Total amounts for overages and true-ups
+          example:
+            overages: '250.50'
+            trueUps: '0.00'
+          allOf:
+          - $ref: '#/components/schemas/TotalsDto'
+        periods:
+          description: List of commitment periods with usage data
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitmentPeriodDto'
+        createdAt:
+          type: string
+          description: Created at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Updated at timestamp
+          example: '2024-01-15T10:30:00.000Z'
+        deletedAt:
+          type: string
+          description: Soft delete timestamp (null if not deleted)
+          example: null
+      required:
+      - id
+      - contractId
+      - customerId
+      - prepaidEnabled
+      - commitmentValue
+      - commitmentUnitType
+      - eventTypesIncluded
+      - currentCumulative
+      - createdAt
+      - updatedAt
+    CommitmentPeriodDto:
+      type: object
+      properties:
+        periodId:
+          type: string
+          description: Commitment period ID
+          example: 550e8400-e29b-41d4-a716-446655440000
+        periodDate:
+          type: string
+          description: Period start date
+          example: '2024-01-01T00:00:00.000Z'
+        amounts:
+          description: Amounts for this period
+          allOf:
+          - $ref: '#/components/schemas/PeriodAmountsDto'
+        eventTypes:
+          description: Breakdown of usage by event type
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTypeOverageDto'
+        finalizedAt:
+          type: string
+          description: Timestamp when the period was finalized; null if not yet finalized
+          example: null
+          nullable: true
+        lastCalculatedAt:
+          type: string
+          description: Last time the period was calculated
+          example: '2024-01-15T10:30:00.000Z'
+        createdAt:
+          type: string
+          description: Created at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Updated at timestamp
+          example: '2024-01-15T10:30:00.000Z'
+      required:
+      - periodId
+      - periodDate
+      - amounts
+      - eventTypes
+      - createdAt
+      - updatedAt
+    PeriodAmountsDto:
+      type: object
+      properties:
+        cumulative:
+          type: string
+          description: Cumulative amount
+          example: '5000.00'
+        remaining:
+          type: string
+          description: Remaining amount
+          example: '5000.00'
+        trueUp:
+          type: string
+          description: True-up amount
+          example: '0.00'
+      required:
+      - cumulative
+      - remaining
+      - trueUp
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    TotalsDto:
+      type: object
+      properties: {}
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    CreateUsageCommitmentOverageConfigV3Dto:
+      type: object
+      properties:
+        billingTermId:
+          type: string
+          description: Billing term ID this overage config applies to
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        overagePrice:
+          type: number
+          description: Price per unit for overage
+          example: 1.5
+        overageInvoiceLineName:
+          type: string
+          description: Display name for overage invoice line item
+          example: Overage
+        overageIntegrationItemId:
+          type: string
+          description: Integration item ID for overage invoice line item
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        overagePricings:
+          description: Detailed pricing tiers for overage
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUsageCommitmentOveragePricingItemV3Dto'
+      required:
+      - billingTermId
+      - overagePrice
+    MetricsDto:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount
+          example: '150.50'
+        units:
+          type: string
+          description: Units/quantity
+          example: '1000'
+      required:
+      - amount
+      - units
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    UpdateUsageCommitmentV3RequestDto:
+      type: object
+      properties:
+        commitmentValue:
+          type: number
+          description: The commitment amount value
+          example: 1000
+        commitmentStartDate:
+          type: string
+          description: Commitment start date (YYYY-MM-DD)
+          example: '2025-01-01'
+        commitmentEndDate:
+          type: string
+          description: Commitment end date, inclusive (YYYY-MM-DD)
+          example: '2025-12-31'
+        isFullDuration:
+          type: boolean
+          description: Whether commitment lasts the full duration
+          example: true
+        commitmentInterval:
+          type: string
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - YEARLY
+          description: Commitment period interval
+          example: MONTHLY
+        billingTermsToAdd:
+          description: Billing term IDs to add to the commitment
+          type: array
+          items:
+            type: string
+        pricePriority:
+          type: string
+          enum:
+          - LOW
+          - HIGH
+          description: Price priority when multiple products are selected
+          example: LOW
+    CreateUsageCommitmentV3Dto:
+      type: object
+      properties:
+        commitmentValue:
+          type: number
+          description: The commitment amount value
+          example: 1000
+        commitmentUnitType:
+          type: string
+          enum:
+          - DOLLARS
+          - UNITS
+          description: 'Unit type: DOLLARS or UNITS'
+          example: DOLLARS
+        prepaidEnabled:
+          type: boolean
+          description: Whether prepaid is enabled
+          example: true
+        prepaidValue:
+          type: number
+          description: Prepaid amount value (required if prepaidEnabled is true)
+          example: 500
+        prepaymentInvoiceLineName:
+          type: string
+          description: Name of prepayment invoice line item
+          example: Prepayment
+        prepaymentIntegrationItem:
+          type: string
+          description: Integration item ID for prepayment
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        revenueRecognitionPattern:
+          type: string
+          description: 'Revenue recognition pattern: straight-line or recognize-as-consumed'
+          example: straight-line
+        trueUpName:
+          type: string
+          description: Name of true-up invoice line item (for non-prepaid)
+          example: True up
+        trueUpIntegrationItem:
+          type: string
+          description: Integration item ID for true-up invoice line (non-prepaid)
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        billingTermIds:
+          description: Billing term IDs to link to this commitment
+          example:
+          - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+          type: array
+          items:
+            type: string
+        commitmentStartDate:
+          type: string
+          description: Commitment start date (YYYY-MM-DD)
+          example: '2025-01-01'
+        commitmentEndDate:
+          type: string
+          description: Commitment end date, inclusive (YYYY-MM-DD)
+          example: '2025-12-31'
+        isFullDuration:
+          type: boolean
+          description: Whether commitment lasts the full duration
+          example: true
+        commitmentInterval:
+          type: string
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - YEARLY
+          description: Commitment period interval
+          example: MONTHLY
+        isSequential:
+          type: boolean
+          description: Whether this is a sequential commitment
+          example: false
+        previousCommitmentId:
+          type: string
+          description: ID of the previous commitment if sequential
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        prePaidWholeCommitment:
+          type: boolean
+          description: 'Whether the whole commitment is prepaid upfront (pay-in-full). False means split-payment. Deprecated: use prepaymentScheduleType instead.'
+          example: true
+          deprecated: true
+        prepaymentScheduleType:
+          type: string
+          enum:
+          - FULL_UPFRONT
+          - PER_COMMITMENT_PERIOD
+          - SPLIT_ACROSS_BILLING_PERIODS
+          description: Prepayment schedule type. Takes precedence over prePaidWholeCommitment. Defaults to FULL_UPFRONT when omitted and prepaidEnabled is true.
+          example: FULL_UPFRONT
+        pricePriority:
+          type: string
+          enum:
+          - LOW
+          - HIGH
+          description: 'Price priority: LOW or HIGH'
+          example: LOW
+        overageConfigs:
+          description: Overage pricing configuration per billing term
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUsageCommitmentOverageConfigV3Dto'
+      required:
+      - commitmentValue
+      - commitmentUnitType
+      - prepaidEnabled
+      - billingTermIds
+    CreateUsageCommitmentOveragePricingItemV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Pricing name
+          example: Overage tier 1
+        mantissa:
+          type: string
+          description: Mantissa for the price
+          example: '0'
+        exponent:
+          type: string
+          description: Exponent for the price
+          example: '0'
+        currency:
+          type: string
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWG
+          - ZWL
+          description: ISO 4217 currency code
+          example: USD
+        tier:
+          type: number
+          description: Tier number
+          example: 0
+        conditionValue:
+          type: number
+          description: Condition value for tier
+          example: 0
+        isOverage:
+          type: boolean
+          description: Whether this pricing is for overage
+      required:
+      - name
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

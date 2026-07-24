@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Projects API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Projects
+paths:
+  /v3/projects:
+    get:
+      description: Projects synced from the connected ERP (e.g. Sage Intacct). Can be populated on an obligation or billing term. A project may be tied to a single customer via customerId, or null for internal projects.
+      operationId: IntegratorsApiProjectsController_getProjects
+      parameters: []
+      responses:
+        '200':
+          description: Get projects
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      properties:
+                        data:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/ProjectModelDto'
+      summary: List projects
+      tags:
+      - Projects
+components:
+  schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    ProjectModelDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the project
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the project
+          example: Implementation
+        fullName:
+          type: string
+          description: The fully qualified name of the project
+          example: Acme Co:Implementation
+        externalId:
+          type: string
+          description: The external ID of the project in the source ERP
+          example: '123'
+        customerId:
+          type: string
+          description: The ID of the Tabs customer this project is tied to, or null for internal/unassigned projects
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+      required:
+      - id
+      - name
+      - fullName
+      - externalId
+      - customerId
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

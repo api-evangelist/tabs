@@ -1,0 +1,325 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Performance Obligations API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Performance Obligations
+paths:
+  /v3/performance-obligations:
+    get:
+      operationId: IntegratorsApiPerformanceObligationsController_searchPerformanceObligations
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: true
+        in: query
+        description: Number of items to return
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n        Supported items for filter: contractId, customerId, serviceStartDate, serviceEndDate, billingTermGroupId, createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all performance obligations by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/GetPerformanceObligationItemDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '400':
+          description: Performance obligation features are not enabled for this merchant
+      summary: List performance obligations
+      tags:
+      - Performance Obligations
+  /v3/performance-obligations/{performanceObligationId}/recognized:
+    post:
+      operationId: IntegratorsApiPerformanceObligationsController_upsertRecognizedRevenue
+      parameters:
+      - name: performanceObligationId
+        required: true
+        in: path
+        description: The ID of the performance obligation
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: Recognized revenue entries to upsert for the performance obligation. Amounts may be positive or negative (e.g. negative values when reallocating discounts).
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertRecognizedRevenueDto'
+      responses:
+        '200':
+          description: Returns the revenue schedule ID
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      type: string
+                      example: 123e4567-e89b-12d3-a456-426614174000
+        '400':
+          description: Bad request body, e.g. invalid timeframe
+        '404':
+          description: Performance obligation not found
+        '500':
+          description: Internal Server Error
+      summary: Upsert recognized revenue
+      tags:
+      - Performance Obligations
+components:
+  schemas:
+    GetPerformanceObligationItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the performance obligation
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the performance obligation
+          nullable: true
+          example: Annual Subscription
+        contractId:
+          type: string
+          description: ID of the contract this performance obligation belongs to
+          example: 123e4567-e89b-12d3-a456-426614174000
+        billingTermGroupId:
+          type: string
+          description: Billing term group ID (foreign key)
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        billingTermGroupName:
+          type: string
+          description: Billing term group name
+          nullable: true
+          example: Towing Services
+        itemId:
+          type: string
+          description: ID of the associated integration item
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itemName:
+          type: string
+          description: Name of the associated integration item
+          nullable: true
+          example: Enterprise License
+        erpClassId:
+          type: string
+          description: ID of the ERP class
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        erpClassName:
+          type: string
+          description: Name of the ERP class
+          nullable: true
+          example: Software Revenue
+        category:
+          type: string
+          description: Revenue category
+          nullable: true
+          example: SaaS
+        considerationType:
+          type: string
+          description: Consideration type
+          nullable: true
+          example: FIXED
+        recognitionPattern:
+          type: string
+          description: Revenue recognition pattern
+          nullable: true
+          example: STRAIGHT_LINE
+        eventTypeId:
+          type: string
+          description: Event type ID
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        eventTypeName:
+          type: string
+          description: Event type name
+          nullable: true
+          example: Tow Completion
+        productId:
+          type: string
+          description: ID of the associated product
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        productName:
+          type: string
+          description: Name of the associated product
+          nullable: true
+          example: Enterprise Plan
+        serviceStartDate:
+          format: date-time
+          type: string
+          description: Service start date
+          example: '2024-01-01'
+        serviceEndDate:
+          format: date-time
+          type: string
+          description: Service end date
+          example: '2024-12-31'
+        transactionPrice:
+          type: string
+          description: Transaction price as a decimal string
+          example: '1000.50'
+        recognizedRevenue:
+          description: Monthly recognized revenue entries for this performance obligation
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueAtomResponseDto'
+        createdAt:
+          format: date-time
+          type: string
+          description: Timestamp when the performance obligation was created
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          format: date-time
+          type: string
+          description: Timestamp when the performance obligation was last updated
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - id
+      - name
+      - contractId
+      - billingTermGroupId
+      - billingTermGroupName
+      - itemId
+      - itemName
+      - erpClassId
+      - erpClassName
+      - category
+      - considerationType
+      - recognitionPattern
+      - eventTypeId
+      - eventTypeName
+      - productId
+      - productName
+      - serviceStartDate
+      - serviceEndDate
+      - transactionPrice
+      - recognizedRevenue
+      - createdAt
+      - updatedAt
+    UpsertRecognizedRevenueDto:
+      type: object
+      properties:
+        recognizedRevenue:
+          description: Array of recognized revenue entries
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
+      required:
+      - recognizedRevenue
+    RecognizedRevenueEntryDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: The timeframe for the revenue (YYYY-MM format)
+          example: 2024-01
+        total:
+          type: number
+          description: The total revenue amount
+          example: 1000
+      required:
+      - timeframe
+      - total
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    RecognizedRevenueAtomResponseDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Month in YYYY-MM format
+          example: 2024-01
+        total:
+          type: string
+          description: Recognized revenue amount as a decimal string
+          example: '1000.50'
+      required:
+      - timeframe
+      - total
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header

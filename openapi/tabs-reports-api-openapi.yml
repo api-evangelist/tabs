@@ -1,0 +1,417 @@
+openapi: 3.0.0
+info:
+  title: Tabs External Billing Terms Reports API
+  description: ''
+  version: 1.0.0
+  contact: {}
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: searched
+    source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
+    source_pages: 93
+servers:
+- url: https://integrators.prod.api.tabsplatform.com
+security:
+- custom-header: []
+tags:
+- name: Reports
+paths:
+  /v3/reports/cash-forecasting:
+    get:
+      description: Retrieves a paginated cash forecasting report showing due and paid amounts per period for each customer
+      operationId: IntegratorsApiReportsController_getReport
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Max items per page. Defaults to 50. Values above 500 will be rejected.
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n            Supported items for filter: startMonth, endMonth, currency.\n\n            Months should be in YYYY-MM format. Set startMonth and endMonth to the same value to request a single month.\n\n            By default the forecast is capped to 120 months ahead of the current month; pass endMonth to extend or shorten that horizon.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved cash forecasting report
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/CashForecastingReportDto'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+        '401':
+          description: Unauthorized - Invalid or missing API key
+      summary: Get cash forecasting report
+      tags:
+      - Reports
+  /v3/reports/arr:
+    get:
+      operationId: IntegratorsApiReportsController_getARR
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: Page Number
+        schema:
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Max items per page. Defaults to 50. Values above 500 will be rejected.
+        schema:
+          default: 50
+          type: number
+      - name: filter
+        required: false
+        in: query
+        description: "\n            Supported items for filter: startMonth, endMonth, customerId, currency.\n\n            Months should be in YYYY-MM format.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get ARR by filter
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/IntegratorsApiResponse'
+                - properties:
+                    payload:
+                      allOf:
+                      - $ref: '#/components/schemas/PaginatedResponseDTO'
+                      - properties:
+                          data:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/GetARR'
+                          limit:
+                            type: number
+                          totalItems:
+                            type: number
+                          currentPage:
+                            type: number
+      summary: Get ARR report
+      tags:
+      - Reports
+components:
+  schemas:
+    GetARR:
+      type: object
+      properties:
+        customer:
+          type: object
+          description: Customer information
+          example:
+            id: 482ff1f3-7270-4a62-8f78-9006f6eb2354
+            name: John Doe
+            externalIds:
+            - id: '123'
+              type: QUICKBOOKS
+              sourceType: QUICKBOOKS
+        timeframe:
+          type: string
+          description: ARR timeframe (YYYY-MM)
+          example: 2026-01
+        currency:
+          type: string
+          description: ISO 4217 currency code for the ARR amount
+          example: USD
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWG
+          - ZWL
+        total:
+          type: number
+          description: Annual recurring revenue for this customer in the given timeframe
+          example: 120000
+      required:
+      - customer
+      - timeframe
+      - currency
+      - total
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    CashForecastingReportDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: ID of the customer
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerName:
+          type: string
+          description: Name of the customer
+        cashForecastingPerPeriod:
+          description: Array of cash forecasting data per period
+          type: array
+          items:
+            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
+      required:
+      - customerId
+      - customerName
+      - cashForecastingPerPeriod
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    CashForecastingPerPeriodDto:
+      type: object
+      properties:
+        period:
+          type: string
+          description: The time period for the forecast
+        dueTotal:
+          type: number
+          description: Total amount due for the period
+        paidTotal:
+          type: number
+          description: Total amount paid for the period
+        total:
+          type: number
+          description: Total amount (due + paid) for the period
+      required:
+      - period
+      - dueTotal
+      - paidTotal
+      - total
+  securitySchemes:
+    custom-header:
+      type: apiKey
+      name: Authorization
+      in: header
