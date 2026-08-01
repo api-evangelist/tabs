@@ -1,0 +1,81 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://help.tabs.com/articles/7814512087-tabs-mcp-connector-setup-usage-guide
+announcement: https://www.tabs.com/blog/introducing-tabs-mcp
+description: >-
+  Tabs operates an official remote MCP server (announced 2026-04-22) exposing
+  its "Commercial Graph" — customers, contracts, invoices, payments, credit
+  memos, revenue, commitments, renewals, and reports — as read-only tools over
+  MCP Streamable HTTP. Authentication is OAuth 2.0 (WorkOS-backed) with
+  standard RFC 8414 / RFC 9728 discovery (metadata captured in well-known/)
+  and automatic merchant scoping; multi-merchant accounts are supported. The
+  server is stateless and runs on the same service layer as the Tabs REST API
+  (same filters, pagination, and business logic). Probed live: POST /mcp
+  returns 401 with a WWW-Authenticate Bearer resource_metadata challenge.
+server:
+  name: tabs
+  transport: http
+  url: https://integrators.prod.api.tabsplatform.com/mcp
+  auth: oauth2
+  protected_resource: well-known/tabs-mcp-oauth-protected-resource.json
+  authorization_server: https://login.tabs.com
+  read_only: true
+  version: 1.0.0
+clients:
+  - Claude Desktop / claude.ai (custom connector or npx mcp-remote)
+  - Claude Code (type url)
+  - Any MCP client supporting Streamable HTTP
+tools:
+  - name: list_merchants
+    description: List all Tabs instances your account has access to (called automatically on first use)
+  - name: merchants_info_get
+    description: Get details about a specific Tabs instance
+  - name: customers_list
+    description: List customers with optional filtering by name, external ID, or last updated date
+  - name: customers_get
+    description: Get a single customer by ID
+  - name: customers_contacts_list
+    description: List contacts for a specific customer
+  - name: contracts_list
+    description: List contracts with filtering by name, external ID, source, status, customer, or last updated date
+  - name: contracts_get
+    description: Get a single contract by ID
+  - name: contracts_usage_get
+    description: Get usage data for a contract, optionally filtered by event type
+  - name: contracts_billing_term_groups_get
+    description: Get billing term groups for a contract
+  - name: contracts_performance_obligations_get
+    description: Get performance obligations for a contract
+  - name: invoices_list
+    description: List invoices with filtering by customer, contract, status, issue date, due date, and more
+  - name: invoices_get
+    description: Get a single invoice (requires customer ID)
+  - name: payments_list
+    description: List payments with filtering by received date, status, type, invoice, or customer
+  - name: payments_get
+    description: Get a single payment (requires customer and invoice IDs)
+  - name: credit_memos_list
+    description: List credit memos with filtering by number, customer, issue date range, or status
+  - name: credit_memos_get
+    description: Get a single credit memo by ID
+  - name: credit_memos_by_invoice
+    description: Get all credit memos for a specific invoice
+  - name: items_list
+    description: List items with filtering by name, external ID, or external ID type
+  - name: items_get
+    description: Get a single item by ID
+  - name: products_list
+    description: List products with filtering by name or status
+  - name: products_get
+    description: Get a single product by ID
+  - name: revenue_list
+    description: List revenue data with filtering by month range (YYYY-MM) or customer
+  - name: commitments_list
+    description: List commitments with filtering by customer or contract
+  - name: commitments_get
+    description: Get a single commitment by ID
+  - name: renewals_list
+    description: List renewals with filtering by contract, type, status, or contract end date
+  - name: reports_cash_forecasting_get
+    description: Get the cash forecasting report

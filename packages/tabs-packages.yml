@@ -1,0 +1,11 @@
+generated: '2026-07-21'
+method: searched
+source: npm registry search + PyPI + docs.tabsplatform.com
+description: >-
+  Search of the public package registries (npm, PyPI) and the Tabs docs for
+  first-party client libraries. None found: Tabs publishes no SDKs — the docs
+  present the Universal API as direct HTTP + JSON, and the only GitHub org
+  (github.com/tabs-platform) hosts a single repository with no published
+  client packages. Registry lookups: npm search "tabsplatform" (no first-party
+  hits), pypi.org/simple/tabs-platform 404, pypi.org/simple/tabsplatform 404.
+packages: []

@@ -1,0 +1,63 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tabs-external-api-openapi.yml + well-known probes + docs.tabsplatform.com
+description: >-
+  Industry and cross-cutting standards conformance for the Tabs Platform API,
+  derived from the published OpenAPI, the /.well-known/ discovery surface, and
+  the docs. Trust-center certifications are captured separately in
+  security/tabs-trust-center.yml.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      RFC 8414 authorization-server metadata published at
+      integrators.prod.api.tabsplatform.com/.well-known/oauth-authorization-server
+      (issuer https://login.tabs.com; authorization_code, refresh_token, device_code
+      grants; PKCE S256; dynamic client registration). Used for MCP access; the
+      REST API itself authenticates with API keys.
+  - id: oidc
+    conforms: true
+    evidence: >-
+      OIDC discovery published at login.tabs.com/.well-known/openid-configuration
+      (RS256 id tokens, userinfo endpoint, scopes openid/profile/email/offline_access).
+  - id: rfc9728-protected-resource
+    conforms: true
+    evidence: >-
+      RFC 9728 protected-resource metadata at
+      integrators.prod.api.tabsplatform.com/.well-known/oauth-protected-resource
+      for the MCP resource; the /mcp endpoint returns 401 with a
+      WWW-Authenticate resource_metadata challenge.
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Official remote MCP server at https://integrators.prod.api.tabsplatform.com/mcp
+      (OAuth-protected, announced at tabs.com/blog/introducing-tabs-mcp).
+  - id: idempotency
+    conforms: true
+    evidence: >-
+      Usage API (Beta) requires a UUIDv4 idempotencyKey on every event with a
+      45-day deduplication window; concurrent duplicates return 409
+      (docs.tabsplatform.com/docs/usage-events-beta).
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Uniform page/limit pagination with currentPage/limit/totalItems response
+      fields across filtered endpoints (docs.tabsplatform.com/docs/filter-rules).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use custom JSON envelopes ({success,payload} on the External API;
+      {success,message,error:{code,message,details}} on the Usage API), not
+      application/problem+json.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: No /.well-known/security.txt found on any Tabs host (404/401).
+  - id: json-api
+    conforms: false
+    evidence: Responses use custom envelopes, not JSON:API media types.
+  - id: asc-606
+    conforms: true
+    evidence: >-
+      Revenue recognition is modeled on ASC 606 performance obligations
+      (contract performance-obligation and recognized-revenue endpoints;
+      marketing states "automate ASC 606 compliance").

@@ -1,0 +1,36 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Tabs External API
+  version: 1.0.0
+  x-apievangelist:
+    generated: '2026-07-21'
+    method: generated
+    source: openapi/tabs-external-api-openapi.yml
+extends: openapi/tabs-external-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: tabs
+      x-apievangelist-repo: https://github.com/api-evangelist/tabs
+      description: >-
+        The Tabs Universal (External) API v3 exposes the revenue data model of
+        the Tabs AI-native revenue automation platform — customers, contracts,
+        obligations, billing terms, performance obligations, invoices,
+        payments, credit memos, products, items, commitments, renewals,
+        revenue, and reports — for ingestion from and retrieval into the rest
+        of the finance stack (ERP, CRM, payments, tax).
+      contact:
+        name: Tabs Support
+        email: support@tabsplatform.com
+        url: https://docs.tabsplatform.com
+      termsOfService: https://www.tabs.com/terms-and-conditions
+  - target: $.info
+    update:
+      x-conventions:
+        pagination: page/limit with currentPage/limit/totalItems response fields
+        filtering: 'property:rule:"value" syntax; see https://docs.tabsplatform.com/docs/filter-rules'
+        envelope: '{ success, payload }'
+  - target: $.externalDocs
+    update:
+      description: Tabs Platform API documentation
+      url: https://docs.tabsplatform.com/docs/getting-started

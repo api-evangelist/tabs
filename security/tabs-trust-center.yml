@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: searched
+probe: true
+url: https://trust.tabs.com/
+certifications: [SOC 2]
+description: >-
+  Tabs operates a trust center at trust.tabs.com (hosted on Responsive/RFPIO
+  Profiles; JS-rendered, so the automated keyword probe could not read the
+  body). The tabs.com site footer links to it as "Security" and displays a
+  "SOC2 Compliant" badge in its published site data. An earlier SafeBase
+  trust center at trust.tabs.inc no longer resolves.
+evidence:
+  - source: https://www.tabs.com/ (site footer data)
+    keywords: ["SOC2 Compliant", "Security -> https://trust.tabs.com/"]
+  - source: https://trust.tabs.com/
+    note: Live (HTTP 200), titled "Trust Center"; content requires JS rendering

@@ -1,0 +1,65 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tabsplatform.com/docs/filter-rules
+docs:
+  - https://docs.tabsplatform.com/docs/authentication
+  - https://docs.tabsplatform.com/docs/filter-rules
+  - https://docs.tabsplatform.com/docs/usage-events-beta
+description: >-
+  Cross-cutting request/response semantics of the Tabs Universal (External) API
+  v3 and the Usage API (Beta), captured from the published docs at
+  docs.tabsplatform.com and the OpenAPI embedded in the API reference.
+authentication:
+  style: api-key
+  header: Authorization
+  format: "Authorization: <API_KEY> (Usage API docs also show 'Authorization: Bearer <your-key>')"
+  issuance: Admins generate keys in the Developers section of the Tabs app side navigation
+  notes: Keys identify the merchant and the scopes they may access; revocation takes effect after eviction from an hourly cache
+  artifact: ../authentication/tabs-authentication.yml
+idempotency:
+  supported: true
+  scope: Usage API (Beta) event ingestion
+  mechanism: required idempotencyKey field (UUID v4) in the POST /v1/events request body
+  retention: 45 days deduplication window per (manufacturerId, idempotencyKey) pair
+  conflict_behavior: Concurrent submissions with the same key return 409 Conflict; reuse after processing returns 400 (duplicate idempotency key)
+  delete_semantics: DELETE /v1/events/{idempotencyKey} creates a deletion event linked to the original via parentEventId
+  docs: https://docs.tabsplatform.com/docs/usage-events-beta
+pagination:
+  style: page-offset
+  request_params:
+    - name: page
+      description: Page number (default 1)
+    - name: limit
+      description: Items per page (default 50)
+  response_fields: [currentPage, limit, totalItems, data]
+  docs: https://docs.tabsplatform.com/docs/filter-rules
+filtering:
+  syntax: 'property:rule:"value" (comma-separated filters combine with AND)'
+  rules: [eq, neq, gt, gte, lt, lte, like, nlike, in, nin, isnull, isnotnull]
+  nested_properties: dot notation (e.g. externalIds.externalId)
+  date_format: YYYY-MM-DD (ISO)
+  docs: https://docs.tabsplatform.com/docs/filter-rules
+response_envelope:
+  external_api:
+    shape: '{ success: bool, payload: { data: [...], currentPage, limit, totalItems } }'
+    source: openapi/tabs-external-api-openapi.yml#IntegratorsApiResponse
+  usage_api:
+    shape: '{ success: bool, message: string, data: { events: {...} } }'
+    error_shape: '{ success: false, message, error: { code, message, details: { field: [messages] } } }'
+    source: openapi/tabs-usage-api-beta-openapi.yml
+versioning:
+  scheme: uri-path
+  current: v3 (External API), v1 (Usage API Beta)
+  notes: Legacy usage endpoints coexist with the v1 Usage API Beta; Beta access is granted by account managers
+rate_limits:
+  usage_api: 10,000 requests per minute per merchant, fixed 60-second window; 429 responses include a retryAfter field (seconds)
+  external_api: x-ratelimit-limit / x-ratelimit-remaining / x-ratelimit-reset headers observed on integrators.prod.api.tabsplatform.com responses
+  docs: https://docs.tabsplatform.com/docs/usage-events-beta
+error_semantics:
+  artifact: ../errors/tabs-problem-types.yml
+  retry_guidance: Retry only on 503/429/network errors (Usage API); 400 indicates validation or duplicate idempotency key and must not be retried
+metadata:
+  supported: true
+  scope: Usage events accept an optional metadata object of key/value pairs; customers carry customFields
+lifecycle:
+  artifact: ../lifecycle/tabs-lifecycle.yml

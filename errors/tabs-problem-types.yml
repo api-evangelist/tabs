@@ -1,0 +1,55 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tabs-external-api-openapi.yml + openapi/tabs-usage-api-beta-openapi.yml
+docs: https://docs.tabsplatform.com/docs/usage-events-beta
+format: custom-envelope
+description: >-
+  Error catalog derived from the 4xx/5xx responses declared across the Tabs
+  External API v3 OpenAPI (93 operations) and the Usage API (Beta) OpenAPI,
+  enriched from the Usage API error documentation. Tabs does not use RFC 9457
+  problem+json; each API has its own JSON error envelope.
+envelopes:
+  external_api: '{ success: false, payload: ... } (IntegratorsApiResponse)'
+  usage_api: '{ success: false, message: string, error: { code: int, message: string, details: { field: [messages] } } }'
+  usage_api_infra: '{ statusCode: int, message: string, timestamp, path, method, retryAfter? }'
+problems:
+  - status: 400
+    title: Bad request
+    detail: >-
+      Invalid JSON, schema, timestamp, eventType, filter syntax, unsupported
+      filter property, or rule violation; on the Usage API also a reused
+      idempotency key (duplicate). Declared on 35 External API operations and
+      the Usage API ingestion endpoints.
+    remediation: Fix the request payload or filter expression; do not retry unchanged requests.
+  - status: 401
+    title: Unauthorized
+    detail: >-
+      Missing, invalid, expired, or revoked API key in the Authorization
+      header. Revoked keys begin failing after eviction from an hourly cache.
+    remediation: "Supply a valid key: Authorization: <API_KEY> (Usage API docs show Bearer form)."
+  - status: 404
+    title: Resource not found
+    detail: Declared on 51 External API operations for missing customers, contracts, invoices, obligations, categories, products, and related resources.
+  - status: 409
+    title: Conflict
+    detail: >-
+      Declared on 2 External API operations; on the Usage API, concurrent
+      submissions with the same (manufacturerId, idempotencyKey) pair return
+      409 Conflict.
+    remediation: Treat as already-in-flight; check whether the original request succeeded.
+  - status: 422
+    title: Unprocessable entity
+    detail: Usage API validation errors (e.g. missing customerId or eventTypeId), returned with a field-level details map.
+  - status: 429
+    title: Too many requests
+    detail: >-
+      Usage API rate limit exceeded — 10,000 requests per minute per merchant,
+      fixed 60-second window. Response includes retryAfter (seconds).
+    remediation: Back off for retryAfter seconds, then retry.
+  - status: 500
+    title: Internal server error
+    detail: Declared on 46 External API operations and the Usage API ("An unexpected error occurred").
+  - status: 503
+    title: Service unavailable
+    detail: Transient failure (e.g. Kafka timeout, Valkey degrade) on the health/ingestion path. Safe to retry.
+    remediation: Retry with backoff; 503 is documented as retryable.

@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.tabs.com/product/july-2026
+description: >-
+  Tabs publishes dated monthly product releases at tabs.com/product/<month-year>
+  ("Monthly Releases" in the resource navigation), alongside launch
+  announcements on the blog. No separate API-versioned changelog is published;
+  the External API is versioned in the URI path (v3) and the Usage API (Beta)
+  at v1. Recent window captured below.
+scheme: monthly-product-releases
+current_api_versions:
+  external_api: v3
+  usage_api: v1 (Beta)
+entries:
+  - version: July 2026
+    date: '2026-07'
+    url: https://www.tabs.com/product/july-2026
+    breaking: false
+    highlights:
+      - 'Release theme: "Better data in. Smarter revenue out."'
+      - 'Site banner: "July Release: Configure your CRM your way."'
+  - version: June 2026
+    date: '2026-06'
+    url: https://www.tabs.com/product/june-2026
+    breaking: false
+    highlights:
+      - 'Release theme: "Sell without limits. Bill without spreadsheets." — usage-based and hybrid pricing support'
+  - version: Sage Intacct integration
+    date: '2026'
+    url: https://www.tabs.com/blog/sage-integration-announcement
+    breaking: false
+    highlights:
+      - Order-to-cash automation on Sage Intacct joins the QuickBooks/NetSuite ERP integrations
+  - version: Tabs MCP Server
+    date: '2026-04-22'
+    url: https://www.tabs.com/blog/introducing-tabs-mcp
+    breaking: false
+    highlights:
+      - Launch of the read-only remote MCP server (25 tools across 12 commercial data domains) at integrators.prod.api.tabsplatform.com/mcp

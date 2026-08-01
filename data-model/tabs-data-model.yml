@@ -1,0 +1,105 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tabsplatform.com/docs/the-tabs-data-model
+description: >-
+  Entity-relationship graph of the Tabs revenue data model, captured from the
+  published "The Tabs Data Model" guide and corroborated against the External
+  API v3 OpenAPI (customer/contract/obligation/invoice/payment resources and
+  their id-reference fields). Tabs markets this connected model as its
+  "Commercial Graph".
+entities:
+  - name: Customer
+    description: The business being billed; carries contacts, addresses, external IDs (ERP/CRM), custom fields, auto-charge and dunning settings
+    id_format: UUID v4
+  - name: Contract
+    description: Binding agreement defining dates, payment terms, cancellation policies, and obligations; contract files can be uploaded and downloaded
+    id_format: UUID v4
+  - name: Item
+    description: Product/service in the general ledger with accounting codes; credited on sale, debited at month-end close when revenue is recognized
+  - name: RevenueCategory
+    description: Logical grouping of products/services used for visualization and reporting
+  - name: Obligation
+    description: Commitment generating the line items that comprise invoices; relates to a GL Item; can carry ERP class/department/project
+  - name: PerformanceObligation
+    description: ASC 606 performance obligation with recognized revenue schedules
+  - name: BillingTerm
+    description: Billing term (and billing term groups) attached to contracts, driving invoice generation
+  - name: Invoice
+    description: Itemized request for payment tied to obligations and contracts; contains invoice line items, computed-but-modifiable dates, and generates sales tax
+  - name: CreditMemo
+    description: Credit applied against invoices
+  - name: Payment
+    description: Recorded receipt settling outstanding invoices, generally imported from the commercial bank
+  - name: UsageEvent
+    description: Consumption record for usage-based products (eventTypeId, datetime, value, idempotencyKey, differentiator, invoiceSplitKey)
+  - name: EventType
+    description: Merchant-global definition of a usage event category (name, displayType, fieldToSum)
+  - name: Commitment
+    description: Usage commitment for a customer
+  - name: Renewal
+    description: Contract renewal record
+  - name: Merchant
+    description: The Tabs account (manufacturerId); API keys, book close date, and event types are merchant-scoped
+relationships:
+  - from: Contract
+    to: Customer
+    type: belongs_to
+    via: customerId
+    note: Each contract belongs to exactly one customer; Tabs can infer the customer when a contract is uploaded without one
+  - from: Customer
+    to: Customer
+    type: belongs_to
+    via: parentCustomerId
+    note: Sub-customer hierarchy
+  - from: Contract
+    to: Obligation
+    type: has_many
+    note: Contracts outline the obligations to pay for products or services
+  - from: Obligation
+    to: Item
+    type: belongs_to
+    note: Obligations relate to a GL Item
+  - from: Obligation
+    to: RevenueCategory
+    type: belongs_to
+    note: Revenue categories group obligations for reporting
+  - from: Contract
+    to: BillingTerm
+    type: has_many
+    note: Billing terms (and billing term groups) are managed per contract
+  - from: Contract
+    to: PerformanceObligation
+    type: has_many
+    note: Performance obligations with revenue are listed and bulk-saved per contract
+  - from: Invoice
+    to: Obligation
+    type: belongs_to
+    note: Obligations generate the line items that comprise invoices
+  - from: Invoice
+    to: Customer
+    type: belongs_to
+    note: Invoices are retrieved per customer in the External API
+  - from: Payment
+    to: Invoice
+    type: belongs_to
+    note: Payments settle outstanding invoices
+  - from: CreditMemo
+    to: Invoice
+    type: belongs_to
+    note: Credit memos are applied to invoices
+  - from: UsageEvent
+    to: Customer
+    type: belongs_to
+    via: customerId
+  - from: UsageEvent
+    to: EventType
+    type: belongs_to
+    via: eventTypeId
+    note: Usage events feed invoice line-item quantities for usage-based obligations whose service period encompasses the event datetime
+  - from: Commitment
+    to: Customer
+    type: belongs_to
+    note: Usage commitments are set per customer
+  - from: Renewal
+    to: Contract
+    type: belongs_to

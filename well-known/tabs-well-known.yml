@@ -1,0 +1,84 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Probe of the /.well-known/ discovery surface across Tabs hosts (website,
+  docs, app, API, login). The integrators API host publishes RFC 8414 OAuth
+  authorization-server metadata and RFC 9728 protected-resource metadata for
+  the Tabs MCP server; login.tabs.com publishes OIDC discovery. SPA hosts
+  (app.tabsplatform.com, trust.tabs.com) return their HTML shell with HTTP 200
+  for any path, recorded here as catch-all (not real well-known documents).
+hosts:
+  - host: https://integrators.prod.api.tabsplatform.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: tabs-oauth-authorization-server.json
+        note: RFC 8414 metadata; issuer https://login.tabs.com, PKCE S256, dynamic client registration
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: tabs-mcp-oauth-protected-resource.json
+        note: RFC 9728 metadata for the Tabs MCP server resource https://integrators.prod.api.tabsplatform.com/mcp
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://login.tabs.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: tabs-openid-configuration.json
+        note: OIDC discovery; grants authorization_code, client_credentials, refresh_token, device_code; RS256
+  - host: https://usage-events.prod.api.tabsplatform.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 401
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-authorization-server
+        status: 401
+      - path: /.well-known/api-catalog
+        status: 401
+      - path: /.well-known/ai-plugin.json
+        status: 401
+  - host: https://tabs.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://docs.tabsplatform.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /llms.txt
+        status: 200
+        file: ../llms/tabs-llms.txt
+        note: llms.txt index of guides and API reference pages (ReadMe-hosted docs)
+  - host: https://app.tabsplatform.com
+    documents:
+      - path: /.well-known/*
+        status: 200
+        note: SPA catch-all — returns the application HTML shell for every path; no real well-known documents
+  - host: https://trust.tabs.com
+    documents:
+      - path: /.well-known/*
+        status: 200
+        note: SPA catch-all — trust-center HTML shell returned for every path; no real well-known documents

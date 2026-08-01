@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tabsplatform.com/docs/slas-and-uptime
+description: >-
+  Lifecycle and operational posture of the Tabs Platform API, captured from the
+  published SLAs and Uptime page and the API reference. No public status page
+  was found (status.tabs.com and status.tabsplatform.com do not resolve); no
+  published deprecation policy or Sunset-header support was found, though the
+  legacy usage-events endpoints coexist with the v1 Usage API Beta.
+versioning:
+  scheme: uri-path
+  current: v3
+  notes: >-
+    External API paths are versioned /v3/...; the Usage API (Beta) is /v1/...
+    on a separate host. Legacy usage event endpoints remain available while
+    the Beta rolls out to approved merchants.
+sla:
+  url: https://docs.tabsplatform.com/docs/slas-and-uptime
+  uptime_target: "99.9% per month (excluding scheduled maintenance and force majeure)"
+  scheduled_maintenance: "Off-peak hours (e.g. 9 PM - 4 AM ET or weekends, not the 1st or last of the month)"
+  change_notice: 30 days advance notice of SLA updates
+  support_response_targets:
+    - severity: Critical
+      initial_response: 1 hour
+    - severity: High
+      initial_response: 4 hours
+    - severity: Medium
+      initial_response: 1 business day
+    - severity: Low
+      initial_response: 2 business days
+  support_channels:
+    - email: support@tabsplatform.com
+    - slack: Real-time support available
+status_page: null
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    No published deprecation policy found. The docs label the pre-Beta usage
+    endpoints "Usage Events (Legacy)" and steer new integrations to the v1
+    Usage API Beta via account managers.
+deprecated_operations: []
