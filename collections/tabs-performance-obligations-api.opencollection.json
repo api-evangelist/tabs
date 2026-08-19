@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Performance Obligations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Performance Obligations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List performance obligations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/performance-obligations",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: contractId, customerId, serviceStartDate, serviceEndDate, billingTermGroupId, createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+              }
+            ]
+          },
+          "docs": "List performance obligations"
+        },
+        {
+          "info": {
+            "name": "Upsert recognized revenue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/performance-obligations/:performanceObligationId/recognized",
+            "params": [
+              {
+                "name": "performanceObligationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the performance obligation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert recognized revenue"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

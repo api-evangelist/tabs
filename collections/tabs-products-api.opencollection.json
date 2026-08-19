@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Products API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a product by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/products/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Product ID"
+              }
+            ]
+          },
+          "docs": "Get a product by ID"
+        },
+        {
+          "info": {
+            "name": "Update a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/products/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Product ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a product"
+        },
+        {
+          "info": {
+            "name": "List all products for merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/products",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: name, status\n\n        - name: Product name (case insensitive, partial match) - use \"like\" rule\n        - status: Product status (ACTIVE, INACTIVE) - use \"eq\" rule\n        "
+              }
+            ]
+          },
+          "docs": "List all products for merchant"
+        },
+        {
+          "info": {
+            "name": "Create a new product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/products",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new product"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

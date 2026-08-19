@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Commitments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commitments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List commitments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/commitments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: customerId, contractId\n\n        - customerId: Filter by customer ID (use \"eq\" rule, e.g., customerId:eq:customer-id)\n\n        - contractId: Filter by contract IDs (use \"in\" rule with pipe-separated values, e.g., contractId:in:id1|id2|id3)\n        "
+              }
+            ]
+          },
+          "docs": "List commitments"
+        },
+        {
+          "info": {
+            "name": "Create commitments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/commitments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create commitments"
+        },
+        {
+          "info": {
+            "name": "Update commitment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/commitments/:commitmentId",
+            "params": [
+              {
+                "name": "commitmentId",
+                "value": "",
+                "type": "path",
+                "description": "Commitment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update commitment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

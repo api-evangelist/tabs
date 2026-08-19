@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Obligations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Obligations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List obligations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/obligations",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: contractId, customerId, startDate, endDate, serviceStartDate, serviceEndDate\n\n        Dates should be in YYYY-MM-DD format\n        "
+              }
+            ]
+          },
+          "docs": "List obligations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

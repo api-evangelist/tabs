@@ -1,0 +1,158 @@
+{
+  "item": [
+    {
+      "id": "aa7c8801-8495-48e7-b145-b84a95a8f0da",
+      "name": "Payments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c79b4083-0657-47a0-af48-88059759aa1e",
+          "name": "List payments",
+          "request": {
+            "name": "List payments",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n        Supported items for filter: receivedAt, status, type, invoiceId, customerId.\n\n        Filtering parameter in the format \"property:rule:value\".\n\n        Example: \"receivedAt:eq:[some date]\" or \"status:eq:[some status]\".\n\n        For multiple filters use \"receivedAt:eq:[some date],status:eq:[some status]\".\n\n        Supported rules: eq, neq, gt, gte, lt, lte, like, nlike, in, nin, isnull, isnotnull.\n        "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3cacad6f-ce55-4c00-b537-2ed82c219014",
+              "name": "Get all Payments by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"total\": 99.99,\n        \"receivedAt\": \"2023-01-01T00:00:00.000Z\",\n        \"status\": \"COMPLETED\",\n        \"type\": \"MANUAL\",\n        \"method\": \"CREDIT_CARD\",\n        \"externalIds\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"stripeId\": \"pi_1234567890\",\n        \"reference\": \"REF123456\"\n      },\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"total\": 99.99,\n        \"receivedAt\": \"2023-01-01T00:00:00.000Z\",\n        \"status\": \"COMPLETED\",\n        \"type\": \"MANUAL\",\n        \"method\": \"CREDIT_CARD\",\n        \"externalIds\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"stripeId\": \"pi_1234567890\",\n        \"reference\": \"REF123456\"\n      }\n    ],\n    \"limit\": 7229.004580871837,\n    \"totalItems\": 7046.528173419386,\n    \"currentPage\": 3697.231933464027\n  },\n  \"success\": false,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 9353.102719600245,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1e99b00f-51b7-4e29-9b86-4ceff5686747",
+    "name": "Tabs External Billing Terms Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

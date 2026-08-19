@@ -1,0 +1,2794 @@
+{
+  "item": [
+    {
+      "id": "2bd6a5b2-aee0-4c47-b11d-79bfd782a9ec",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7472842a-9d42-4753-a90e-1e6c51e23e1c",
+          "name": "Bulk create events (legacy)",
+          "request": {
+            "name": "Bulk create events (legacy)",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"customerId\": \"<string>\",\n      \"datetime\": \"<dateTime>\",\n      \"eventTypeId\": \"<string>\",\n      \"value\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"<string>\",\n      \"invoiceGroup\": \"<string>\"\n    },\n    {\n      \"customerId\": \"<string>\",\n      \"datetime\": \"<dateTime>\",\n      \"eventTypeId\": \"<string>\",\n      \"value\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"<string>\",\n      \"invoiceGroup\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ffd1cb8-9b74-44c3-bb32-9d2a5dab14c4",
+              "name": "The Events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"datetime\": \"2021-01-01T00:00:00.000Z\",\n      \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"value\": \"123\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"DIFF\",\n      \"invoiceGroup\": \"123\"\n    },\n    {\n      \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"datetime\": \"2021-01-01T00:00:00.000Z\",\n      \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"value\": \"123\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"DIFF\",\n      \"invoiceGroup\": \"123\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"datetime\": \"2021-01-01T00:00:00.000Z\",\n  \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"value\": \"123\",\n  \"metadata\": {},\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"differentiator\": \"DIFF\",\n  \"invoiceGroup\": \"123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1953f88d-e702-4575-ae3f-a706e450dca4",
+              "name": "Some events failed validation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"datetime\": \"2021-01-01T00:00:00.000Z\",\n      \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"value\": \"123\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"DIFF\",\n      \"invoiceGroup\": \"123\"\n    },\n    {\n      \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"datetime\": \"2021-01-01T00:00:00.000Z\",\n      \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"value\": \"123\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"DIFF\",\n      \"invoiceGroup\": \"123\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7701523e-f322-4d3f-93a7-82e79e3c1fd2",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"datetime\": \"2021-01-01T00:00:00.000Z\",\n      \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"value\": \"123\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"DIFF\",\n      \"invoiceGroup\": \"123\"\n    },\n    {\n      \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"datetime\": \"2021-01-01T00:00:00.000Z\",\n      \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"value\": \"123\",\n      \"metadata\": \"<object>\",\n      \"differentiator\": \"DIFF\",\n      \"invoiceGroup\": \"123\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ef92060-86e9-4aa0-a12c-46ad53f907a7",
+          "name": "Bulk delete events (legacy)",
+          "request": {
+            "name": "Bulk delete events (legacy)",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ade82c8e-11dc-4a93-82ec-f48e8475816a",
+              "name": "All events deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"event-id-1\",\n  \"event-id-2\",\n  \"event-id-3\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 200\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88709ab7-b5fc-494e-8ca7-fc2c8d61180b",
+              "name": "Bad request - invalid event IDs or other validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"event-id-1\",\n  \"event-id-2\",\n  \"event-id-3\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6b388b37-ad7a-43b1-a32c-d1e41dbe7b2c",
+              "name": "One or more events not found - no events will be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"event-id-1\",\n  \"event-id-2\",\n  \"event-id-3\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"message\": \"Events not found: event-id-1, event-id-2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfa9d11e-25d6-46a1-94b6-dfee63835250",
+              "name": "Internal server error - transaction failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"event-id-1\",\n  \"event-id-2\",\n  \"event-id-3\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "589051f7-34f8-47ad-aec9-b9cbb141f70b",
+          "name": "Create event (legacy)",
+          "request": {
+            "name": "Create event (legacy)",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"datetime\": \"<dateTime>\",\n  \"eventTypeId\": \"<string>\",\n  \"value\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"differentiator\": \"<string>\",\n  \"invoiceGroup\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb0cc0cd-334a-4470-8b36-a3f8daf930dc",
+              "name": "The Event",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"datetime\": \"2021-01-01T00:00:00.000Z\",\n  \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"value\": \"123\",\n  \"metadata\": \"<object>\",\n  \"differentiator\": \"DIFF\",\n  \"invoiceGroup\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"datetime\": \"2021-01-01T00:00:00.000Z\",\n  \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"value\": \"123\",\n  \"metadata\": {},\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"differentiator\": \"DIFF\",\n  \"invoiceGroup\": \"123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15e47db1-9552-430e-aa33-cfd8ede3164a",
+              "name": "Event already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"datetime\": \"2021-01-01T00:00:00.000Z\",\n  \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"value\": \"123\",\n  \"metadata\": \"<object>\",\n  \"differentiator\": \"DIFF\",\n  \"invoiceGroup\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60a5387a-078d-4aba-93e3-3cb85fc448ae",
+          "name": "List events (legacy)",
+          "request": {
+            "name": "List events (legacy)",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n      Supported items for filter: eventTypeId, customerId, differentiator, datetime\n\n      Datetime should be in YYYY-MM-DD format"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2d18e55-bf5a-4f58-b62d-7ecbea9d2690",
+              "name": "Get all Events by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"datetime\": \"2021-01-01T00:00:00.000Z\",\n        \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"value\": \"123\",\n        \"metadata\": {},\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"differentiator\": \"DIFF\",\n        \"invoiceGroup\": \"123\"\n      },\n      {\n        \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"datetime\": \"2021-01-01T00:00:00.000Z\",\n        \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"value\": \"123\",\n        \"metadata\": {},\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"differentiator\": \"DIFF\",\n        \"invoiceGroup\": \"123\"\n      }\n    ],\n    \"limit\": 7323.2611092498155,\n    \"totalItems\": 6957.579756528203,\n    \"currentPage\": 3265.5635730661393\n  },\n  \"success\": false,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 9536.312326869189,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35ff82f1-f09f-4be6-b042-4c976a4f8762",
+          "name": "Delete event (legacy)",
+          "request": {
+            "name": "Delete event (legacy)",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2cdbc44-de18-4e3f-8c36-c1604b5b5e29",
+              "name": "The Events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f48ad5d0-12f8-4f40-99a5-367e2dc1228c",
+          "name": "List event types",
+          "request": {
+            "name": "List event types",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                "types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Supported items for filter: name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "07c55b48-7571-40ad-b7cb-812ad578f7e4",
+              "name": "Get all Event Types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Event Type Name\"\n      },\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Event Type Name\"\n      }\n    ],\n    \"limit\": 845.2107885497928,\n    \"totalItems\": 1299.0174387217323,\n    \"currentPage\": 3471.7214811127815\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 6653.918938514234,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9d034e9-b5fe-4a53-9bdc-b0770381a202",
+          "name": "Create event type",
+          "request": {
+            "name": "Create event type",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                "types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ba3687b6-045a-4c2c-b7cf-ea641204410e",
+              "name": "The Event Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Event Type Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"name\": \"Event Type Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e46a03c-3fcd-4707-a548-c3344a718c98",
+              "name": "Event Type already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Event Type Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9e58c8b-6536-4ad6-b93d-0a9fc9eb168e",
+          "name": "Get event type by ID",
+          "request": {
+            "name": "Get event type by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                "types",
+                ":eventTypeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventTypeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28c696e4-029b-4bc3-a1f2-954d5017c547",
+              "name": "The Event Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"name\": \"Event Type Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "325cd7bf-664b-4636-ae07-5edfc2c168ac",
+              "name": "Event Type not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f37e7899-2bef-41e2-af5f-8d443a182c4b",
+          "name": "Delete event type",
+          "request": {
+            "name": "Delete event type",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "events",
+                "types",
+                ":eventTypeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventTypeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "57e40446-62d4-4a65-a09c-9a754908553f",
+              "name": "The Event Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24d40ce7-39e8-42aa-ad60-8f6ef1840719",
+              "name": "Event Type is still in use and cannot be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9fddb2fb-6131-41f3-b3fe-89a0c60fbb7f",
+              "name": "Event Type not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "events",
+                    "types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37a969e3-ecce-434c-b86b-f2784d2f36e5",
+          "name": "Get all events",
+          "request": {
+            "name": "Get all events",
+            "description": {
+              "content": "Fetches all usage events, and can be filtered as needed. Reach out to your account manager if you would like to participate in the Beta for the new Usage API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "Start date for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "End date for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+                },
+                {
+                  "disabled": false,
+                  "key": "ingestStartDate",
+                  "value": "<string>",
+                  "description": "Start ingest timestamp for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+                },
+                {
+                  "disabled": false,
+                  "key": "ingestEndDate",
+                  "value": "<string>",
+                  "description": "End ingest timestamp for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+                },
+                {
+                  "disabled": false,
+                  "key": "customerId",
+                  "value": "<string>",
+                  "description": "Tabs Customer ID to filter events"
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeId",
+                  "value": "<string>",
+                  "description": "Event type ID to filter events"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Source to filter events"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of events to return (default: 50, max: 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderDirection",
+                  "value": "<string>",
+                  "description": "Sort direction (asc/desc)"
+                },
+                {
+                  "disabled": false,
+                  "key": "skipDeletionEvents",
+                  "value": "true",
+                  "description": "Include deleted events in the response (default: true)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e2175562-810f-4bc3-9183-f67e33d4c641",
+              "name": "Events retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestStartDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestEndDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "skipDeletionEvents",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"datetime\": \"2024-01-15T10:30:00Z\",\n      \"idempotencyKey\": \"018c1234-5678-7abc-def0-123456789abc\",\n      \"value\": 1,\n      \"differentiator\": \"mobile\",\n      \"invoiceSplitKey\": \"invoice-123\",\n      \"deleted\": false\n    }\n  ],\n  \"count\": 100,\n  \"nextCursor\": \"next-page-cursor\",\n  \"hasMore\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f8ea01a-5426-4a35-befb-12ec8c453486",
+              "name": "Bad request - Invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestStartDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestEndDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "skipDeletionEvents",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Validation failed\",\n    \"details\": {\n      \"startDate\": [\n        \"Invalid date format. Expected YYYY-MM-DDTHH:mm:ss\"\n      ],\n      \"limit\": [\n        \"Limit must be between 1 and 1000\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8887afa4-6d8e-46b9-b90b-600aa86a5b65",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestStartDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestEndDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "skipDeletionEvents",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 429,\n  \"message\": \"Rate limit exceeded. Maximum 10000 requests per minute allowed.\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"path\": \"/v1/events\",\n  \"method\": \"GET\",\n  \"retryAfter\": 30\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51ce9b97-7932-45e3-91f7-d14003fa6758",
+              "name": "Internal server error - Failed to retrieve events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestStartDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ingestEndDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "skipDeletionEvents",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Failed to retrieve events\",\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"Failed to retrieve events\",\n    \"details\": {\n      \"error\": [\n        \"Internal server error\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6df6f96b-82bd-43d2-a4c5-1c43add63d0d",
+          "name": "Create an event",
+          "request": {
+            "name": "Create an event",
+            "description": {
+              "content": "Creates a new usage event. Requires valid authentication and unique idempotency key. Reach out to your account manager if you would like to participate in the Beta for the new Usage API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<uuid>\",\n  \"datetime\": \"<dateTime>\",\n  \"eventTypeId\": \"<uuid>\",\n  \"idempotencyKey\": \"<uuid>\",\n  \"value\": \"<double>\",\n  \"differentiator\": \"<string>\",\n  \"invoiceSplitKey\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c90debc7-e4cf-4065-bdf4-a3f1409bd791",
+              "name": "Event created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"datetime\": \"2024-01-15T10:30:00Z\",\n  \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"idempotencyKey\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"value\": 1.5,\n  \"differentiator\": \"mobile\",\n  \"invoiceSplitKey\": \"invoice-123\",\n  \"metadata\": {\n    \"key_0\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Event created successfully\",\n  \"data\": {\n    \"events\": {\n      \"manufacturerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"datetime\": \"2024-01-15T10:30:00Z\",\n      \"idempotencyKey\": \"018c1234-5678-7abc-def0-123456789abc\",\n      \"value\": 1,\n      \"differentiator\": \"mobile\",\n      \"invoiceSplitKey\": \"invoice-123\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1c66e0f-de8e-4287-b537-81ef5d7dd1db",
+              "name": "Bad request - Invalid event data or duplicate idempotency key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"datetime\": \"2024-01-15T10:30:00Z\",\n  \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"idempotencyKey\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"value\": 1.5,\n  \"differentiator\": \"mobile\",\n  \"invoiceSplitKey\": \"invoice-123\",\n  \"metadata\": {\n    \"key_0\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Validation failed\",\n    \"details\": {\n      \"idempotencyKey\": [\n        \"Idempotency key 018c1234-5678-7abc-def0-123456789abc already exists\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f3ca5e8-a661-41f9-8281-ea5d78def40b",
+              "name": "Unauthorized - Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"datetime\": \"2024-01-15T10:30:00Z\",\n  \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"idempotencyKey\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"value\": 1.5,\n  \"differentiator\": \"mobile\",\n  \"invoiceSplitKey\": \"invoice-123\",\n  \"metadata\": {\n    \"key_0\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"message\": \"Invalid or missing API key. Use 'Authorization: Bearer <your-key>'\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"path\": \"/v1/events\",\n  \"method\": \"POST\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbf0e108-67a8-4b7d-9acd-28dac2f62f12",
+              "name": "Unprocessable Entity - Validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"datetime\": \"2024-01-15T10:30:00Z\",\n  \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"idempotencyKey\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"value\": 1.5,\n  \"differentiator\": \"mobile\",\n  \"invoiceSplitKey\": \"invoice-123\",\n  \"metadata\": {\n    \"key_0\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"error\": {\n    \"code\": 422,\n    \"message\": \"Validation failed\",\n    \"details\": {\n      \"customerId\": [\n        \"Customer ID is required\"\n      ],\n      \"eventTypeId\": [\n        \"Event type is required\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b506d3de-9e29-4ed7-b36a-60b32f771b1c",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"datetime\": \"2024-01-15T10:30:00Z\",\n  \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"idempotencyKey\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"value\": 1.5,\n  \"differentiator\": \"mobile\",\n  \"invoiceSplitKey\": \"invoice-123\",\n  \"metadata\": {\n    \"key_0\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 429,\n  \"message\": \"Rate limit exceeded. Maximum 10000 requests per minute allowed.\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"path\": \"/v1/events\",\n  \"method\": \"POST\",\n  \"retryAfter\": 30\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27930f91-c13f-46ae-b05a-013f0eb4e8da",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"datetime\": \"2024-01-15T10:30:00Z\",\n  \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"idempotencyKey\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"value\": 1.5,\n  \"differentiator\": \"mobile\",\n  \"invoiceSplitKey\": \"invoice-123\",\n  \"metadata\": {\n    \"key_0\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Internal server error\",\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"An unexpected error occurred\",\n    \"details\": {\n      \"error\": [\n        \"Internal server error\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c65ba011-0422-4795-9431-e6a70d8b1927",
+          "name": "Get API version information",
+          "request": {
+            "name": "Get API version information",
+            "description": {
+              "content": "Returns the current API version, name, and description",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "842554a5-4122-420d-96e6-79fd2deba22f",
+              "name": "Version information retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"v1\",\n  \"api\": \"Events API\",\n  \"description\": \"Event Ingestion API for usage in Tabs\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba650160-e06f-4322-8d4d-21172c8eaa5e",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 429,\n  \"message\": \"Rate limit exceeded. Maximum 10000 requests per minute allowed.\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"path\": \"/v1/version\",\n  \"method\": \"GET\",\n  \"retryAfter\": 30\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccff0bb0-c84b-4c8a-a63d-088f61ee1801",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Internal server error\",\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"An unexpected error occurred\",\n    \"details\": {\n      \"error\": [\n        \"Internal server error\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82990f14-d40c-42de-ab5c-6759b68e30f2",
+          "name": "Delete an event",
+          "request": {
+            "name": "Delete an event",
+            "description": {
+              "content": "Deletes a usage event by creating a new deletion event that links back to the original event. Requires valid authentication. Reach out to your account manager if you would like to participate in the Beta for the new Usage API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "events",
+                ":idempotencyKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "idempotencyKey",
+                  "description": "(Required) Event key of the event that should be deleted"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "887b50e1-1f26-426b-a6ae-5746bb1d653e",
+              "name": "Event deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events",
+                    ":idempotencyKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "idempotencyKey",
+                      "description": "(Required) Event key of the event that should be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Event deleted successfully\",\n  \"data\": {\n    \"events\": {\n      \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"eventTypeId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"datetime\": \"2024-01-15T10:30:00Z\",\n      \"idempotencyKey\": \"018c1234-5678-7abc-def0-123456789abc\",\n      \"value\": -1,\n      \"parentEventId\": \"018c1234-5678-7abc-def0-123456789000\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbc7be8f-f462-492f-b8f1-4c92b51a616d",
+              "name": "Bad request - Event not found or invalid idempotency key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events",
+                    ":idempotencyKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "idempotencyKey",
+                      "description": "(Required) Event key of the event that should be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Validation failed\",\n    \"details\": {\n      \"idempotencyKey\": [\n        \"Event with idempotency key 018c1234-5678-7abc-def0-123456789abc not found\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "130f0606-cea1-4ad3-93dc-297d50afaf0a",
+              "name": "Unauthorized - Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events",
+                    ":idempotencyKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "idempotencyKey",
+                      "description": "(Required) Event key of the event that should be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"message\": \"Invalid or missing API key. Use 'Authorization: Bearer <your-key>'\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"path\": \"/v1/events\",\n  \"method\": \"POST\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db768f47-dfa9-492e-aace-8f00899090ca",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events",
+                    ":idempotencyKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "idempotencyKey",
+                      "description": "(Required) Event key of the event that should be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 429,\n  \"message\": \"Rate limit exceeded. Maximum 10000 requests per minute allowed.\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"path\": \"/v1/events/018c1234-5678-7abc-def0-123456789abc\",\n  \"method\": \"DELETE\",\n  \"retryAfter\": 30\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "037fb23b-9019-46a7-b8af-051407d391c4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "events",
+                    ":idempotencyKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "idempotencyKey",
+                      "description": "(Required) Event key of the event that should be deleted"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Internal server error\",\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"An unexpected error occurred\",\n    \"details\": {\n      \"error\": [\n        \"Internal server error\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ece04492-497e-4b25-82fb-fa7d3f8da807",
+    "name": "Tabs External Billing Terms Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

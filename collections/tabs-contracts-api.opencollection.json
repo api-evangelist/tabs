@@ -1,0 +1,682 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Contracts API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contracts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Supported items for filter: name, externalIds.externalId, externalIds.sourceType, source, status, customerId, createdAt, lastUpdatedAt. Date format for createdAt and lastUpdatedAt: YYYY-MM-DD"
+              }
+            ]
+          },
+          "docs": "List contracts"
+        },
+        {
+          "info": {
+            "name": "Create contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create contract"
+        },
+        {
+          "info": {
+            "name": "Get contract by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ]
+          },
+          "docs": "Get contract by ID"
+        },
+        {
+          "info": {
+            "name": "Update contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contract"
+        },
+        {
+          "info": {
+            "name": "Download contract file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/file",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ]
+          },
+          "docs": "Download contract file"
+        },
+        {
+          "info": {
+            "name": "Upload contract file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/file",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "shouldProcess",
+                "value": "",
+                "type": "query",
+                "description": "Whether to trigger contract processing after file upload. Defaults to true."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload contract file"
+        },
+        {
+          "info": {
+            "name": "Create contract obligation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/obligations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create contract obligation"
+        },
+        {
+          "info": {
+            "name": "Get contract obligation by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/obligations/:obligationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "obligationId",
+                "value": "",
+                "type": "path",
+                "description": "Obligation Id"
+              }
+            ]
+          },
+          "docs": "Get contract obligation by ID"
+        },
+        {
+          "info": {
+            "name": "Delete contract obligation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/obligations/:obligationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "obligationId",
+                "value": "",
+                "type": "path",
+                "description": "Obligation Id"
+              }
+            ]
+          },
+          "docs": "Delete contract obligation"
+        },
+        {
+          "info": {
+            "name": "Perform contract action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/actions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform contract action"
+        },
+        {
+          "info": {
+            "name": "Update contract obligation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/obligation/:obligationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "obligationId",
+                "value": "",
+                "type": "path",
+                "description": "Obligation Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contract obligation"
+        },
+        {
+          "info": {
+            "name": "Upsert obligation custom revenue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/obligation/:obligationId/custom-revenue",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract id"
+              },
+              {
+                "name": "obligationId",
+                "value": "",
+                "type": "path",
+                "description": "Obligation id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert obligation custom revenue"
+        },
+        {
+          "info": {
+            "name": "List contract billing term groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-term-groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+              }
+            ]
+          },
+          "docs": "List contract billing term groups"
+        },
+        {
+          "info": {
+            "name": "Delete contract billing term group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-term-groups/:groupId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "Billing Term Group Id"
+              }
+            ]
+          },
+          "docs": "Delete contract billing term group"
+        },
+        {
+          "info": {
+            "name": "List contract performance obligations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/performance-obligations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "billingTermGroupId",
+                "value": "",
+                "type": "query",
+                "description": "Optional billing term group ID to filter results"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+              }
+            ]
+          },
+          "docs": "List contract performance obligations"
+        },
+        {
+          "info": {
+            "name": "Bulk save contract performance obligations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/performance-obligations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk save contract performance obligations"
+        },
+        {
+          "info": {
+            "name": "Update contract performance obligation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/performance-obligations/:pobId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "pobId",
+                "value": "",
+                "type": "path",
+                "description": "Performance Obligation Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contract performance obligation"
+        },
+        {
+          "info": {
+            "name": "List contract billing terms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-terms",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "billingTermGroupId",
+                "value": "",
+                "type": "query",
+                "description": "Optional billing term group (BTG) ID to filter by"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              }
+            ]
+          },
+          "docs": "List contract billing terms"
+        },
+        {
+          "info": {
+            "name": "Create contract billing term",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-terms",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create contract billing term"
+        },
+        {
+          "info": {
+            "name": "Update contract billing term",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-terms/:billingTermId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "billingTermId",
+                "value": "",
+                "type": "path",
+                "description": "Billing Term Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contract billing term"
+        },
+        {
+          "info": {
+            "name": "Delete contract billing term",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-terms/:billingTermId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "billingTermId",
+                "value": "",
+                "type": "path",
+                "description": "Billing Term Id"
+              }
+            ]
+          },
+          "docs": "Delete contract billing term"
+        },
+        {
+          "info": {
+            "name": "Update contract obligation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3.1/contracts/:id/obligation/:obligationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "obligationId",
+                "value": "",
+                "type": "path",
+                "description": "Obligation Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contract obligation"
+        },
+        {
+          "info": {
+            "name": "List deleted contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/deleted",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Supported items for filter: name, externalIds.externalId, externalIds.sourceType, source, status, customerId, createdAt, lastUpdatedAt, deletedAt. Date format for createdAt, lastUpdatedAt, and deletedAt: YYYY-MM-DD"
+              }
+            ]
+          },
+          "docs": "List deleted contracts"
+        },
+        {
+          "info": {
+            "name": "Change event type for selected billing terms and POBs in a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/contracts/:id/billing-term-groups/:groupId/event-type",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contract Id"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "Billing Term Group Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change event type for selected billing terms and POBs in a group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

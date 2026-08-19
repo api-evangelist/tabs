@@ -1,0 +1,635 @@
+{
+  "item": [
+    {
+      "id": "a1878694-1faf-4761-876e-c2d1ea33c23d",
+      "name": "Commitments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "968b4767-a091-47b3-9c09-e1a0c9169759",
+          "name": "List commitments",
+          "request": {
+            "name": "List commitments",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "commitments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n        Supported items for filter: customerId, contractId\n\n        - customerId: Filter by customer ID (use \"eq\" rule, e.g., customerId:eq:customer-id)\n\n        - contractId: Filter by contract IDs (use \"in\" rule with pipe-separated values, e.g., contractId:in:id1|id2|id3)\n        "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "532c7e31-4b54-448f-915c-6f12e65656f3",
+              "name": "Get all commitments with optional customer and contract filtering",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"contractId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"prepaidEnabled\": false,\n        \"commitmentValue\": \"10000.00\",\n        \"commitmentUnitType\": \"DOLLARS\",\n        \"eventTypesIncluded\": [\n          \"string\",\n          \"string\"\n        ],\n        \"currentCumulative\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"units\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n        \"updatedAt\": \"2024-01-15T10:30:00.000Z\",\n        \"prepaidValue\": \"5000.00\",\n        \"commitmentStartDate\": \"2024-01-01T00:00:00.000Z\",\n        \"commitmentEndDate\": \"2024-12-31T00:00:00.000Z\",\n        \"commitmentPeriodInterval\": \"MONTHLY\",\n        \"commitmentCustomInterval\": \"3_MONTHS\",\n        \"nextSequentialCommitmentId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"pricePriority\": \"LOW\",\n        \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n        \"totals\": {\n          \"overages\": \"250.50\",\n          \"trueUps\": \"0.00\"\n        },\n        \"periods\": [\n          {\n            \"periodId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"periodDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amounts\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"eventTypes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"finalizedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastCalculatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"periodId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"periodDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amounts\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"eventTypes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"finalizedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastCalculatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"deletedAt\": \"string\"\n      },\n      {\n        \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"contractId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"customerId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"prepaidEnabled\": false,\n        \"commitmentValue\": \"10000.00\",\n        \"commitmentUnitType\": \"DOLLARS\",\n        \"eventTypesIncluded\": [\n          \"string\",\n          \"string\"\n        ],\n        \"currentCumulative\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"units\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n        \"updatedAt\": \"2024-01-15T10:30:00.000Z\",\n        \"prepaidValue\": \"5000.00\",\n        \"commitmentStartDate\": \"2024-01-01T00:00:00.000Z\",\n        \"commitmentEndDate\": \"2024-12-31T00:00:00.000Z\",\n        \"commitmentPeriodInterval\": \"MONTHLY\",\n        \"commitmentCustomInterval\": \"3_MONTHS\",\n        \"nextSequentialCommitmentId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"pricePriority\": \"LOW\",\n        \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n        \"totals\": {\n          \"overages\": \"250.50\",\n          \"trueUps\": \"0.00\"\n        },\n        \"periods\": [\n          {\n            \"periodId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"periodDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amounts\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"eventTypes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"finalizedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastCalculatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"periodId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"periodDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amounts\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"eventTypes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"finalizedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastCalculatedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"deletedAt\": \"string\"\n      }\n    ],\n    \"limit\": 6846.729521160588,\n    \"totalItems\": 1657.7802647092665,\n    \"currentPage\": 897.8994864080836\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 7928.84628951248,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "209991ad-2abb-452c-82aa-a04c040ba726",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b961aa42-040c-4d8e-8453-9b056c55a968",
+          "name": "Create commitments",
+          "request": {
+            "name": "Create commitments",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "commitments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contractId\": \"<string>\",\n  \"commitments\": [\n    {\n      \"commitmentValue\": \"<number>\",\n      \"commitmentUnitType\": \"<string>\",\n      \"prepaidEnabled\": \"<boolean>\",\n      \"billingTermIds\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"prepaidValue\": \"<number>\",\n      \"prepaymentInvoiceLineName\": \"<string>\",\n      \"prepaymentIntegrationItem\": \"<string>\",\n      \"revenueRecognitionPattern\": \"<string>\",\n      \"trueUpName\": \"<string>\",\n      \"trueUpIntegrationItem\": \"<string>\",\n      \"commitmentStartDate\": \"<string>\",\n      \"commitmentEndDate\": \"<string>\",\n      \"isFullDuration\": \"<boolean>\",\n      \"commitmentInterval\": \"<string>\",\n      \"isSequential\": \"<boolean>\",\n      \"previousCommitmentId\": \"<string>\",\n      \"prePaidWholeCommitment\": \"<boolean>\",\n      \"prepaymentScheduleType\": \"<string>\",\n      \"pricePriority\": \"<string>\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"<string>\",\n          \"overagePrice\": \"<number>\",\n          \"overageInvoiceLineName\": \"<string>\",\n          \"overageIntegrationItemId\": \"<string>\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"<string>\",\n          \"overagePrice\": \"<number>\",\n          \"overageInvoiceLineName\": \"<string>\",\n          \"overageIntegrationItemId\": \"<string>\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"commitmentValue\": \"<number>\",\n      \"commitmentUnitType\": \"<string>\",\n      \"prepaidEnabled\": \"<boolean>\",\n      \"billingTermIds\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"prepaidValue\": \"<number>\",\n      \"prepaymentInvoiceLineName\": \"<string>\",\n      \"prepaymentIntegrationItem\": \"<string>\",\n      \"revenueRecognitionPattern\": \"<string>\",\n      \"trueUpName\": \"<string>\",\n      \"trueUpIntegrationItem\": \"<string>\",\n      \"commitmentStartDate\": \"<string>\",\n      \"commitmentEndDate\": \"<string>\",\n      \"isFullDuration\": \"<boolean>\",\n      \"commitmentInterval\": \"<string>\",\n      \"isSequential\": \"<boolean>\",\n      \"previousCommitmentId\": \"<string>\",\n      \"prePaidWholeCommitment\": \"<boolean>\",\n      \"prepaymentScheduleType\": \"<string>\",\n      \"pricePriority\": \"<string>\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"<string>\",\n          \"overagePrice\": \"<number>\",\n          \"overageInvoiceLineName\": \"<string>\",\n          \"overageIntegrationItemId\": \"<string>\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"<string>\",\n          \"overagePrice\": \"<number>\",\n          \"overageInvoiceLineName\": \"<string>\",\n          \"overageIntegrationItemId\": \"<string>\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9fa11d4c-37b9-4c27-822f-c81b6ad11031",
+              "name": "Usage commitments created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contractId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n  \"commitments\": [\n    {\n      \"commitmentValue\": 1000,\n      \"commitmentUnitType\": \"DOLLARS\",\n      \"prepaidEnabled\": true,\n      \"billingTermIds\": [\n        \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n      ],\n      \"prepaidValue\": 500,\n      \"prepaymentInvoiceLineName\": \"Prepayment\",\n      \"prepaymentIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"revenueRecognitionPattern\": \"straight-line\",\n      \"trueUpName\": \"True up\",\n      \"trueUpIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"commitmentStartDate\": \"2025-01-01\",\n      \"commitmentEndDate\": \"2025-12-31\",\n      \"isFullDuration\": true,\n      \"commitmentInterval\": \"MONTHLY\",\n      \"isSequential\": false,\n      \"previousCommitmentId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"prePaidWholeCommitment\": true,\n      \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n      \"pricePriority\": \"LOW\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"commitmentValue\": 1000,\n      \"commitmentUnitType\": \"DOLLARS\",\n      \"prepaidEnabled\": true,\n      \"billingTermIds\": [\n        \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n      ],\n      \"prepaidValue\": 500,\n      \"prepaymentInvoiceLineName\": \"Prepayment\",\n      \"prepaymentIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"revenueRecognitionPattern\": \"straight-line\",\n      \"trueUpName\": \"True up\",\n      \"trueUpIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"commitmentStartDate\": \"2025-01-01\",\n      \"commitmentEndDate\": \"2025-12-31\",\n      \"isFullDuration\": true,\n      \"commitmentInterval\": \"MONTHLY\",\n      \"isSequential\": false,\n      \"previousCommitmentId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"prePaidWholeCommitment\": true,\n      \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n      \"pricePriority\": \"LOW\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"success\": true,\n    \"commitmentIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 7460.113863051581,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d304486d-c589-4b6d-afcd-ae67f727238d",
+              "name": "Validation error or BT lockdown",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contractId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n  \"commitments\": [\n    {\n      \"commitmentValue\": 1000,\n      \"commitmentUnitType\": \"DOLLARS\",\n      \"prepaidEnabled\": true,\n      \"billingTermIds\": [\n        \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n      ],\n      \"prepaidValue\": 500,\n      \"prepaymentInvoiceLineName\": \"Prepayment\",\n      \"prepaymentIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"revenueRecognitionPattern\": \"straight-line\",\n      \"trueUpName\": \"True up\",\n      \"trueUpIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"commitmentStartDate\": \"2025-01-01\",\n      \"commitmentEndDate\": \"2025-12-31\",\n      \"isFullDuration\": true,\n      \"commitmentInterval\": \"MONTHLY\",\n      \"isSequential\": false,\n      \"previousCommitmentId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"prePaidWholeCommitment\": true,\n      \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n      \"pricePriority\": \"LOW\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"commitmentValue\": 1000,\n      \"commitmentUnitType\": \"DOLLARS\",\n      \"prepaidEnabled\": true,\n      \"billingTermIds\": [\n        \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n      ],\n      \"prepaidValue\": 500,\n      \"prepaymentInvoiceLineName\": \"Prepayment\",\n      \"prepaymentIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"revenueRecognitionPattern\": \"straight-line\",\n      \"trueUpName\": \"True up\",\n      \"trueUpIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"commitmentStartDate\": \"2025-01-01\",\n      \"commitmentEndDate\": \"2025-12-31\",\n      \"isFullDuration\": true,\n      \"commitmentInterval\": \"MONTHLY\",\n      \"isSequential\": false,\n      \"previousCommitmentId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"prePaidWholeCommitment\": true,\n      \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n      \"pricePriority\": \"LOW\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5421e705-b492-464d-95fa-8c4bcef5ed3e",
+              "name": "Contract not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contractId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n  \"commitments\": [\n    {\n      \"commitmentValue\": 1000,\n      \"commitmentUnitType\": \"DOLLARS\",\n      \"prepaidEnabled\": true,\n      \"billingTermIds\": [\n        \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n      ],\n      \"prepaidValue\": 500,\n      \"prepaymentInvoiceLineName\": \"Prepayment\",\n      \"prepaymentIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"revenueRecognitionPattern\": \"straight-line\",\n      \"trueUpName\": \"True up\",\n      \"trueUpIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"commitmentStartDate\": \"2025-01-01\",\n      \"commitmentEndDate\": \"2025-12-31\",\n      \"isFullDuration\": true,\n      \"commitmentInterval\": \"MONTHLY\",\n      \"isSequential\": false,\n      \"previousCommitmentId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"prePaidWholeCommitment\": true,\n      \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n      \"pricePriority\": \"LOW\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"commitmentValue\": 1000,\n      \"commitmentUnitType\": \"DOLLARS\",\n      \"prepaidEnabled\": true,\n      \"billingTermIds\": [\n        \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n      ],\n      \"prepaidValue\": 500,\n      \"prepaymentInvoiceLineName\": \"Prepayment\",\n      \"prepaymentIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"revenueRecognitionPattern\": \"straight-line\",\n      \"trueUpName\": \"True up\",\n      \"trueUpIntegrationItem\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"commitmentStartDate\": \"2025-01-01\",\n      \"commitmentEndDate\": \"2025-12-31\",\n      \"isFullDuration\": true,\n      \"commitmentInterval\": \"MONTHLY\",\n      \"isSequential\": false,\n      \"previousCommitmentId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n      \"prePaidWholeCommitment\": true,\n      \"prepaymentScheduleType\": \"FULL_UPFRONT\",\n      \"pricePriority\": \"LOW\",\n      \"overageConfigs\": [\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"billingTermId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePrice\": 1.5,\n          \"overageInvoiceLineName\": \"Overage\",\n          \"overageIntegrationItemId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n          \"overagePricings\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"mantissa\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"exponent\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"tier\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"conditionValue\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"isOverage\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d342564-093b-46a0-a0b6-a62f8e96190a",
+          "name": "Update commitment",
+          "request": {
+            "name": "Update commitment",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "commitments",
+                ":commitmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commitmentId",
+                  "description": "(Required) Commitment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commitmentValue\": \"<number>\",\n  \"commitmentStartDate\": \"<string>\",\n  \"commitmentEndDate\": \"<string>\",\n  \"isFullDuration\": \"<boolean>\",\n  \"commitmentInterval\": \"<string>\",\n  \"billingTermsToAdd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pricePriority\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a72b5f14-1f91-4119-a129-022e201a142d",
+              "name": "Commitment updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments",
+                    ":commitmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commitmentId",
+                      "description": "(Required) Commitment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commitmentValue\": 1000,\n  \"commitmentStartDate\": \"2025-01-01\",\n  \"commitmentEndDate\": \"2025-12-31\",\n  \"isFullDuration\": true,\n  \"commitmentInterval\": \"MONTHLY\",\n  \"billingTermsToAdd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pricePriority\": \"LOW\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {},\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 5077.331939941842,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60545b28-4055-4f3a-8862-065da9d1b3a6",
+              "name": "Validation error or locked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments",
+                    ":commitmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commitmentId",
+                      "description": "(Required) Commitment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commitmentValue\": 1000,\n  \"commitmentStartDate\": \"2025-01-01\",\n  \"commitmentEndDate\": \"2025-12-31\",\n  \"isFullDuration\": true,\n  \"commitmentInterval\": \"MONTHLY\",\n  \"billingTermsToAdd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pricePriority\": \"LOW\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fdff03a9-4e90-4627-b6b7-5dd6f810f935",
+              "name": "Commitment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "commitments",
+                    ":commitmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commitmentId",
+                      "description": "(Required) Commitment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commitmentValue\": 1000,\n  \"commitmentStartDate\": \"2025-01-01\",\n  \"commitmentEndDate\": \"2025-12-31\",\n  \"isFullDuration\": true,\n  \"commitmentInterval\": \"MONTHLY\",\n  \"billingTermsToAdd\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pricePriority\": \"LOW\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1e633f85-45ea-4edd-b21b-cb36750684a7",
+    "name": "Tabs External Billing Terms Commitments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "item": [
+    {
+      "id": "eeffc01b-0fba-4059-9717-58ba31ab9946",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01e61139-1edb-4134-8c46-66998501064d",
+          "name": "Get cash forecasting report",
+          "request": {
+            "name": "Get cash forecasting report",
+            "description": {
+              "content": "Retrieves a paginated cash forecasting report showing due and paid amounts per period for each customer",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "reports",
+                "cash-forecasting"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Max items per page. Defaults to 50. Values above 500 will be rejected."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n            Supported items for filter: startMonth, endMonth, currency.\n\n            Months should be in YYYY-MM format. Set startMonth and endMonth to the same value to request a single month.\n\n            By default the forecast is capped to 120 months ahead of the current month; pass endMonth to extend or shorten that horizon.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d45f75b8-25bc-4699-8d69-66b7b89ef141",
+              "name": "Successfully retrieved cash forecasting report",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "reports",
+                    "cash-forecasting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"customerName\": \"string\",\n        \"cashForecastingPerPeriod\": [\n          {\n            \"period\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dueTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paidTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"period\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dueTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paidTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"customerName\": \"string\",\n        \"cashForecastingPerPeriod\": [\n          {\n            \"period\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dueTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paidTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"period\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dueTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"paidTotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ],\n    \"limit\": 5606.668156468658,\n    \"totalItems\": 7775.694639106208,\n    \"currentPage\": 5987.623979132502\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 5686.851076065812,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93a5fdf6-c0fc-4177-96f7-c9501f4a5929",
+              "name": "Unauthorized - Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "reports",
+                    "cash-forecasting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbc7ebb4-e65c-4864-a7e2-afe9e35a109a",
+          "name": "Get ARR report",
+          "request": {
+            "name": "Get ARR report",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "reports",
+                "arr"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Max items per page. Defaults to 50. Values above 500 will be rejected."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n            Supported items for filter: startMonth, endMonth, customerId, currency.\n\n            Months should be in YYYY-MM format.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f03f804-9f30-4b85-86cd-72ae808d266f",
+              "name": "Get ARR by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "reports",
+                    "arr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"customer\": {\n          \"name\": \"John Doe\",\n          \"externalIds\": [\n            {\n              \"type\": \"QUICKBOOKS\",\n              \"sourceType\": \"QUICKBOOKS\"\n            }\n          ]\n        },\n        \"timeframe\": \"2026-01\",\n        \"currency\": \"USD\",\n        \"total\": 120000\n      },\n      {\n        \"customer\": {\n          \"name\": \"John Doe\",\n          \"externalIds\": [\n            {\n              \"type\": \"QUICKBOOKS\",\n              \"sourceType\": \"QUICKBOOKS\"\n            }\n          ]\n        },\n        \"timeframe\": \"2026-01\",\n        \"currency\": \"USD\",\n        \"total\": 120000\n      }\n    ],\n    \"limit\": 2967.890820277438,\n    \"totalItems\": 1282.5179160540433,\n    \"currentPage\": 5467.031472094734\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 7851.517969745096,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bbb53ce9-c65d-4313-8833-82eeda7168e1",
+    "name": "Tabs External Billing Terms Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

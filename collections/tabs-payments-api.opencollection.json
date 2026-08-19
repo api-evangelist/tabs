@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Payments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/payments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: receivedAt, status, type, invoiceId, customerId.\n\n        Filtering parameter in the format \"property:rule:value\".\n\n        Example: \"receivedAt:eq:[some date]\" or \"status:eq:[some status]\".\n\n        For multiple filters use \"receivedAt:eq:[some date],status:eq:[some status]\".\n\n        Supported rules: eq, neq, gt, gte, lt, lte, like, nlike, in, nin, isnull, isnotnull.\n        "
+              }
+            ]
+          },
+          "docs": "List payments"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

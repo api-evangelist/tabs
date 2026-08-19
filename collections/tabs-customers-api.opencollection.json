@@ -1,0 +1,643 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Customers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get customer by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              }
+            ]
+          },
+          "docs": "Get customer by ID"
+        },
+        {
+          "info": {
+            "name": "Delete customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              }
+            ]
+          },
+          "docs": "Delete customer"
+        },
+        {
+          "info": {
+            "name": "List customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Supported items for filter: name, externalIds.externalId, lastUpdatedAt. Date format for lastUpdatedAt: YYYY-MM-DD"
+              }
+            ]
+          },
+          "docs": "List customers"
+        },
+        {
+          "info": {
+            "name": "Create customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create customer"
+        },
+        {
+          "info": {
+            "name": "Create sub-customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/sub-customers",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create sub-customer"
+        },
+        {
+          "info": {
+            "name": "Get customer invoice by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              }
+            ]
+          },
+          "docs": "Get customer invoice by ID"
+        },
+        {
+          "info": {
+            "name": "Update invoice external IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/external-ids",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update invoice external IDs"
+        },
+        {
+          "info": {
+            "name": "Download invoice PDF",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/pdf",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the response either pdf or buffer"
+              }
+            ]
+          },
+          "docs": "Download invoice PDF"
+        },
+        {
+          "info": {
+            "name": "Perform invoice action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/actions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform invoice action"
+        },
+        {
+          "info": {
+            "name": "Get invoice payment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/payments/:paymentId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              },
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Payment Id"
+              }
+            ]
+          },
+          "docs": "Get invoice payment by ID"
+        },
+        {
+          "info": {
+            "name": "Create invoice payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/payments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create invoice payment"
+        },
+        {
+          "info": {
+            "name": "Upload invoice attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/attachments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer Id"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload invoice attachment"
+        },
+        {
+          "info": {
+            "name": "Update customer auto-charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/autocharge",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer auto-charge"
+        },
+        {
+          "info": {
+            "name": "Update customer credit card fees exemption",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/cc-fees-exemption",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer credit card fees exemption"
+        },
+        {
+          "info": {
+            "name": "Update customer custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/custom-field",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer custom fields"
+        },
+        {
+          "info": {
+            "name": "List customer contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/contacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Supported items for filter: firstName, lastName, email, isPrimaryContact, isCCEmail, lastUpdatedAt. Date format for lastUpdatedAt: YYYY-MM-DD"
+              }
+            ]
+          },
+          "docs": "List customer contacts"
+        },
+        {
+          "info": {
+            "name": "Create customer contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/contacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create customer contacts"
+        },
+        {
+          "info": {
+            "name": "Create customer address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/address",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create customer address"
+        },
+        {
+          "info": {
+            "name": "Update customer contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/contacts/:contactId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "contactId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer contact"
+        },
+        {
+          "info": {
+            "name": "Upsert customer external ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/external-ids",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert customer external ID"
+        },
+        {
+          "info": {
+            "name": "List invoice credit memos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/credit-memos",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ]
+          },
+          "docs": "List invoice credit memos"
+        },
+        {
+          "info": {
+            "name": "Update customer name",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/name",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer name"
+        },
+        {
+          "info": {
+            "name": "Update invoice PO number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/po",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update invoice PO number"
+        },
+        {
+          "info": {
+            "name": "Update invoice memo",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/customers/:id/invoices/:invoiceId/memo",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID"
+              },
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update invoice memo"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

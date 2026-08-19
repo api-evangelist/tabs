@@ -1,0 +1,158 @@
+{
+  "item": [
+    {
+      "id": "2ff0a14b-880a-41b0-9c6a-1b9b3d6937eb",
+      "name": "Billing Terms",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "af559c82-48fb-43e4-b3b3-8451d3eff1b0",
+          "name": "List billing terms",
+          "request": {
+            "name": "List billing terms",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "billing-terms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n        Supported items for filter: contractId, customerId, startDate, endDate, billingTermGroupId, productId\n\n        Dates should be in YYYY-MM-DD format\n        "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7c9c70d-12c4-4ca6-bc51-95f03c65ba89",
+              "name": "Get all Billing Terms by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "billing-terms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"billingTermId\": \"990404bc-7760-ad68-7e69-bc10f851fa5c\",\n        \"contractId\": \"9592134f-8c97-4f4c-d49e-dd26e5c80544\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"itemId\": \"6000c4c5-588b-8ede-5fc6-8caa0e8df35a\",\n        \"productId\": \"7b4905f5-0196-9972-3f4d-6e5fece80cd4\",\n        \"billingStartDate\": \"string\",\n        \"billingEndDate\": \"string\",\n        \"quantity\": 1,\n        \"duration\": 12,\n        \"intervalFrequency\": 1516.219285165078,\n        \"interval\": \"MONTH\",\n        \"invoiceDateStrategy\": \"FIRST_OF_PERIOD\",\n        \"netPaymentTerms\": 30,\n        \"billingType\": \"FLAT\",\n        \"pricingType\": \"SIMPLE\",\n        \"isRecurring\": false,\n        \"isArrears\": true,\n        \"eventTypeId\": \"3c5d7c5c-57de-0d33-94ee-06d1340367d5\",\n        \"classId\": \"9324d3a7-174f-e2ff-b833-6b141b41f310\",\n        \"departmentId\": \"52fdb951-f96d-6e25-14a7-aebc0dae9934\",\n        \"projectId\": \"a296c195-5d35-926d-988a-3231f3de1c0b\",\n        \"pricing\": [\n          {\n            \"tier\": 1,\n            \"amount\": 120000,\n            \"amountType\": \"TOTAL_INVOICE\",\n            \"tierMinimum\": 0\n          }\n        ],\n        \"billingTermGroupId\": \"23ac5d76-e326-1a3d-8d5f-4567fd9911ab\",\n        \"commitmentId\": \"6c6f4eaf-ee6c-c8b1-a24c-1c17bd40a16b\",\n        \"commitmentBillingTermType\": \"string\",\n        \"discounts\": [\n          {\n            \"type\": \"PERCENTAGE\",\n            \"amount\": \"0.10\",\n            \"note\": \"Partner discount\"\n          },\n          {\n            \"type\": \"FIXED\",\n            \"amount\": \"100\",\n            \"note\": \"Early payment discount\"\n          }\n        ]\n      },\n      {\n        \"billingTermId\": \"f6d8b62f-425b-08b8-509f-5fb1868aa951\",\n        \"contractId\": \"6199c2f8-5de9-7357-3ae1-9a2ac407e53b\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"itemId\": \"6d442fe1-2c43-38f6-26e1-938313d6e2df\",\n        \"productId\": \"8eddf591-33d9-9dc1-6dd3-24e876caf0b5\",\n        \"billingStartDate\": \"string\",\n        \"billingEndDate\": \"string\",\n        \"quantity\": 1,\n        \"duration\": 12,\n        \"intervalFrequency\": 884.9812134100598,\n        \"interval\": \"MONTH\",\n        \"invoiceDateStrategy\": \"FIRST_OF_PERIOD\",\n        \"netPaymentTerms\": 30,\n        \"billingType\": \"FLAT\",\n        \"pricingType\": \"SIMPLE\",\n        \"isRecurring\": false,\n        \"isArrears\": true,\n        \"eventTypeId\": \"227d3f39-8546-7ef5-89aa-a87b9e58b0d3\",\n        \"classId\": \"74c99d17-691d-9981-416a-9a794dcf2f1c\",\n        \"departmentId\": \"397287f1-9e88-0f50-9a5c-85e086e83ee1\",\n        \"projectId\": \"361ac275-6d7b-0d9b-475b-34decc0705c4\",\n        \"pricing\": [\n          {\n            \"tier\": 1,\n            \"amount\": 120000,\n            \"amountType\": \"TOTAL_INVOICE\",\n            \"tierMinimum\": 0\n          }\n        ],\n        \"billingTermGroupId\": \"0ec04eaa-a67e-1193-78de-c0ba5dc8ba5a\",\n        \"commitmentId\": \"f91bd593-6edb-b6de-526c-a28063834cfd\",\n        \"commitmentBillingTermType\": \"string\",\n        \"discounts\": [\n          {\n            \"type\": \"PERCENTAGE\",\n            \"amount\": \"0.10\",\n            \"note\": \"Partner discount\"\n          },\n          {\n            \"type\": \"FIXED\",\n            \"amount\": \"100\",\n            \"note\": \"Early payment discount\"\n          }\n        ]\n      }\n    ],\n    \"limit\": 3129.825765169746,\n    \"totalItems\": 5736.4117679108485,\n    \"currentPage\": 614.6322397025317\n  },\n  \"success\": false,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 9042.607362018938,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a136b730-40dd-4481-8e79-433cb434090e",
+    "name": "Tabs External Billing Terms API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

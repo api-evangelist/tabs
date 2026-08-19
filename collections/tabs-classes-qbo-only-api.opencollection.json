@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Classes (QBO only) API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Classes (QBO only)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List classes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/classes"
+          },
+          "docs": "Class comes from QBO only, and can be populated on an obligation. This does not apply to NS users"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

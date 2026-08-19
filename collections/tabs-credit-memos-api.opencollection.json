@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Credit Memos API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Credit Memos",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get credit memo by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/credit-memos/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get credit memo by ID"
+        },
+        {
+          "info": {
+            "name": "List credit memos",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/credit-memos",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported properties: creditMemoNumber, customerId, issueDateFrom, issueDateTo, status, lastUpdatedAt\n\n        Supported rules: eq: equals, in: in, gt: greater than, gte: greater than or equals, lt: less than, lte: less than or equals\n\n        Dates should be in YYYY-MM-DD format. lastUpdatedAt also accepts ISO 8601 timestamps (e.g. 2023-01-01T00:00:00.000Z).\n\n        lastUpdatedAt supports gt, gte, lt, lte, and eq rules, and can be combined (e.g. gte + lt) by specifying it multiple times.\n\n        For multiple filters use \"property:rule:value,property:rule:value\".\n\n        Example: \"lastUpdatedAt:gte:2023-01-01T00:00:00.000Z,lastUpdatedAt:lt:2024-01-01T00:00:00.000Z,status:in:OPEN|APPLIED|VOID\".\n        "
+              }
+            ]
+          },
+          "docs": "List credit memos"
+        },
+        {
+          "info": {
+            "name": "Create credit memo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/credit-memos",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create credit memo"
+        },
+        {
+          "info": {
+            "name": "Apply credit memo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/credit-memos/:id/applications",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Credit memo ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply credit memo"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

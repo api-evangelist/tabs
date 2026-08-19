@@ -1,0 +1,158 @@
+{
+  "item": [
+    {
+      "id": "97b6592b-f96c-46bd-856e-7cf53b0c23da",
+      "name": "Renewals",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef59c561-b9f8-4955-8732-33c21f1fcb3d",
+          "name": "List renewals",
+          "request": {
+            "name": "List renewals",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "renewals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n        Supported items for filter: contractId, type, status, contractEndDate\n\n        - contractId: Contract ID to filter by\n        - type: Renewal type (AUTOMATIC, UNILATERAL, MUTUAL, NONE)\n        - status: Renewal status (DRAFT, APPROVED, DECLINED)\n        - contractEndDate: Filter by term end date in YYYY-MM-DD format\n        "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7abce854-112b-493c-bd65-fdd1e645322c",
+              "name": "Get all Renewals by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "renewals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"contractId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"status\": \"DRAFT\",\n        \"type\": \"AUTOMATIC\",\n        \"noticePeriod\": 30,\n        \"noticePeriodUnits\": \"DAY\",\n        \"renewalLength\": 12,\n        \"renewalLengthUnits\": \"MONTH\",\n        \"maxNumberOfRenewals\": 3,\n        \"sameConditions\": true,\n        \"priceIncrease\": 5.5,\n        \"priceIncreaseUnits\": \"PERCENT\",\n        \"recurringPeriod\": 12,\n        \"recurringPeriodUnits\": \"MONTH\",\n        \"escalatorConditions\": \"Based on CPI\",\n        \"renewalCriteria\": \"Performance metrics\",\n        \"renewalCriteriaDetails\": \"Must meet 95% SLA\",\n        \"termEndDate\": \"2024-12-31\",\n        \"escalatorClauseSummary\": \"Annual increase\",\n        \"summary\": \"Automatic renewal with 30 day notice\",\n        \"quotes\": \"string\"\n      },\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"contractId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"status\": \"DRAFT\",\n        \"type\": \"AUTOMATIC\",\n        \"noticePeriod\": 30,\n        \"noticePeriodUnits\": \"DAY\",\n        \"renewalLength\": 12,\n        \"renewalLengthUnits\": \"MONTH\",\n        \"maxNumberOfRenewals\": 3,\n        \"sameConditions\": true,\n        \"priceIncrease\": 5.5,\n        \"priceIncreaseUnits\": \"PERCENT\",\n        \"recurringPeriod\": 12,\n        \"recurringPeriodUnits\": \"MONTH\",\n        \"escalatorConditions\": \"Based on CPI\",\n        \"renewalCriteria\": \"Performance metrics\",\n        \"renewalCriteriaDetails\": \"Must meet 95% SLA\",\n        \"termEndDate\": \"2024-12-31\",\n        \"escalatorClauseSummary\": \"Annual increase\",\n        \"summary\": \"Automatic renewal with 30 day notice\",\n        \"quotes\": \"string\"\n      }\n    ],\n    \"limit\": 7244.474919972642,\n    \"totalItems\": 6450.125496872976,\n    \"currentPage\": 3190.193927933146\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 2329.4592977596353,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "342d6bae-8b99-43ca-aa1a-6f1d61f30814",
+    "name": "Tabs External Billing Terms Renewals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

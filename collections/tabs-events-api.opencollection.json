@@ -1,0 +1,350 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Events API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk create events (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk create events (legacy)"
+        },
+        {
+          "info": {
+            "name": "Bulk delete events (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk delete events (legacy)"
+        },
+        {
+          "info": {
+            "name": "List events (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n      Supported items for filter: eventTypeId, customerId, differentiator, datetime\n\n      Datetime should be in YYYY-MM-DD format"
+              }
+            ]
+          },
+          "docs": "List events (legacy)"
+        },
+        {
+          "info": {
+            "name": "Create event (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create event (legacy)"
+        },
+        {
+          "info": {
+            "name": "Delete event (legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete event (legacy)"
+        },
+        {
+          "info": {
+            "name": "List event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/types",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Supported items for filter: name"
+              }
+            ]
+          },
+          "docs": "List event types"
+        },
+        {
+          "info": {
+            "name": "Create event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/types",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create event type"
+        },
+        {
+          "info": {
+            "name": "Get event type by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/types/:eventTypeId",
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get event type by ID"
+        },
+        {
+          "info": {
+            "name": "Delete event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/events/types/:eventTypeId",
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete event type"
+        },
+        {
+          "info": {
+            "name": "Get all events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v1/events",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+              },
+              {
+                "name": "ingestStartDate",
+                "value": "",
+                "type": "query",
+                "description": "Start ingest timestamp for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+              },
+              {
+                "name": "ingestEndDate",
+                "value": "",
+                "type": "query",
+                "description": "End ingest timestamp for filtering events (UTC) (format: YYYY-MM-DDTHH:mm:ss)"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Tabs Customer ID to filter events"
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Event type ID to filter events"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Source to filter events"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of events to return (default: 50, max: 1000)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination"
+              },
+              {
+                "name": "orderDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc/desc)"
+              },
+              {
+                "name": "skipDeletionEvents",
+                "value": "",
+                "type": "query",
+                "description": "Include deleted events in the response (default: true)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Fetches all usage events, and can be filtered as needed. Reach out to your account manager if you would like to participate in the Beta for the new Usage API."
+        },
+        {
+          "info": {
+            "name": "Create an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrators.prod.api.tabsplatform.com/v1/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new usage event. Requires valid authentication and unique idempotency key. Reach out to your account manager if you would like to participate in the Beta for the new Usage API."
+        },
+        {
+          "info": {
+            "name": "Get API version information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v1/version",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the current API version, name, and description"
+        },
+        {
+          "info": {
+            "name": "Delete an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrators.prod.api.tabsplatform.com/v1/events/:idempotencyKey",
+            "params": [
+              {
+                "name": "idempotencyKey",
+                "value": "",
+                "type": "path",
+                "description": "Event key of the event that should be deleted"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a usage event by creating a new deletion event that links back to the original event. Requires valid authentication. Reach out to your account manager if you would like to participate in the Beta for the new Usage API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

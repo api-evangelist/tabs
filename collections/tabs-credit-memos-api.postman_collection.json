@@ -1,0 +1,829 @@
+{
+  "item": [
+    {
+      "id": "ab42aca6-3cf9-45b2-b11f-407875cfd80b",
+      "name": "Credit Memos",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3b409f79-c2ae-4a9f-9b2a-b605cac696a8",
+          "name": "Get credit memo by ID",
+          "request": {
+            "name": "Get credit memo by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "credit-memos",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "96435df3-488f-4043-a37d-49e04b2c9e9d",
+              "name": "Credit memo retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"creditMemoNumber\": \"CM-001\",\n    \"creditMemoPrefix\": \"CM\",\n    \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"manufacturerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"issueDate\": \"2023-01-01T00:00:00.000Z\",\n    \"total\": 100,\n    \"status\": \"OPEN\",\n    \"customer\": {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"name\": \"Acme Corp\",\n      \"nameWithPrefix\": \"CUST-001 Acme Corp\"\n    },\n    \"items\": [\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Product A\",\n        \"quantity\": 1,\n        \"amount\": 100,\n        \"salesTaxAmount\": 8.25,\n        \"contraRevenueScheduleId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"note\": \"Credit for defective product\",\n        \"item\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"externalId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"erpClass\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Product A\",\n        \"quantity\": 1,\n        \"amount\": 100,\n        \"salesTaxAmount\": 8.25,\n        \"contraRevenueScheduleId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"note\": \"Credit for defective product\",\n        \"item\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"externalId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"erpClass\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"applications\": [\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"amountApplied\": 100,\n        \"invoiceNumber\": \"INV-001\",\n        \"invoicePrefix\": \"INV\",\n        \"appliedAt\": \"2023-01-01T00:00:00.000Z\"\n      },\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"amountApplied\": 100,\n        \"invoiceNumber\": \"INV-001\",\n        \"invoicePrefix\": \"INV\",\n        \"appliedAt\": \"2023-01-01T00:00:00.000Z\"\n      }\n    ],\n    \"externalIds\": [\n      {\n        \"externalId\": \"EXT-123\",\n        \"sourceType\": \"NETSUITE\"\n      },\n      {\n        \"externalId\": \"EXT-123\",\n        \"sourceType\": \"NETSUITE\"\n      }\n    ],\n    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n    \"lastUpdatedAt\": \"2023-01-01T00:00:00.000Z\",\n    \"syncStatus\": \"NOT_SYNCED\",\n    \"memo\": \"Credit for defective product\",\n    \"reason\": \"Product defect\"\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 3036.5497139831723,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7da429d-a83e-4e99-afd3-b3161d85e381",
+              "name": "Credit memo not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "51840823-e6ac-4a26-805a-b1fa49b43710",
+              "name": "Internal server error - Failed to get credit memo",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "537b38d1-53e7-4cf1-8853-521749ac2405",
+          "name": "List credit memos",
+          "request": {
+            "name": "List credit memos",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "credit-memos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n        Supported properties: creditMemoNumber, customerId, issueDateFrom, issueDateTo, status, lastUpdatedAt\n\n        Supported rules: eq: equals, in: in, gt: greater than, gte: greater than or equals, lt: less than, lte: less than or equals\n\n        Dates should be in YYYY-MM-DD format. lastUpdatedAt also accepts ISO 8601 timestamps (e.g. 2023-01-01T00:00:00.000Z).\n\n        lastUpdatedAt supports gt, gte, lt, lte, and eq rules, and can be combined (e.g. gte + lt) by specifying it multiple times.\n\n        For multiple filters use \"property:rule:value,property:rule:value\".\n\n        Example: \"lastUpdatedAt:gte:2023-01-01T00:00:00.000Z,lastUpdatedAt:lt:2024-01-01T00:00:00.000Z,status:in:OPEN|APPLIED|VOID\".\n        "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e5b0755-acf9-4c4e-b339-743807cefc79",
+              "name": "Get all Credit Memos by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"creditMemoNumber\": \"CM-001\",\n        \"creditMemoPrefix\": \"CM\",\n        \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"manufacturerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"issueDate\": \"2023-01-01T00:00:00.000Z\",\n        \"total\": 100,\n        \"status\": \"OPEN\",\n        \"customer\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nameWithPrefix\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"items\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"salesTaxAmount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"contraRevenueScheduleId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"note\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"item\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"erpClass\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"salesTaxAmount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"contraRevenueScheduleId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"note\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"item\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"erpClass\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"applications\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creditMemoId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amountApplied\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoicePrefix\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"appliedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creditMemoId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amountApplied\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoicePrefix\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"appliedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"externalIds\": [\n          {\n            \"externalId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"externalId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n        \"lastUpdatedAt\": \"2023-01-01T00:00:00.000Z\",\n        \"syncStatus\": \"NOT_SYNCED\",\n        \"memo\": \"Credit for defective product\",\n        \"reason\": \"Product defect\"\n      },\n      {\n        \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"creditMemoNumber\": \"CM-001\",\n        \"creditMemoPrefix\": \"CM\",\n        \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"manufacturerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"issueDate\": \"2023-01-01T00:00:00.000Z\",\n        \"total\": 100,\n        \"status\": \"OPEN\",\n        \"customer\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nameWithPrefix\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"items\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"salesTaxAmount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"contraRevenueScheduleId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"note\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"item\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"erpClass\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"salesTaxAmount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"contraRevenueScheduleId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"note\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"item\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"erpClass\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"applications\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creditMemoId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amountApplied\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoicePrefix\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"appliedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creditMemoId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amountApplied\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoiceNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"invoicePrefix\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"appliedAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"externalIds\": [\n          {\n            \"externalId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"externalId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sourceType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n        \"lastUpdatedAt\": \"2023-01-01T00:00:00.000Z\",\n        \"syncStatus\": \"NOT_SYNCED\",\n        \"memo\": \"Credit for defective product\",\n        \"reason\": \"Product defect\"\n      }\n    ],\n    \"limit\": 7646.425925709767,\n    \"totalItems\": 7081.490905024214,\n    \"currentPage\": 5815.058175399949\n  },\n  \"success\": true,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 1633.6427314314362,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6ebbc4e-5e24-4bcd-b274-0dc5845969ef",
+          "name": "Create credit memo",
+          "request": {
+            "name": "Create credit memo",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "credit-memos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"issueDate\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"amount\": \"<number>\",\n      \"invoiceLineItemId\": \"<string>\",\n      \"itemId\": \"<string>\"\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"amount\": \"<number>\",\n      \"invoiceLineItemId\": \"<string>\",\n      \"itemId\": \"<string>\"\n    }\n  ],\n  \"memo\": \"<string>\",\n  \"applyOnCreate\": {\n    \"invoiceId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b9b5d5b-08d7-45af-a047-f80d306a3cf2",
+              "name": "Credit memo created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"issueDate\": \"2023-01-10\",\n  \"reason\": \"Product defect\",\n  \"items\": [\n    {\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"invoiceLineItemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\"\n    },\n    {\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"invoiceLineItemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\"\n    }\n  ],\n  \"memo\": \"Credit for defective product\",\n  \"applyOnCreate\": {\n    \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"creditMemoNumber\": \"CM-001\",\n  \"creditMemoPrefix\": \"CM\",\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"manufacturerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"issueDate\": \"2023-01-01T00:00:00.000Z\",\n  \"total\": 100,\n  \"status\": \"OPEN\",\n  \"customer\": {\n    \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"name\": \"Acme Corp\",\n    \"nameWithPrefix\": \"CUST-001 Acme Corp\"\n  },\n  \"items\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"name\": \"Product A\",\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"salesTaxAmount\": 8.25,\n      \"contraRevenueScheduleId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"note\": \"Credit for defective product\",\n      \"item\": {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Product A\",\n        \"externalId\": \"EXT-123\"\n      },\n      \"erpClass\": {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Revenue\"\n      }\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"name\": \"Product A\",\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"salesTaxAmount\": 8.25,\n      \"contraRevenueScheduleId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"note\": \"Credit for defective product\",\n      \"item\": {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Product A\",\n        \"externalId\": \"EXT-123\"\n      },\n      \"erpClass\": {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Revenue\"\n      }\n    }\n  ],\n  \"applications\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"amountApplied\": 100,\n      \"invoiceNumber\": \"INV-001\",\n      \"invoicePrefix\": \"INV\",\n      \"appliedAt\": \"2023-01-01T00:00:00.000Z\"\n    },\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"creditMemoId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"amountApplied\": 100,\n      \"invoiceNumber\": \"INV-001\",\n      \"invoicePrefix\": \"INV\",\n      \"appliedAt\": \"2023-01-01T00:00:00.000Z\"\n    }\n  ],\n  \"externalIds\": [\n    {\n      \"externalId\": \"EXT-123\",\n      \"sourceType\": \"NETSUITE\"\n    },\n    {\n      \"externalId\": \"EXT-123\",\n      \"sourceType\": \"NETSUITE\"\n    }\n  ],\n  \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n  \"lastUpdatedAt\": \"2023-01-01T00:00:00.000Z\",\n  \"syncStatus\": \"NOT_SYNCED\",\n  \"memo\": \"Credit for defective product\",\n  \"reason\": \"Product defect\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c286cafe-5e27-4d73-8417-383f7d2d9a17",
+              "name": "Bad request - Invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"issueDate\": \"2023-01-10\",\n  \"reason\": \"Product defect\",\n  \"items\": [\n    {\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"invoiceLineItemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\"\n    },\n    {\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"invoiceLineItemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\"\n    }\n  ],\n  \"memo\": \"Credit for defective product\",\n  \"applyOnCreate\": {\n    \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "30247c8b-b659-4688-b932-499836b9bd3e",
+              "name": "Internal server error - Failed to create credit memo",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"issueDate\": \"2023-01-10\",\n  \"reason\": \"Product defect\",\n  \"items\": [\n    {\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"invoiceLineItemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\"\n    },\n    {\n      \"quantity\": 1,\n      \"amount\": 100,\n      \"invoiceLineItemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\"\n    }\n  ],\n  \"memo\": \"Credit for defective product\",\n  \"applyOnCreate\": {\n    \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7f323c6-6ba8-4ff0-8612-e8d00bf045af",
+          "name": "Apply credit memo",
+          "request": {
+            "name": "Apply credit memo",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "credit-memos",
+                ":id",
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Credit memo ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoiceId\": \"<string>\",\n  \"amount\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3307a838-a43f-4819-8853-d3d5dc71df4c",
+              "name": "Credit memo application created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Credit memo ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62f217f5-3081-4874-b2e8-6b5c463ebff6",
+              "name": "Bad request - Invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Credit memo ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4da2929f-ade6-4eb6-bebe-7cfd00481f1b",
+              "name": "Not found - Credit memo or invoice not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Credit memo ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e94ad409-6afb-43ac-9f90-97cc6ed72452",
+              "name": "Internal server error - Failed to apply credit memo",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "credit-memos",
+                    ":id",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Credit memo ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invoiceId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b4eb51e2-f26d-4c17-8bf1-d7d77a8156be",
+    "name": "Tabs External Billing Terms Credit Memos API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

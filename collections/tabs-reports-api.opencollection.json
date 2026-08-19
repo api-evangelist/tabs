@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Reports API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cash forecasting report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/reports/cash-forecasting",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max items per page. Defaults to 50. Values above 500 will be rejected."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n            Supported items for filter: startMonth, endMonth, currency.\n\n            Months should be in YYYY-MM format. Set startMonth and endMonth to the same value to request a single month.\n\n            By default the forecast is capped to 120 months ahead of the current month; pass endMonth to extend or shorten that horizon.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated cash forecasting report showing due and paid amounts per period for each customer"
+        },
+        {
+          "info": {
+            "name": "Get ARR report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/reports/arr",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max items per page. Defaults to 50. Values above 500 will be rejected."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n            Supported items for filter: startMonth, endMonth, customerId, currency.\n\n            Months should be in YYYY-MM format.\n\n            Currency should be an ISO 4217 currency code (e.g., USD, INR, EUR).\n            "
+              }
+            ]
+          },
+          "docs": "Get ARR report"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,503 @@
+{
+  "item": [
+    {
+      "id": "cadcf2ac-1a24-49a0-9e80-68502b05a566",
+      "name": "Performance Obligations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "06541114-ed48-4191-860c-356f72e3968a",
+          "name": "List performance obligations",
+          "request": {
+            "name": "List performance obligations",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "performance-obligations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "(Required) Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "(Required) Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "\n        Supported items for filter: contractId, customerId, serviceStartDate, serviceEndDate, billingTermGroupId, createdAt, updatedAt\n\n        Dates should be in YYYY-MM-DD format\n        "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06ccd35e-237e-4ee7-9eb1-ebd76bfc0a3e",
+              "name": "Get all performance obligations by filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "performance-obligations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"data\": [\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Annual Subscription\",\n        \"contractId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"billingTermGroupId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"billingTermGroupName\": \"Towing Services\",\n        \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"itemName\": \"Enterprise License\",\n        \"erpClassId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"erpClassName\": \"Software Revenue\",\n        \"category\": \"SaaS\",\n        \"considerationType\": \"FIXED\",\n        \"recognitionPattern\": \"STRAIGHT_LINE\",\n        \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"eventTypeName\": \"Tow Completion\",\n        \"productId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"productName\": \"Enterprise Plan\",\n        \"serviceStartDate\": \"2018-05-10T16:47:45.543Z\",\n        \"serviceEndDate\": \"1999-06-02T18:06:57.717Z\",\n        \"transactionPrice\": \"1000.50\",\n        \"recognizedRevenue\": [\n          {\n            \"timeframe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"timeframe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n        \"updatedAt\": \"2024-01-01T00:00:00.000Z\"\n      },\n      {\n        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"name\": \"Annual Subscription\",\n        \"contractId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"billingTermGroupId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"billingTermGroupName\": \"Towing Services\",\n        \"itemId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"itemName\": \"Enterprise License\",\n        \"erpClassId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"erpClassName\": \"Software Revenue\",\n        \"category\": \"SaaS\",\n        \"considerationType\": \"FIXED\",\n        \"recognitionPattern\": \"STRAIGHT_LINE\",\n        \"eventTypeId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"eventTypeName\": \"Tow Completion\",\n        \"productId\": \"123e4567-e89b-12d3-a456-426614174000\",\n        \"productName\": \"Enterprise Plan\",\n        \"serviceStartDate\": \"1980-12-07T14:35:50.827Z\",\n        \"serviceEndDate\": \"1959-01-07T15:04:14.987Z\",\n        \"transactionPrice\": \"1000.50\",\n        \"recognizedRevenue\": [\n          {\n            \"timeframe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"timeframe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n        \"updatedAt\": \"2024-01-01T00:00:00.000Z\"\n      }\n    ],\n    \"limit\": 208.09091762795774,\n    \"totalItems\": 2510.296040669847,\n    \"currentPage\": 6655.487811058748\n  },\n  \"success\": false,\n  \"message\": \"string\",\n  \"error\": {\n    \"code\": 9165.557804232918,\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03978915-5465-4688-aa1b-1f8262241cf9",
+              "name": "Performance obligation features are not enabled for this merchant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "performance-obligations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bdadda6-0298-40a9-8597-3b83e9aff336",
+          "name": "Upsert recognized revenue",
+          "request": {
+            "name": "Upsert recognized revenue",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "performance-obligations",
+                ":performanceObligationId",
+                "recognized"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "performanceObligationId",
+                  "description": "(Required) The ID of the performance obligation"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recognizedRevenue\": [\n    {\n      \"timeframe\": \"<string>\",\n      \"total\": \"<number>\"\n    },\n    {\n      \"timeframe\": \"<string>\",\n      \"total\": \"<number>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a8a138e-cc66-4a29-8ab9-378e35619197",
+              "name": "Returns the revenue schedule ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "performance-obligations",
+                    ":performanceObligationId",
+                    "recognized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "performanceObligationId",
+                      "description": "(Required) The ID of the performance obligation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recognizedRevenue\": [\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    },\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46cb8215-6f2c-4a4c-a105-01afd501fc19",
+              "name": "Bad request body, e.g. invalid timeframe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "performance-obligations",
+                    ":performanceObligationId",
+                    "recognized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "performanceObligationId",
+                      "description": "(Required) The ID of the performance obligation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recognizedRevenue\": [\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    },\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5ac4447d-f9c5-410e-aa60-22487732c8e4",
+              "name": "Performance obligation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "performance-obligations",
+                    ":performanceObligationId",
+                    "recognized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "performanceObligationId",
+                      "description": "(Required) The ID of the performance obligation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recognizedRevenue\": [\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    },\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9622fdc3-851d-4ac3-85ab-d045db2ec9ad",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "performance-obligations",
+                    ":performanceObligationId",
+                    "recognized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "performanceObligationId",
+                      "description": "(Required) The ID of the performance obligation"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recognizedRevenue\": [\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    },\n    {\n      \"timeframe\": \"2024-01\",\n      \"total\": 1000\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integrators.prod.api.tabsplatform.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6965cc9f-a808-4b91-8839-0a68f293e731",
+    "name": "Tabs External Billing Terms Performance Obligations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

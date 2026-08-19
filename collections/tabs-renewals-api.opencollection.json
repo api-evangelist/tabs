@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tabs External Billing Terms Renewals API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Renewals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List renewals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrators.prod.api.tabsplatform.com/v3/renewals",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "\n        Supported items for filter: contractId, type, status, contractEndDate\n\n        - contractId: Contract ID to filter by\n        - type: Renewal type (AUTOMATIC, UNILATERAL, MUTUAL, NONE)\n        - status: Renewal status (DRAFT, APPROVED, DECLINED)\n        - contractEndDate: Filter by term end date in YYYY-MM-DD format\n        "
+              }
+            ]
+          },
+          "docs": "List renewals"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
