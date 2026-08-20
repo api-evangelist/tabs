@@ -30,6 +30,16 @@ tags:
 - Revenue Recognition
 - Usage-Based Billing
 - Invoicing
+- Collection
+- Fintech
+- Software-as-a-Service
+tags_raw:
+- Billing
+- Revenue Automation
+- Accounts Receivable
+- Revenue Recognition
+- Usage-Based Billing
+- Invoicing
 - Collections
 - Fintech
 - SaaS
@@ -184,6 +194,8 @@ apis:
   humanURL: https://docs.tabsplatform.com/
   baseURL: https://integrators.prod.api.tabsplatform.com
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -232,6 +244,8 @@ apis:
   humanURL: https://docs.tabsplatform.com/
   baseURL: https://integrators.prod.api.tabsplatform.com
   tags:
+  - Item
+  tags_raw:
   - Items
   properties:
   - type: OpenAPI
@@ -248,6 +262,8 @@ apis:
   humanURL: https://docs.tabsplatform.com/
   baseURL: https://integrators.prod.api.tabsplatform.com
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -328,6 +344,8 @@ apis:
   humanURL: https://docs.tabsplatform.com/
   baseURL: https://integrators.prod.api.tabsplatform.com
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -344,6 +362,8 @@ apis:
   humanURL: https://docs.tabsplatform.com/
   baseURL: https://integrators.prod.api.tabsplatform.com
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
