@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Tabs External Billing Terms API
   description: ''
@@ -68,6 +68,90 @@ paths:
       - Billing Terms
 components:
   schemas:
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    PricingTierDto:
+      type: object
+      properties:
+        tier:
+          type: number
+          description: Tier Number
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        amountType:
+          type: string
+          description: Amount Type
+          example: PER_ITEM
+          enum:
+          - PER_ITEM
+          - TOTAL_INVOICE
+        tierMinimum:
+          type: number
+          description: Tier Minimum
+          example: 0
+      required:
+      - tier
+      - amount
+      - amountType
+      - tierMinimum
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    DiscountDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     GetBillingTermItemDto:
       type: object
       properties:
@@ -83,19 +167,22 @@ components:
           type: string
           description: Billing term name
         description:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Billing term description
-          nullable: true
         itemId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ERP item ID
           format: uuid
-          nullable: true
         productId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Product ID from /v3/products. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
           format: uuid
-          nullable: true
         billingStartDate:
           type: string
           description: Billing start date
@@ -114,7 +201,9 @@ components:
           type: number
           description: Interval frequency
         interval:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Interval unit
           enum:
           - NONE
@@ -126,7 +215,6 @@ components:
           - SEMI_MONTH
           - WEEK
           example: MONTH
-          nullable: true
         invoiceDateStrategy:
           type: string
           description: Invoice date strategy
@@ -137,10 +225,11 @@ components:
           - ADVANCED_DUE_START
           example: FIRST_OF_PERIOD
         netPaymentTerms:
-          type: number
+          type:
+          - number
+          - 'null'
           description: Days between invoice issue and due date
           example: 30
-          nullable: true
         billingType:
           type: string
           description: Billing type
@@ -163,25 +252,29 @@ components:
           type: boolean
           description: Whether the billing term is in arrears
         eventTypeId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Usage event type ID
           format: uuid
-          nullable: true
         classId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ERP class ID
           format: uuid
-          nullable: true
         departmentId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Department ID
           format: uuid
-          nullable: true
         projectId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Project ID
           format: uuid
-          nullable: true
         pricing:
           description: Pricing tiers
           example:
@@ -193,19 +286,22 @@ components:
           items:
             $ref: '#/components/schemas/PricingTierDto'
         billingTermGroupId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Billing term group (BTG) ID
           format: uuid
-          nullable: true
         commitmentId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Commitment ID
           format: uuid
-          nullable: true
         commitmentBillingTermType:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Commitment billing term type
-          nullable: true
         discounts:
           description: Billing term discounts.
           example:
@@ -246,90 +342,6 @@ components:
       - commitmentId
       - commitmentBillingTermType
       - discounts
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    PricingTierDto:
-      type: object
-      properties:
-        tier:
-          type: number
-          description: Tier Number
-          example: 1
-        amount:
-          type: number
-          description: Amount
-          example: 100
-        amountType:
-          type: string
-          description: Amount Type
-          example: PER_ITEM
-          enum:
-          - PER_ITEM
-          - TOTAL_INVOICE
-        tierMinimum:
-          type: number
-          description: Tier Minimum
-          example: 0
-      required:
-      - tier
-      - amount
-      - amountType
-      - tierMinimum
-    DiscountDto:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of discount
-          enum:
-          - PERCENTAGE
-          - FIXED
-          example: PERCENTAGE
-        amount:
-          type: string
-          description: The discount amount (stored as mantissa in database with exponent 0)
-          example: '10'
-        note:
-          type: string
-          description: Optional note about the discount
-          example: Early payment discount
   securitySchemes:
     custom-header:
       type: apiKey

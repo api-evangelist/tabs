@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms Jobs API
+  title: Tabs External Jobs API
   description: ''
   version: 1.0.0
   contact: {}
@@ -46,21 +46,6 @@ paths:
       - Jobs
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
     JobDto:
       type: object
       properties:
@@ -169,6 +154,21 @@ components:
       - success
       - message
       - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
   securitySchemes:
     custom-header:
       type: apiKey

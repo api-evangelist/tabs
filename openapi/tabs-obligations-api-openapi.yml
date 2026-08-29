@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms Obligations API
+  title: Tabs External Obligations API
   description: ''
   version: 1.0.0
   contact: {}
@@ -68,6 +68,106 @@ paths:
       - Obligations
 components:
   schemas:
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    PricingTierDto:
+      type: object
+      properties:
+        tier:
+          type: number
+          description: Tier Number
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        amountType:
+          type: string
+          description: Amount Type
+          example: PER_ITEM
+          enum:
+          - PER_ITEM
+          - TOTAL_INVOICE
+        tierMinimum:
+          type: number
+          description: Tier Minimum
+          example: 0
+      required:
+      - tier
+      - amount
+      - amountType
+      - tierMinimum
+    RecognizedRevenueDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Timeframe
+          example: 2024-01
+        total:
+          type: number
+          description: Total
+          example: 1000
+        booksClosed:
+          type: boolean
+          description: Books closed
+          example: false
+      required:
+      - timeframe
+      - total
+      - booksClosed
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    DiscountDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
     BillingScheduleDto:
       type: object
       properties:
@@ -159,10 +259,11 @@ components:
           description: The item in the ERP that the line items will belong to
           example: 123e4567-e89b-12d3-a456-426614174000
         productId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Product ID from /v3/products that links this billing term to an entry in the merchant's product catalog. To ensure revenue reporting accuracy, associate the billing term with a product whenever applicable.
           example: 123e4567-e89b-12d3-a456-426614174000
-          nullable: true
         invoiceType:
           type: string
           description: INVOICE or BILL for remittance. Use INVOICE for all instances
@@ -205,25 +306,39 @@ components:
       - pricingType
       - invoiceType
       - pricing
-    RecognizedRevenueDto:
+    SeatBasedObligationConfigDto:
       type: object
       properties:
-        timeframe:
-          type: string
-          description: Timeframe
-          example: 2024-01
-        total:
-          type: number
-          description: Total
-          example: 1000
-        booksClosed:
+        isMovingMinimum:
           type: boolean
-          description: Books closed
+          description: Whether we need to update minimums on a moving basis
           example: false
+        minQuantity:
+          type: number
+          description: 'Minimum quantity to bill for, regardless of current # of seats'
+          example: 0
+        defaultProrationPolicy:
+          type: string
+          description: Default proration policy
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - YEAR
+        defaultTrueUpTiming:
+          type: string
+          description: Default true up timing
+          enum:
+          - IMMEDIATE
+          - CO_TERM
       required:
-      - timeframe
-      - total
-      - booksClosed
+      - isMovingMinimum
+      - minQuantity
+      - defaultProrationPolicy
+      - defaultTrueUpTiming
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     RevenueScheduleDto:
       type: object
       properties:
@@ -238,90 +353,6 @@ components:
             $ref: '#/components/schemas/RecognizedRevenueDto'
       required:
       - recognizedRevenue
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    PricingTierDto:
-      type: object
-      properties:
-        tier:
-          type: number
-          description: Tier Number
-          example: 1
-        amount:
-          type: number
-          description: Amount
-          example: 100
-        amountType:
-          type: string
-          description: Amount Type
-          example: PER_ITEM
-          enum:
-          - PER_ITEM
-          - TOTAL_INVOICE
-        tierMinimum:
-          type: number
-          description: Tier Minimum
-          example: 0
-      required:
-      - tier
-      - amount
-      - amountType
-      - tierMinimum
-    DiscountDto:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of discount
-          enum:
-          - PERCENTAGE
-          - FIXED
-          example: PERCENTAGE
-        amount:
-          type: string
-          description: The discount amount (stored as mantissa in database with exponent 0)
-          example: '10'
-        note:
-          type: string
-          description: Optional note about the discount
-          example: Early payment discount
     ObligationDto:
       type: object
       properties:
@@ -371,36 +402,6 @@ components:
       - serviceEndDate
       - billingSchedule
       - revenueSchedule
-    SeatBasedObligationConfigDto:
-      type: object
-      properties:
-        isMovingMinimum:
-          type: boolean
-          description: Whether we need to update minimums on a moving basis
-          example: false
-        minQuantity:
-          type: number
-          description: 'Minimum quantity to bill for, regardless of current # of seats'
-          example: 0
-        defaultProrationPolicy:
-          type: string
-          description: Default proration policy
-          enum:
-          - NONE
-          - DAY
-          - MONTH
-          - YEAR
-        defaultTrueUpTiming:
-          type: string
-          description: Default true up timing
-          enum:
-          - IMMEDIATE
-          - CO_TERM
-      required:
-      - isMovingMinimum
-      - minQuantity
-      - defaultProrationPolicy
-      - defaultTrueUpTiming
   securitySchemes:
     custom-header:
       type: apiKey

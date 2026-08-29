@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms Performance Obligations API
+  title: Tabs External Performance Obligations API
   description: ''
   version: 1.0.0
   contact: {}
@@ -108,6 +108,45 @@ paths:
       - Performance Obligations
 components:
   schemas:
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     GetPerformanceObligationItemDto:
       type: object
       properties:
@@ -116,78 +155,92 @@ components:
           description: Unique identifier for the performance obligation
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of the performance obligation
-          nullable: true
           example: Annual Subscription
         contractId:
           type: string
           description: ID of the contract this performance obligation belongs to
           example: 123e4567-e89b-12d3-a456-426614174000
         billingTermGroupId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Billing term group ID (foreign key)
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         billingTermGroupName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Billing term group name
-          nullable: true
           example: Towing Services
         itemId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ID of the associated integration item
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         itemName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of the associated integration item
-          nullable: true
           example: Enterprise License
         erpClassId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ID of the ERP class
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         erpClassName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of the ERP class
-          nullable: true
           example: Software Revenue
         category:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Revenue category
-          nullable: true
           example: SaaS
         considerationType:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Consideration type
-          nullable: true
           example: FIXED
         recognitionPattern:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Revenue recognition pattern
-          nullable: true
           example: STRAIGHT_LINE
         eventTypeId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Event type ID
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         eventTypeName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Event type name
-          nullable: true
           example: Tow Completion
         productId:
-          type: string
+          type:
+          - string
+          - 'null'
           description: ID of the associated product
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         productName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Name of the associated product
-          nullable: true
           example: Enterprise Plan
         serviceStartDate:
           format: date-time
@@ -241,69 +294,6 @@ components:
       - recognizedRevenue
       - createdAt
       - updatedAt
-    UpsertRecognizedRevenueDto:
-      type: object
-      properties:
-        recognizedRevenue:
-          description: Array of recognized revenue entries
-          type: array
-          items:
-            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
-      required:
-      - recognizedRevenue
-    RecognizedRevenueEntryDto:
-      type: object
-      properties:
-        timeframe:
-          type: string
-          description: The timeframe for the revenue (YYYY-MM format)
-          example: 2024-01
-        total:
-          type: number
-          description: The total revenue amount
-          example: 1000
-      required:
-      - timeframe
-      - total
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     RecognizedRevenueAtomResponseDto:
       type: object
       properties:
@@ -318,6 +308,30 @@ components:
       required:
       - timeframe
       - total
+    RecognizedRevenueEntryDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: The timeframe for the revenue (YYYY-MM format)
+          example: 2024-01
+        total:
+          type: number
+          description: The total revenue amount
+          example: 1000
+      required:
+      - timeframe
+      - total
+    UpsertRecognizedRevenueDto:
+      type: object
+      properties:
+        recognizedRevenue:
+          description: Array of recognized revenue entries
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
+      required:
+      - recognizedRevenue
   securitySchemes:
     custom-header:
       type: apiKey

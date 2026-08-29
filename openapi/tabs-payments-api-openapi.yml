@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms Payments API
+  title: Tabs External Payments API
   description: ''
   version: 1.0.0
   contact: {}
@@ -104,18 +104,9 @@ components:
       required:
       - code
       - message
-    ExternalIdSourceType:
-      type: string
-      enum:
-      - QUICKBOOKS
-      - NETSUITE
-      - RILLET
-      - SAGE_INTACCT
-      - SALESFORCE
-      - HUBSPOT
-      - AVALARA
-      - ANROK
-      - STRIPE
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     PaymentsV3Dto:
       type: object
       properties:
@@ -189,6 +180,18 @@ components:
       - type
       - method
       - externalIds
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
     IntegrationsExternalId:
       type: object
       properties:
@@ -204,9 +207,6 @@ components:
       required:
       - type
       - id
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
   securitySchemes:
     custom-header:
       type: apiKey

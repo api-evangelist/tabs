@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms Items API
+  title: Tabs External Items API
   description: ''
   version: 1.0.0
   contact: {}
@@ -96,21 +96,6 @@ paths:
       - Items
 components:
   schemas:
-    ExternalIdV3Dto:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: NETSUITE
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
-      required:
-      - type
-      - id
     IntegratorsApiResponse:
       type: object
       properties:
@@ -159,10 +144,11 @@ components:
           description: Name of the item
           example: Item 1
         displayName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Display name of the item, as shown in the Tabs app. Null when not set.
           example: Item 1 (Annual)
-          nullable: true
         externalIds:
           description: List of external identifiers associated with the item
           type: array
@@ -172,6 +158,9 @@ components:
       - id
       - name
       - externalIds
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     ExternalIdSourceType:
       type: string
       enum:
@@ -184,9 +173,21 @@ components:
       - AVALARA
       - ANROK
       - STRIPE
-    PaginatedResponseDTO:
+    ExternalIdV3Dto:
       type: object
-      properties: {}
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
   securitySchemes:
     custom-header:
       type: apiKey

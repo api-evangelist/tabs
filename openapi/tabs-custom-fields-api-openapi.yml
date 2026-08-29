@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms Custom Fields API
+  title: Tabs External Custom Fields API
   description: ''
   version: 1.0.0
   contact: {}
@@ -42,21 +42,6 @@ paths:
       - Custom Fields
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
     CustomFieldDto:
       type: object
       properties:
@@ -97,6 +82,21 @@ components:
       - success
       - message
       - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
   securitySchemes:
     custom-header:
       type: apiKey
