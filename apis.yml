@@ -2,6 +2,18 @@ aid: tabs
 name: Tabs
 description: Tabs is an AI-native revenue automation platform for B2B companies that streamlines the entire contract-to-cash lifecycle — contract ingestion, billing generation, invoicing, collections, cash application, ASC 606 revenue recognition, and reporting. Its Universal (External) API v3 exposes the underlying revenue data model of customers, contracts, obligations, billing terms, performance obligations, invoices, payments, credit memos, products, commitments, and renewals, while a dedicated Usage API (Beta) ingests high-throughput usage events with strong idempotency. Tabs also operates an official read-only MCP server over its "Commercial Graph" so AI agents can query live billing, revenue, and contract data. Backed by Lightspeed Venture Partners and General Catalyst ($91M+ raised through its 2025 Series B), Tabs integrates with QuickBooks, NetSuite, Sage Intacct, Salesforce, HubSpot, Stripe, Plaid, Anrok, and Avalara.
 url: https://raw.githubusercontent.com/api-evangelist/tabs/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
