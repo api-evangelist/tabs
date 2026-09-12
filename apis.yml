@@ -434,6 +434,160 @@ apis:
     url: https://docs.tabsplatform.com/reference
   - type: Documentation
     url: https://docs.tabsplatform.com/docs/usage-events-beta
+- aid: tabs:tabs-platform-api
+  name: Tabs Platform API
+  description: REST API for the Tabs revenue automation platform that exposes the core data model of customers, contracts, items, revenue categories, obligations, invoices, payments, and usage events. The API lets finance and engineering teams embed billing into their products, sync contract and usage data, generate invoices, and reconcile payments programmatically. An LLM-friendly index of all docs and OpenAPI endpoints is published at docs.tabsplatform.com/llms.txt.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Billing
+  - Invoicing
+  - Collection
+  - Revenue Recognition
+  - Contracts
+  - Usage
+  - Payments
+  - Customers
+  tags_raw:
+  - Billing
+  - Invoicing
+  - Collections
+  - Revenue Recognition
+  - Contracts
+  - Usage
+  - Payments
+  - Customers
+  properties:
+  - type: Documentation
+    url: https://docs.tabsplatform.com/
+  - type: GettingStarted
+    url: https://docs.tabsplatform.com/
+  - type: Authentication
+    url: https://docs.tabsplatform.com/
+  - type: LLMs
+    url: https://docs.tabsplatform.com/llms.txt
+  - type: Signup
+    url: https://www.tabs.com/
+  - type: Pricing
+    url: https://www.tabs.com/pricing
+  features:
+  - name: Contract Intelligence
+    description: Ingests executed contracts and extracts the data needed to drive billing, revenue recognition, and renewals without manual entry.
+  - name: Automated Billing
+    description: Generates invoices directly from contracts and obligations, supporting subscription, usage-based, metered, and hybrid models.
+  - name: Collections Automation
+    description: AI agents send payment reminders, embed payment links, and match incoming payments to outstanding invoices.
+  - name: ASC 606 Revenue Recognition
+    description: Schedules and posts revenue in compliance with ASC 606 using contract and billing data as the source of truth.
+  - name: Usage Event Ingestion
+    description: Streams consumption events into the platform for metered billing and downstream revenue accounting.
+  - name: Unified Customer Record
+    description: Combines contracts, usage, payments, and terms into a single customer view that downstream systems can query.
+  - name: Real-Time Reporting
+    description: Surfaces ARR, cash, AR balance, and renewals in real time for finance leadership and operators.
+  - name: Webhooks and Events
+    description: Notifies external systems of invoice, payment, and contract events so customers can build automation around revenue.
+  useCases:
+  - name: SaaS Subscription Billing
+    description: Automate recurring invoicing and revenue scheduling for SaaS companies running annual, monthly, or hybrid contracts.
+  - name: Usage-Based Billing for AI and Infrastructure
+    description: Meter consumption events from AI, API, or infrastructure products and turn them into invoices and revenue schedules.
+  - name: ERP and CRM Sync
+    description: Keep ERP general ledgers and CRM opportunity data in sync with the contracts and invoices managed in Tabs.
+  - name: Cash Application
+    description: Auto-match incoming ACH, wire, and Stripe payments against open invoices to clear AR balances.
+  - name: Revenue Reporting for Finance Leadership
+    description: Provide CFOs and controllers with live ARR, AR aging, and renewal visibility tied back to source contracts.
+  integrations:
+  - name: QuickBooks Online
+  - name: NetSuite
+  - name: Sage Intacct
+  - name: Oracle
+  - name: Rillet
+  - name: Salesforce
+  - name: HubSpot
+  - name: Stripe
+  - name: Plaid
+  - name: Anrok
+  - name: Avalara
+  - name: DocuSign
+  authentication:
+  - type: API Key
+    description: Server-side API key authentication issued from the Tabs dashboard for backend integrations.
+- aid: tabs:tabs-fi-billingterms-api
+  name: Tabs BillingTerms API
+  description: The BillingTerms API from Tabs — 3 operation(s) for billingterms.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Billing Terms
+  tags_raw:
+  - BillingTerms
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-billingterms-api-openapi.yml
+- aid: tabs:tabs-fi-creditmemos-api
+  name: Tabs CreditMemos API
+  description: The CreditMemos API from Tabs — 3 operation(s) for creditmemos.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Credit Memos
+  tags_raw:
+  - CreditMemos
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-creditmemos-api-openapi.yml
+- aid: tabs:tabs-fi-customfields-api
+  name: Tabs CustomFields API
+  description: The CustomFields API from Tabs — 1 operation(s) for customfields.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Custom Fields
+  tags_raw:
+  - CustomFields
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-customfields-api-openapi.yml
+- aid: tabs:tabs-fi-eventtypes-api
+  name: Tabs EventTypes API
+  description: The EventTypes API from Tabs — 2 operation(s) for eventtypes.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Event Types
+  tags_raw:
+  - EventTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-eventtypes-api-openapi.yml
+- aid: tabs:tabs-fi-performanceobligations-api
+  name: Tabs PerformanceObligations API
+  description: The PerformanceObligations API from Tabs — 4 operation(s) for performanceobligations.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Performance Obligations
+  tags_raw:
+  - PerformanceObligations
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-performanceobligations-api-openapi.yml
+- aid: tabs:tabs-fi-system-api
+  name: Tabs System API
+  description: The System API from Tabs — 4 operation(s) for system.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-system-api-openapi.yml
+- aid: tabs:tabs-fi-usageevents-api
+  name: Tabs UsageEvents API
+  description: The UsageEvents API from Tabs — 2 operation(s) for usageevents.
+  humanURL: https://docs.tabsplatform.com/
+  tags:
+  - Usage Events
+  tags_raw:
+  - UsageEvents
+  properties:
+  - type: OpenAPI
+    url: openapi/tabs-fi-usageevents-api-openapi.yml
 common:
 - type: Overlay
   url: overlays/tabs-external-api-overlay.yaml
