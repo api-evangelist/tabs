@@ -292,6 +292,8 @@ apis:
   humanURL: https://docs.tabsplatform.com/
   baseURL: https://integrators.prod.api.tabsplatform.com
   tags:
+  - Merchants
+  tags_raw:
   - Merchant
   properties:
   - type: OpenAPI
