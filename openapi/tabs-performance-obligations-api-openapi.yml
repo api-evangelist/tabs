@@ -1,7 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Tabs External Performance Obligations API
-  description: ''
+  title: Tabs Performance Obligations API
   version: 1.0.0
   contact: {}
   x-apievangelist:
@@ -9,6 +8,7 @@ info:
     method: searched
     source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
     source_pages: 93
+  description: 'Operations tagged Performance Obligations across 2 of this provider''s published API definitions: tabs-external-api-openapi.yml, tabs-performance-obligations-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://integrators.prod.api.tabsplatform.com
 security:
@@ -68,6 +68,8 @@ paths:
       summary: List performance obligations
       tags:
       - Performance Obligations
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
   /v3/performance-obligations/{performanceObligationId}/recognized:
     post:
       operationId: IntegratorsApiPerformanceObligationsController_upsertRecognizedRevenue
@@ -106,29 +108,72 @@ paths:
       summary: Upsert recognized revenue
       tags:
       - Performance Obligations
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /contracts/{id}/performance-obligations:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Performance Obligations
+      summary: List performance obligations
+      operationId: listContractPerformanceObligations
+      responses:
+        '200':
+          description: OK
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /contracts/{id}/performance-obligations/batch:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Performance Obligations
+      summary: Bulk save performance obligations
+      operationId: bulkSavePerformanceObligations
+      responses:
+        '200':
+          description: OK
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /performance-obligations:
+    get:
+      tags:
+      - Performance Obligations
+      summary: List performance obligations
+      operationId: listPerformanceObligations
+      responses:
+        '200':
+          description: OK
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /performance-obligations/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    patch:
+      tags:
+      - Performance Obligations
+      summary: Update performance obligation
+      operationId: updatePerformanceObligation
+      responses:
+        '200':
+          description: OK
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
 components:
   schemas:
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
     IntegratorsApiError:
       type: object
       properties:
@@ -144,9 +189,6 @@ components:
       required:
       - code
       - message
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     GetPerformanceObligationItemDto:
       type: object
       properties:
@@ -294,6 +336,16 @@ components:
       - recognizedRevenue
       - createdAt
       - updatedAt
+    UpsertRecognizedRevenueDto:
+      type: object
+      properties:
+        recognizedRevenue:
+          description: Array of recognized revenue entries
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
+      required:
+      - recognizedRevenue
     RecognizedRevenueAtomResponseDto:
       type: object
       properties:
@@ -308,6 +360,30 @@ components:
       required:
       - timeframe
       - total
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
     RecognizedRevenueEntryDto:
       type: object
       properties:
@@ -322,18 +398,16 @@ components:
       required:
       - timeframe
       - total
-    UpsertRecognizedRevenueDto:
-      type: object
-      properties:
-        recognizedRevenue:
-          description: Array of recognized revenue entries
-          type: array
-          items:
-            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
-      required:
-      - recognizedRevenue
   securitySchemes:
     custom-header:
       type: apiKey
       name: Authorization
       in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Server-side API key issued from the Tabs dashboard for backend integrations.
+x-refined-from:
+- tabs-external-api-openapi.yml
+- tabs-performance-obligations-api-openapi.yml

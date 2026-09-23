@@ -41,27 +41,21 @@ paths:
       - Projects
 components:
   schemas:
-    IntegratorsApiResponse:
+    IntegratorsApiError:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
     ProjectModelDto:
       type: object
       properties:
@@ -93,21 +87,27 @@ components:
       - fullName
       - externalId
       - customerId
-    IntegratorsApiError:
+    IntegratorsApiResponse:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
         message:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - code
+      - payload
+      - success
       - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey

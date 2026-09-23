@@ -68,27 +68,84 @@ paths:
       - Obligations
 components:
   schemas:
-    IntegratorsApiResponse:
+    IntegratorsApiError:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
+    SeatBasedObligationConfigDto:
+      type: object
+      properties:
+        isMovingMinimum:
+          type: boolean
+          description: Whether we need to update minimums on a moving basis
+          example: false
+        minQuantity:
+          type: number
+          description: 'Minimum quantity to bill for, regardless of current # of seats'
+          example: 0
+        defaultProrationPolicy:
+          type: string
+          description: Default proration policy
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - YEAR
+        defaultTrueUpTiming:
+          type: string
+          description: Default true up timing
+          enum:
+          - IMMEDIATE
+          - CO_TERM
+      required:
+      - isMovingMinimum
+      - minQuantity
+      - defaultProrationPolicy
+      - defaultTrueUpTiming
+    RevenueScheduleDto:
+      type: object
+      properties:
+        categoryId:
+          type: string
+          description: Category Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        recognizedRevenue:
+          description: Recognized Revenue in each month
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueDto'
+      required:
+      - recognizedRevenue
+    RecognizedRevenueDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Timeframe
+          example: 2024-01
+        total:
+          type: number
+          description: Total
+          example: 1000
+        booksClosed:
+          type: boolean
+          description: Books closed
+          example: false
+      required:
+      - timeframe
+      - total
+      - booksClosed
     PricingTierDto:
       type: object
       properties:
@@ -116,58 +173,58 @@ components:
       - amount
       - amountType
       - tierMinimum
-    RecognizedRevenueDto:
+    ObligationDto:
       type: object
       properties:
-        timeframe:
+        id:
           type: string
-          description: Timeframe
-          example: 2024-01
-        total:
-          type: number
-          description: Total
-          example: 1000
-        booksClosed:
-          type: boolean
-          description: Books closed
-          example: false
+          description: Obligation Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        contractId:
+          type: string
+          description: Contract Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        serviceStartDate:
+          type: string
+          description: Revenue Start Date
+          example: '2024-01-01'
+        serviceEndDate:
+          type: string
+          description: Revenue End Date
+          example: '2024-01-01'
+        categoryId:
+          type: string
+          description: Category Id
+          example: 123e4567-e89b-12d3-a456-426614174000
+        billingSchedule:
+          description: Billing Schedule
+          allOf:
+          - $ref: '#/components/schemas/BillingScheduleDto'
+        revenueSchedule:
+          description: Revenue Schedule
+          allOf:
+          - $ref: '#/components/schemas/RevenueScheduleDto'
+        discount:
+          description: 'Discount configuration. Examples: { type: ''FIXED'', amount: ''5.00'' } for a $5.00 fixed discount, or { type: ''PERCENTAGE'', amount: ''0.10'' } for a 10% percentage discount'
+          example:
+            type: FIXED
+            amount: '5.00'
+          allOf:
+          - $ref: '#/components/schemas/DiscountDto'
+        seatConfig:
+          description: Seat-based obligation configuration
+          allOf:
+          - $ref: '#/components/schemas/SeatBasedObligationConfigDto'
       required:
-      - timeframe
-      - total
-      - booksClosed
-    IntegratorsApiError:
+      - id
+      - contractId
+      - serviceStartDate
+      - serviceEndDate
+      - billingSchedule
+      - revenueSchedule
+    PaginatedResponseDTO:
       type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    DiscountDto:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of discount
-          enum:
-          - PERCENTAGE
-          - FIXED
-          example: PERCENTAGE
-        amount:
-          type: string
-          description: The discount amount (stored as mantissa in database with exponent 0)
-          example: '10'
-        note:
-          type: string
-          description: Optional note about the discount
-          example: Early payment discount
+      properties: {}
     BillingScheduleDto:
       type: object
       properties:
@@ -306,102 +363,45 @@ components:
       - pricingType
       - invoiceType
       - pricing
-    SeatBasedObligationConfigDto:
+    DiscountDto:
       type: object
       properties:
-        isMovingMinimum:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
           type: boolean
-          description: Whether we need to update minimums on a moving basis
-          example: false
-        minQuantity:
-          type: number
-          description: 'Minimum quantity to bill for, regardless of current # of seats'
-          example: 0
-        defaultProrationPolicy:
+          description: Boolean with true=success, false=failure
+        message:
           type: string
-          description: Default proration policy
-          enum:
-          - NONE
-          - DAY
-          - MONTH
-          - YEAR
-        defaultTrueUpTiming:
-          type: string
-          description: Default true up timing
-          enum:
-          - IMMEDIATE
-          - CO_TERM
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - isMovingMinimum
-      - minQuantity
-      - defaultProrationPolicy
-      - defaultTrueUpTiming
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    RevenueScheduleDto:
-      type: object
-      properties:
-        categoryId:
-          type: string
-          description: Category Id
-          example: 123e4567-e89b-12d3-a456-426614174000
-        recognizedRevenue:
-          description: Recognized Revenue in each month
-          type: array
-          items:
-            $ref: '#/components/schemas/RecognizedRevenueDto'
-      required:
-      - recognizedRevenue
-    ObligationDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Obligation Id
-          example: 123e4567-e89b-12d3-a456-426614174000
-        contractId:
-          type: string
-          description: Contract Id
-          example: 123e4567-e89b-12d3-a456-426614174000
-        serviceStartDate:
-          type: string
-          description: Revenue Start Date
-          example: '2024-01-01'
-        serviceEndDate:
-          type: string
-          description: Revenue End Date
-          example: '2024-01-01'
-        categoryId:
-          type: string
-          description: Category Id
-          example: 123e4567-e89b-12d3-a456-426614174000
-        billingSchedule:
-          description: Billing Schedule
-          allOf:
-          - $ref: '#/components/schemas/BillingScheduleDto'
-        revenueSchedule:
-          description: Revenue Schedule
-          allOf:
-          - $ref: '#/components/schemas/RevenueScheduleDto'
-        discount:
-          description: 'Discount configuration. Examples: { type: ''FIXED'', amount: ''5.00'' } for a $5.00 fixed discount, or { type: ''PERCENTAGE'', amount: ''0.10'' } for a 10% percentage discount'
-          example:
-            type: FIXED
-            amount: '5.00'
-          allOf:
-          - $ref: '#/components/schemas/DiscountDto'
-        seatConfig:
-          description: Seat-based obligation configuration
-          allOf:
-          - $ref: '#/components/schemas/SeatBasedObligationConfigDto'
-      required:
-      - id
-      - contractId
-      - serviceStartDate
-      - serviceEndDate
-      - billingSchedule
-      - revenueSchedule
+      - payload
+      - success
+      - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey

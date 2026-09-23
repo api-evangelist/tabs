@@ -2,7 +2,14 @@
   "provider": "tabs",
   "sources": [
     "_original/tabs-external-api-openapi.yml",
-    "_original/tabs-usage-api-beta-openapi.yml"
+    "_original/tabs-usage-api-beta-openapi.yml",
+    "tabs-billing-terms-api-openapi.yml",
+    "tabs-credit-memos-api-openapi.yml",
+    "tabs-custom-fields-api-openapi.yml",
+    "tabs-event-types-api-openapi.yml",
+    "tabs-performance-obligations-api-openapi.yml",
+    "tabs-system-api-openapi.yml",
+    "tabs-usage-events-api-openapi.yml"
   ],
   "outputs": [
     "tabs-billing-terms-api-openapi.yml",
@@ -27,11 +34,22 @@
     "tabs-projects-api-openapi.yml",
     "tabs-renewals-api-openapi.yml",
     "tabs-reports-api-openapi.yml",
-    "tabs-revenue-api-openapi.yml"
+    "tabs-revenue-api-openapi.yml",
+    "tabs-event-types-api-openapi.yml",
+    "tabs-system-api-openapi.yml",
+    "tabs-usage-events-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "tabs-billing-terms-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /billing-terms get, /contracts/{id}/billing-terms get, /contracts/{id}/billing-terms post); its other 1 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "tabs-credit-memos-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /credit-memos get, /credit-memos post, /credit-memos/{id} get); its other 4 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "tabs-custom-fields-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /custom-fields get); its other 1 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "tabs-event-types-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /event-types get, /event-types post, /event-types/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "tabs-performance-obligations-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /contracts/{id}/performance-obligations get, /contracts/{id}/performance-obligations/batch post, /performance-obligations get); its other 2 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "tabs-system-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /version get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "tabs-usage-events-api-openapi.yml: previously refined output kept for 3 operation(s) no archived document covers (e.g. /usage-events get, /usage-events post, /usage-events/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "tabs-external-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
@@ -61,17 +79,19 @@
     "tabs-usage-api-beta-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "tabs-usage-api-beta-openapi.yml: declared missing tag: Events",
     "tabs-usage-api-beta-openapi.yml: declared missing tag: Health",
+    "tag 'Billing Terms' spans 2 source specs (tabs-external-api-openapi.yml, tabs-billing-terms-api-openapi.yml): per-path servers applied",
+    "tag 'Credit Memos' spans 2 source specs (tabs-external-api-openapi.yml, tabs-credit-memos-api-openapi.yml): per-path servers applied",
+    "tag 'Custom Fields' spans 2 source specs (tabs-external-api-openapi.yml, tabs-custom-fields-api-openapi.yml): per-path servers applied",
     "tag 'Events' spans 2 source specs (tabs-external-api-openapi.yml, tabs-usage-api-beta-openapi.yml): per-path servers applied",
-    "tag 'Health' spans 2 source specs (tabs-external-api-openapi.yml, tabs-usage-api-beta-openapi.yml): per-path servers applied"
+    "tag 'Health' spans 2 source specs (tabs-external-api-openapi.yml, tabs-usage-api-beta-openapi.yml): per-path servers applied",
+    "tag 'Performance Obligations' spans 2 source specs (tabs-external-api-openapi.yml, tabs-performance-obligations-api-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
-    "tabs-billing-terms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-categories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-classes-qbo-only-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-commitments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-contracts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "tabs-credit-memos-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "tabs-custom-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-departments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -82,7 +102,6 @@
     "tabs-merchant-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-obligations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "tabs-performance-obligations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "tabs-renewals-api-openapi.yml: previously refined output, superseded by openapi/_original/",

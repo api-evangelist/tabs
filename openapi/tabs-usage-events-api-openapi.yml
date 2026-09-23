@@ -1,0 +1,55 @@
+openapi: 3.2.0
+info:
+  title: Tabs Platform BillingTerms Usage Events API
+  description: 'REST API for the Tabs revenue automation platform: customers, contracts, items, revenue categories, obligations, billing terms, invoices, payments, credit memos, usage events, and reports. Source: https://docs.tabsplatform.com/llms.txt'
+  version: '3'
+  contact:
+    name: Tabs
+    url: https://docs.tabsplatform.com/
+servers:
+- url: https://api.tabsplatform.com
+  description: Production (assumed; consult Tabs docs for exact base URL)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Usage Events
+paths:
+  /usage-events:
+    get:
+      tags:
+      - Usage Events
+      summary: Get all usage events (beta)
+      operationId: listUsageEvents
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+      - Usage Events
+      summary: Create usage event (beta)
+      operationId: createUsageEvent
+      responses:
+        '201':
+          description: Created
+  /usage-events/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    delete:
+      tags:
+      - Usage Events
+      summary: Delete usage event
+      operationId: deleteUsageEvent
+      responses:
+        '204':
+          description: Deleted
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Server-side API key issued from the Tabs dashboard for backend integrations.

@@ -121,27 +121,6 @@ paths:
       - Reports
 components:
   schemas:
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
     IntegratorsApiError:
       type: object
       properties:
@@ -157,9 +136,46 @@ components:
       required:
       - code
       - message
-    PaginatedResponseDTO:
+    CashForecastingPerPeriodDto:
       type: object
-      properties: {}
+      properties:
+        period:
+          type: string
+          description: The time period for the forecast
+        dueTotal:
+          type: number
+          description: Total amount due for the period
+        paidTotal:
+          type: number
+          description: Total amount paid for the period
+        total:
+          type: number
+          description: Total amount (due + paid) for the period
+      required:
+      - period
+      - dueTotal
+      - paidTotal
+      - total
+    CashForecastingReportDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: ID of the customer
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerName:
+          type: string
+          description: Name of the customer
+        cashForecastingPerPeriod:
+          description: Array of cash forecasting data per period
+          type: array
+          items:
+            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
+      required:
+      - customerId
+      - customerName
+      - cashForecastingPerPeriod
     GetARR:
       type: object
       properties:
@@ -370,46 +386,30 @@ components:
       - timeframe
       - currency
       - total
-    CashForecastingReportDto:
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
       type: object
       properties:
-        customerId:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
           type: string
-          description: ID of the customer
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        customerName:
-          type: string
-          description: Name of the customer
-        cashForecastingPerPeriod:
-          description: Array of cash forecasting data per period
-          type: array
-          items:
-            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - customerId
-      - customerName
-      - cashForecastingPerPeriod
-    CashForecastingPerPeriodDto:
-      type: object
-      properties:
-        period:
-          type: string
-          description: The time period for the forecast
-        dueTotal:
-          type: number
-          description: Total amount due for the period
-        paidTotal:
-          type: number
-          description: Total amount paid for the period
-        total:
-          type: number
-          description: Total amount (due + paid) for the period
-      required:
-      - period
-      - dueTotal
-      - paidTotal
-      - total
+      - payload
+      - success
+      - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey

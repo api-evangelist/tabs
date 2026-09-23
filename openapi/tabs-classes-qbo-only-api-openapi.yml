@@ -60,6 +60,21 @@ components:
       - id
       - name
       - externalId
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
     IntegratorsApiResponse:
       type: object
       properties:
@@ -81,21 +96,6 @@ components:
       - success
       - message
       - error
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
   securitySchemes:
     custom-header:
       type: apiKey

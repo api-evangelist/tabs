@@ -920,63 +920,94 @@ paths:
       - Customers
 components:
   schemas:
-    CreatePaymentV3Dto:
+    UpdateContactV3Dto:
       type: object
       properties:
-        receivedAt:
-          format: date-time
+        firstName:
           type: string
-          description: Date when payment was received
-          example: '2023-01-01T00:00:00.000Z'
-        method:
+          description: Contact First Name
+          example: John
+        lastName:
           type: string
-          description: Payment method used
-          enum:
-          - CREDIT_CARD
-          - ACH_DEBIT
-          - ACH_CREDIT
-          - CHECK
-          - LINK
-          example: CREDIT_CARD
-        reference:
+          description: Contact Last Name
+          example: Doe
+        email:
           type: string
-          description: Payment reference number
-          example: REF123456
-      required:
-      - receivedAt
-    InvoiceExternalIdV3Dto:
+          description: Contact Email
+          example: john.doe@example.com
+        isPrimaryContact:
+          type: boolean
+          description: Is Primary Contact
+          example: true
+        isCCEmail:
+          type: boolean
+          description: Is CC Email
+          example: false
+    CreateSubCustomerDto:
       type: object
       properties:
-        type:
-          description: Type of external ID source
-          example: NETSUITE
+        customerName:
+          type: string
+          description: Customer Name
+          example: John Doe
+        currency:
+          type: string
+          description: Currency
+          example: USD
+        useParentContactInfo:
+          type: boolean
+          description: Use Parent Customer's Contact Info
+          example: true
+        billingEmail:
+          type: string
+          description: Billing Email
+          example: john.doe@example.com
+        billingAddress:
+          description: Billing Address
           allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
+          - $ref: '#/components/schemas/AddressV3Dto'
       required:
-      - type
-      - id
-    CreditMemoItemDto:
+      - customerName
+      - currency
+      - useParentContactInfo
+    UpdateInvoicePOResponseDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        purchaseOrder:
+          description: Purchase Order
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrderDto'
+      required:
+      - invoiceId
+      - customerId
+      - manufacturerId
+      - purchaseOrder
+    PurchaseOrderDto:
       type: object
       properties:
         id:
           type: string
-          description: Item ID
+          description: Purchase Order ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        name:
+        value:
           type: string
-          description: Item name
-          example: Product A
-        externalId:
-          type: string
-          description: External ID
-          example: EXT-123
+          description: Purchase Order number
+          example: PO-12345
       required:
       - id
-      - name
+      - value
     CreditMemoExternalIdDto:
       type: object
       properties:
@@ -988,6 +1019,21 @@ components:
           type: string
           description: Source type
           example: NETSUITE
+      required:
+      - externalId
+      - sourceType
+    UpsertCustomerExternalIdV3Dto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+        sourceType:
+          description: Type of external ID source
+          example: SALESFORCE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
       required:
       - externalId
       - sourceType
@@ -1086,233 +1132,40 @@ components:
       - primaryBillingContactEmail
       - secondaryBillingContacts
       - lastUpdatedAt
-    CreditMemoCustomerDto:
+    CreatePaymentV3Dto:
       type: object
       properties:
-        id:
-          type: string
-          description: Customer ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Customer name
-          example: Acme Corp
-        nameWithPrefix:
-          type: string
-          description: Customer name with prefix
-          example: CUST-001 Acme Corp
-      required:
-      - id
-      - name
-    CreditMemoDto:
-      type: object
-      properties:
-        creditMemoId:
-          type: string
-          description: Credit memo ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        creditMemoNumber:
-          type: string
-          description: Credit memo number
-          example: CM-001
-        creditMemoPrefix:
-          type: string
-          description: Credit memo prefix
-          example: CM
-        customerId:
-          type: string
-          description: Customer ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        manufacturerId:
-          type: string
-          description: Manufacturer ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        issueDate:
+        receivedAt:
           format: date-time
           type: string
-          description: Issue date
+          description: Date when payment was received
           example: '2023-01-01T00:00:00.000Z'
-        total:
-          type: number
-          description: Total amount
-          example: 100
-        memo:
+        method:
           type: string
-          description: Memo
-          example: Credit for defective product
-        reason:
+          description: Payment method used
+          enum:
+          - CREDIT_CARD
+          - ACH_DEBIT
+          - ACH_CREDIT
+          - CHECK
+          - LINK
+          example: CREDIT_CARD
+        reference:
           type: string
-          description: Reason
-          example: Product defect
-        status:
-          type: string
-          description: Status
-          example: OPEN
-        customer:
-          description: Customer information
-          allOf:
-          - $ref: '#/components/schemas/CreditMemoCustomerDto'
-        items:
-          description: Line items
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditMemoLineItemDto'
-        applications:
-          description: Applications
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditMemoApplicationDto'
-        externalIds:
-          description: External IDs
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditMemoExternalIdDto'
-        createdAt:
-          format: date-time
-          type: string
-          description: Created at
-          example: '2023-01-01T00:00:00.000Z'
-        lastUpdatedAt:
-          format: date-time
-          type: string
-          description: Last updated at
-          example: '2023-01-01T00:00:00.000Z'
-        syncStatus:
-          type: string
-          description: Sync status
-          example: NOT_SYNCED
+          description: Payment reference number
+          example: REF123456
       required:
-      - creditMemoId
-      - creditMemoNumber
-      - creditMemoPrefix
-      - customerId
-      - manufacturerId
-      - issueDate
-      - total
-      - status
-      - customer
-      - items
-      - applications
-      - externalIds
-      - createdAt
-      - lastUpdatedAt
-      - syncStatus
-    UpdateInvoicePOResponseDto:
+      - receivedAt
+    UpdateCustomerCCFeesExemptionV3Dto:
       type: object
       properties:
-        invoiceId:
-          type: string
-          description: Invoice ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        customerId:
-          type: string
-          description: Customer ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        manufacturerId:
-          type: string
-          description: Manufacturer ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        purchaseOrder:
-          description: Purchase Order
-          allOf:
-          - $ref: '#/components/schemas/PurchaseOrderDto'
-      required:
-      - invoiceId
-      - customerId
-      - manufacturerId
-      - purchaseOrder
-    CustomerTaxInfoV3Dto:
-      type: object
-      properties:
-        vatId:
-          type: string
-          description: VAT identifier
-          example: DE123456789
-        ein:
-          type: string
-          description: EIN identifier
-          example: 12-3456789
-        isTaxExempt:
+        ccFeesExempt:
           type: boolean
-          description: Whether customer is tax exempt
-          example: false
-      required:
-      - isTaxExempt
-    UpdateCustomerAutoChargeV3Dto:
-      type: object
-      properties:
-        autocharge:
-          type: boolean
-          description: Auto Charge enabled
+          description: CC Fees Exemption updated
           example: true
       required:
-      - autocharge
-    IntegrationsExternalId:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: QUICKBOOKS
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: pi_1234567890
-      required:
-      - type
-      - id
-    PurchaseOrderDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Purchase Order ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        value:
-          type: string
-          description: Purchase Order number
-          example: PO-12345
-      required:
-      - id
-      - value
-    CreateAddressV3Dto:
-      type: object
-      properties:
-        line1:
-          type: string
-          description: Primary street address
-          example: 123 Main St
-        line2:
-          type: string
-          description: Secondary address line (apt, suite, etc)
-          example: Apt 1
-        postalCode:
-          type: string
-          description: Postal/ZIP code
-          example: '10001'
-        city:
-          type: string
-          description: City name
-          example: New York
-        state:
-          type: string
-          description: State/province name
-          example: NY
-        country:
-          type: string
-          description: Country Code
-          example: US
-        addressee:
-          type: string
-          description: Name of recipient/addressee
-          example: John Doe
-      required:
-      - line1
-      - postalCode
-      - city
-      - state
-    UpdateContactV3Dto:
+      - ccFeesExempt
+    CreateContactV3Dto:
       type: object
       properties:
         firstName:
@@ -1327,14 +1180,37 @@ components:
           type: string
           description: Contact Email
           example: john.doe@example.com
-        isPrimaryContact:
-          type: boolean
-          description: Is Primary Contact
-          example: true
-        isCCEmail:
-          type: boolean
-          description: Is CC Email
-          example: false
+      required:
+      - email
+    ItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the item
+          example: Item 1
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Display name of the item, as shown in the Tabs app. Null when not set.
+          example: Item 1 (Annual)
+        externalIds:
+          description: List of external identifiers associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+      required:
+      - id
+      - name
+      - externalIds
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     UpsertAddressV3Dto:
       type: object
       properties:
@@ -1381,260 +1257,306 @@ components:
       - state
       - isDefaultBilling
       - isDefaultShipping
-    ItemV3Dto:
+    PaymentsV3Dto:
       type: object
       properties:
         id:
           type: string
-          description: Unique identifier for the item
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the item
-          example: Item 1
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Display name of the item, as shown in the Tabs app. Null when not set.
-          example: Item 1 (Annual)
-        externalIds:
-          description: List of external identifiers associated with the item
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalIdV3Dto'
-      required:
-      - id
-      - name
-      - externalIds
-    UpdateCustomerCustomFieldV3Dto:
-      type: object
-      properties:
-        manufacturerCustomFieldId:
-          type: string
-          description: Manufacturer custom field ID. Required when `isPurchaseOrder` is not true.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        customFieldValue:
-          type: string
-          description: 'Custom field value. For purchase order entries (`isPurchaseOrder: true`), this is the new PO number. Pass an empty string to unset the PO. Max 48 characters apply to PO values.'
-          example: Sales
-        isPurchaseOrder:
-          type: boolean
-          description: Set to `true` to update the customer's active purchase order instead of a manufacturer-defined custom field. When `true`, `manufacturerCustomFieldId` is ignored and `customFieldValue` is used as the PO number.
-          example: false
-      required:
-      - customFieldValue
-    ContactV3Dto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Contact ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        firstName:
-          type: string
-          description: Contact First Name
-          example: John
-        lastName:
-          type: string
-          description: Contact Last Name
-          example: Doe
-        email:
-          type: string
-          description: Contact Email
-          example: john.doe@example.com
-        isPrimaryContact:
-          type: boolean
-          description: Is Primary Contact
-          example: true
-        isCCEmail:
-          type: boolean
-          description: Is CC Email
-          example: false
-      required:
-      - id
-      - email
-      - isPrimaryContact
-      - isCCEmail
-    MarkInvoiceToSentOffTabsDto:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action to perform
-          example: SEND
-          enum:
-          - SEND
-          - MARK_INVOICE_TO_SENT_OFF_TABS
-          - MARK_INVOICE_AS_PENDING
-          - MARK_INVOICE_AS_SCHEDULED
-          - MARK_INVOICE_AS_VOID
-          - SEND_REMINDER_EMAIL
-        markInvoiceToSentOffTabs:
-          type: boolean
-          description: Mark the invoice as sent off Tabs
-          example: true
-      required:
-      - action
-      - markInvoiceToSentOffTabs
-    ExternalIdSourceType:
-      type: string
-      enum:
-      - QUICKBOOKS
-      - NETSUITE
-      - RILLET
-      - SAGE_INTACCT
-      - SALESFORCE
-      - HUBSPOT
-      - AVALARA
-      - ANROK
-      - STRIPE
-    UpdateInvoicePODto:
-      type: object
-      properties:
-        poNumber:
-          type: string
-          description: Purchase Order number for the invoice
-          example: PO-12345
-          maxLength: 30
-      required:
-      - poNumber
-    ExternalIdV3Dto:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: NETSUITE
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
-      required:
-      - type
-      - id
-    MarkInvoiceAsScheduledDto:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action to perform
-          example: SEND
-          enum:
-          - SEND
-          - MARK_INVOICE_TO_SENT_OFF_TABS
-          - MARK_INVOICE_AS_PENDING
-          - MARK_INVOICE_AS_SCHEDULED
-          - MARK_INVOICE_AS_VOID
-          - SEND_REMINDER_EMAIL
-        markInvoiceAsScheduled:
-          type: boolean
-          description: Mark the invoice as scheduled
-          example: true
-      required:
-      - action
-      - markInvoiceAsScheduled
-    UpdateInvoiceMemoBodyDto:
-      type: object
-      properties:
-        memo:
-          type: string
-          description: Memo for the invoice
-          example: This is a memo
-          maxLength: 4095
-      required:
-      - memo
-    CreditMemoApplicationDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Application ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        creditMemoId:
-          type: string
-          description: Credit memo ID
+          description: Unique identifier of the payment
           example: 123e4567-e89b-12d3-a456-426614174000
         invoiceId:
           type: string
-          description: Invoice ID
+          description: List of invoices associated with this payment
           example: 123e4567-e89b-12d3-a456-426614174000
-        amountApplied:
+        total:
           type: number
-          description: Amount applied
-          example: 100
+          description: Total amount of the payment
+          example: 99.99
+        stripeId:
+          type: string
+          description: Stripe payment ID if payment was processed through Stripe
+          example: pi_1234567890
+        receivedAt:
+          format: date-time
+          type: string
+          description: Date when payment was received
+          example: '2023-01-01T00:00:00.000Z'
+        status:
+          type: string
+          description: Current status of the payment
+          enum:
+          - OPEN
+          - COMPLETED
+          - EXPIRED
+          - FAILED
+          - CANCELED
+          - UNCOLLECTIBLE
+          example: COMPLETED
+        type:
+          type: string
+          description: Type of payment
+          enum:
+          - MANUAL
+          - STRIPE
+          - RECONCILIATION
+          - REFUND
+          - CREDIT_MEMO_FROM_ERP
+          example: MANUAL
+        reference:
+          type: string
+          description: Payment reference number
+          example: REF123456
+        method:
+          type: string
+          description: Payment method used
+          enum:
+          - CREDIT_CARD
+          - ACH_DEBIT
+          - ACH_CREDIT
+          - CHECK
+          - LINK
+          example: CREDIT_CARD
+        externalIds:
+          description: List of external system identifiers
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationsExternalId'
+      required:
+      - id
+      - invoiceId
+      - total
+      - receivedAt
+      - status
+      - type
+      - method
+      - externalIds
+    InvoiceV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the invoice
+          example: 123e4567-e89b-12d3-a456-426614174000
+        issueDate:
+          type: string
+          description: Date the invoice was issued
+          example: '2021-01-01'
+        dueDate:
+          type: string
+          description: Date the invoice is due
+          example: '2021-01-01'
+        sentDate:
+          type: string
+          description: Date the invoice was sent to the customer
+          example: '2021-01-01'
+        createdAt:
+          type: string
+          description: Date the invoice was created
+          example: '2021-01-01'
+        status:
+          type: string
+          description: Current status of the invoice
+          enum:
+          - DRAFT
+          - APPROVED
+          - SENT
+          - PAID
+          - PARTIALLY_PAID
+          - VOID
+          - SENT_OFF_TABS
+          - PENDING
+          - DONE
+          example: DRAFT
         invoiceNumber:
           type: string
           description: Invoice number
-          example: INV-001
-        invoicePrefix:
+          example: '1234'
+        memo:
           type: string
-          description: Invoice prefix
-          example: INV
-        appliedAt:
-          format: date-time
+          description: Invoice memo
+          example: A memo / note on the invoice
+        customFields:
+          description: Invoice custom fields
+          example:
+          - name: Custom Field 1
+            value: A value for the custom field
+          type: array
+          items:
+            type: string
+        source:
           type: string
-          description: Applied at
-          example: '2023-01-01T00:00:00.000Z'
+          description: Source of the invoice
+          enum:
+          - TABS
+          - QBO
+          - NETSUITE
+          - AVALARA
+          - SALESFORCE
+          - HUBSPOT
+          - STRIPE
+          - RILLET
+          - SAGE_INTACCT
+          - CAMPFIRE
+          example: TABS
+        customerId:
+          type: string
+          description: ID of the customer this invoice belongs to
+          example: 123e4567-e89b-12d3-a456-426614174000
+        originalDueDate:
+          type: string
+          description: Original due date before any modifications
+          example: '2021-01-01'
+        originalIssueDate:
+          type: string
+          description: Original issue date before any modifications
+          example: '2021-01-01'
+        total:
+          type: number
+          description: Total amount in currency associated with the customer
+          example: 100
+        balanceRemaining:
+          type: number
+          description: Remaining balance in currency associated with the customer
+          example: 100
+        externalIds:
+          description: List of external identifiers
+          example:
+          - id: 123e4567-e89b-12d3-a456-426614174000
+            type: customer
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+        lineItems:
+          description: Line items on this invoice
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItemV3Dto'
+        paymentLink:
+          type: string
+          description: Payment link for the invoice (Optional)
+        poNumber:
+          type: string
+          description: PO number
+          example: '1234'
+        paidOn:
+          type:
+          - string
+          - 'null'
+          description: Date the invoice was fully paid
+          example: '2024-01-15T00:00:00.000Z'
+        uncollectibleOn:
+          type:
+          - string
+          - 'null'
+          description: Date the invoice was marked as uncollectible
+          example: '2024-02-01T00:00:00.000Z'
+        lastUpdatedAt:
+          type: string
+          description: Timestamp of last update
+          example: '2024-01-01T00:00:00.000Z'
       required:
       - id
-      - creditMemoId
-      - invoiceId
-      - amountApplied
-      - invoiceNumber
-      - invoicePrefix
-      - appliedAt
-    IntegratorsApiResponse:
+      - issueDate
+      - dueDate
+      - createdAt
+      - status
+      - source
+      - customerId
+      - originalDueDate
+      - originalIssueDate
+      - total
+      - balanceRemaining
+      - externalIds
+      - lineItems
+      - poNumber
+      - paidOn
+      - uncollectibleOn
+      - lastUpdatedAt
+    CreateAddressV3Dto:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
+        line1:
+          type: string
+          description: Primary street address
+          example: 123 Main St
+        line2:
+          type: string
+          description: Secondary address line (apt, suite, etc)
+          example: Apt 1
+        postalCode:
+          type: string
+          description: Postal/ZIP code
+          example: '10001'
+        city:
+          type: string
+          description: City name
+          example: New York
+        state:
+          type: string
+          description: State/province name
+          example: NY
+        country:
+          type: string
+          description: Country Code
+          example: US
+        addressee:
+          type: string
+          description: Name of recipient/addressee
+          example: John Doe
+      required:
+      - line1
+      - postalCode
+      - city
+      - state
+    SendReminderEmailDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        sendReminderEmail:
           type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: Send the reminder email
+          example: true
       required:
-      - payload
-      - success
-      - message
-      - error
-    IntegratorsApiError:
+      - action
+      - sendReminderEmail
+    UpdateInvoiceExternalIdsDto:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+        externalIds:
+          description: List of external identifiers
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceExternalIdV3Dto'
       required:
-      - code
-      - message
-    CreateCustomerErpCustomFieldV3Dto:
+      - externalIds
+    CreditMemoItemDto:
       type: object
       properties:
-        customFieldKey:
+        id:
           type: string
-          description: The NetSuite custom field key
-          example: custentity_department
-        customFieldValue:
+          description: Item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
           type: string
-          description: The value to set for the custom field
-          example: Sales
+          description: Item name
+          example: Product A
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
       required:
-      - customFieldKey
-      - customFieldValue
+      - id
+      - name
     CreateCustomerV3Dto:
       type: object
       properties:
@@ -1852,251 +1774,21 @@ components:
             $ref: '#/components/schemas/CreateCustomerErpCustomFieldV3Dto'
       required:
       - name
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    CreateSubCustomerDto:
+    IntegrationsExternalId:
       type: object
       properties:
-        customerName:
-          type: string
-          description: Customer Name
-          example: John Doe
-        currency:
-          type: string
-          description: Currency
-          example: USD
-        useParentContactInfo:
-          type: boolean
-          description: Use Parent Customer's Contact Info
-          example: true
-        billingEmail:
-          type: string
-          description: Billing Email
-          example: john.doe@example.com
-        billingAddress:
-          description: Billing Address
-          allOf:
-          - $ref: '#/components/schemas/AddressV3Dto'
-      required:
-      - customerName
-      - currency
-      - useParentContactInfo
-    InvoiceV3Dto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the invoice
-          example: 123e4567-e89b-12d3-a456-426614174000
-        issueDate:
-          type: string
-          description: Date the invoice was issued
-          example: '2021-01-01'
-        dueDate:
-          type: string
-          description: Date the invoice is due
-          example: '2021-01-01'
-        sentDate:
-          type: string
-          description: Date the invoice was sent to the customer
-          example: '2021-01-01'
-        createdAt:
-          type: string
-          description: Date the invoice was created
-          example: '2021-01-01'
-        status:
-          type: string
-          description: Current status of the invoice
-          enum:
-          - DRAFT
-          - APPROVED
-          - SENT
-          - PAID
-          - PARTIALLY_PAID
-          - VOID
-          - SENT_OFF_TABS
-          - PENDING
-          - DONE
-          example: DRAFT
-        invoiceNumber:
-          type: string
-          description: Invoice number
-          example: '1234'
-        memo:
-          type: string
-          description: Invoice memo
-          example: A memo / note on the invoice
-        customFields:
-          description: Invoice custom fields
-          example:
-          - name: Custom Field 1
-            value: A value for the custom field
-          type: array
-          items:
-            type: string
-        source:
-          type: string
-          description: Source of the invoice
-          enum:
-          - TABS
-          - QBO
-          - NETSUITE
-          - AVALARA
-          - SALESFORCE
-          - HUBSPOT
-          - STRIPE
-          - RILLET
-          - SAGE_INTACCT
-          - CAMPFIRE
-          example: TABS
-        customerId:
-          type: string
-          description: ID of the customer this invoice belongs to
-          example: 123e4567-e89b-12d3-a456-426614174000
-        originalDueDate:
-          type: string
-          description: Original due date before any modifications
-          example: '2021-01-01'
-        originalIssueDate:
-          type: string
-          description: Original issue date before any modifications
-          example: '2021-01-01'
-        total:
-          type: number
-          description: Total amount in currency associated with the customer
-          example: 100
-        balanceRemaining:
-          type: number
-          description: Remaining balance in currency associated with the customer
-          example: 100
-        externalIds:
-          description: List of external identifiers
-          example:
-          - id: 123e4567-e89b-12d3-a456-426614174000
-            type: customer
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalIdV3Dto'
-        lineItems:
-          description: Line items on this invoice
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceItemV3Dto'
-        paymentLink:
-          type: string
-          description: Payment link for the invoice (Optional)
-        poNumber:
-          type: string
-          description: PO number
-          example: '1234'
-        paidOn:
-          type:
-          - string
-          - 'null'
-          description: Date the invoice was fully paid
-          example: '2024-01-15T00:00:00.000Z'
-        uncollectibleOn:
-          type:
-          - string
-          - 'null'
-          description: Date the invoice was marked as uncollectible
-          example: '2024-02-01T00:00:00.000Z'
-        lastUpdatedAt:
-          type: string
-          description: Timestamp of last update
-          example: '2024-01-01T00:00:00.000Z'
-      required:
-      - id
-      - issueDate
-      - dueDate
-      - createdAt
-      - status
-      - source
-      - customerId
-      - originalDueDate
-      - originalIssueDate
-      - total
-      - balanceRemaining
-      - externalIds
-      - lineItems
-      - poNumber
-      - paidOn
-      - uncollectibleOn
-      - lastUpdatedAt
-    PaymentsV3Dto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the payment
-          example: 123e4567-e89b-12d3-a456-426614174000
-        invoiceId:
-          type: string
-          description: List of invoices associated with this payment
-          example: 123e4567-e89b-12d3-a456-426614174000
-        total:
-          type: number
-          description: Total amount of the payment
-          example: 99.99
-        stripeId:
-          type: string
-          description: Stripe payment ID if payment was processed through Stripe
-          example: pi_1234567890
-        receivedAt:
-          format: date-time
-          type: string
-          description: Date when payment was received
-          example: '2023-01-01T00:00:00.000Z'
-        status:
-          type: string
-          description: Current status of the payment
-          enum:
-          - OPEN
-          - COMPLETED
-          - EXPIRED
-          - FAILED
-          - CANCELED
-          - UNCOLLECTIBLE
-          example: COMPLETED
         type:
+          description: Type of external ID source
+          example: QUICKBOOKS
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
           type: string
-          description: Type of payment
-          enum:
-          - MANUAL
-          - STRIPE
-          - RECONCILIATION
-          - REFUND
-          - CREDIT_MEMO_FROM_ERP
-          example: MANUAL
-        reference:
-          type: string
-          description: Payment reference number
-          example: REF123456
-        method:
-          type: string
-          description: Payment method used
-          enum:
-          - CREDIT_CARD
-          - ACH_DEBIT
-          - ACH_CREDIT
-          - CHECK
-          - LINK
-          example: CREDIT_CARD
-        externalIds:
-          description: List of external system identifiers
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegrationsExternalId'
+          description: External identifier value
+          example: pi_1234567890
       required:
-      - id
-      - invoiceId
-      - total
-      - receivedAt
-      - status
       - type
-      - method
-      - externalIds
+      - id
     MarkInvoiceAsPendingDto:
       type: object
       properties:
@@ -2118,6 +1810,238 @@ components:
       required:
       - action
       - markInvoiceAsPending
+    ExternalIdV3Dto:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
+    MarkInvoiceAsScheduledDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceAsScheduled:
+          type: boolean
+          description: Mark the invoice as scheduled
+          example: true
+      required:
+      - action
+      - markInvoiceAsScheduled
+    MarkInvoiceToSentOffTabsDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceToSentOffTabs:
+          type: boolean
+          description: Mark the invoice as sent off Tabs
+          example: true
+      required:
+      - action
+      - markInvoiceToSentOffTabs
+    ContactV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Contact ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        firstName:
+          type: string
+          description: Contact First Name
+          example: John
+        lastName:
+          type: string
+          description: Contact Last Name
+          example: Doe
+        email:
+          type: string
+          description: Contact Email
+          example: john.doe@example.com
+        isPrimaryContact:
+          type: boolean
+          description: Is Primary Contact
+          example: true
+        isCCEmail:
+          type: boolean
+          description: Is CC Email
+          example: false
+      required:
+      - id
+      - email
+      - isPrimaryContact
+      - isCCEmail
+    CreateCustomerErpCustomFieldV3Dto:
+      type: object
+      properties:
+        customFieldKey:
+          type: string
+          description: The NetSuite custom field key
+          example: custentity_department
+        customFieldValue:
+          type: string
+          description: The value to set for the custom field
+          example: Sales
+      required:
+      - customFieldKey
+      - customFieldValue
+    InvoiceExternalIdV3Dto:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
+    MarkInvoiceAsVoidDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        markInvoiceAsVoid:
+          type: boolean
+          description: Mark the invoice as void
+          example: true
+      required:
+      - action
+      - markInvoiceAsVoid
+    AddressV3Dto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External identifier for the address
+          example: '10'
+        city:
+          type: string
+          description: City name
+          example: New York
+        state:
+          type: string
+          description: State/province name
+          example: NY
+        country:
+          type: string
+          description: Country Code
+          example: US
+        postalCode:
+          type: string
+          description: Postal/ZIP code
+          example: '10001'
+        line1:
+          type: string
+          description: Primary street address
+          example: 123 Main St
+        line2:
+          type: string
+          description: Secondary address line (apt, suite, etc)
+          example: Apt 1
+        addressee:
+          type: string
+          description: Name of recipient/addressee
+          example: John Doe
+      required:
+      - externalId
+      - city
+      - state
+      - postalCode
+      - line1
+      - line2
+    UpdateCustomerAutoChargeV3Dto:
+      type: object
+      properties:
+        autocharge:
+          type: boolean
+          description: Auto Charge enabled
+          example: true
+      required:
+      - autocharge
+    SendInvoiceDto:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action to perform
+          example: SEND
+          enum:
+          - SEND
+          - MARK_INVOICE_TO_SENT_OFF_TABS
+          - MARK_INVOICE_AS_PENDING
+          - MARK_INVOICE_AS_SCHEDULED
+          - MARK_INVOICE_AS_VOID
+          - SEND_REMINDER_EMAIL
+        sendToErp:
+          type: boolean
+          description: Send the invoice to the ERP
+          example: true
+        sendToCustomer:
+          type: boolean
+          description: Send the invoice to the customer
+          example: true
+        overrideInvoiceDate:
+          type: boolean
+          description: Override and update the invoice issue date to today. The due date will also be recalculated to preserve the original net payment terms. For example, if an invoice has Net 30 terms, the due date will be set to 30 days after today.
+          example: true
+      required:
+      - action
+      - sendToErp
+      - sendToCustomer
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
     InvoiceItemV3Dto:
       type: object
       properties:
@@ -2173,127 +2097,127 @@ components:
       - total
       - salesTaxRate
       - item
-    AddressV3Dto:
+    CreditMemoApplicationDto:
       type: object
       properties:
-        externalId:
+        id:
           type: string
-          description: External identifier for the address
-          example: '10'
-        city:
+          description: Application ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoId:
           type: string
-          description: City name
-          example: New York
-        state:
-          type: string
-          description: State/province name
-          example: NY
-        country:
-          type: string
-          description: Country Code
-          example: US
-        postalCode:
-          type: string
-          description: Postal/ZIP code
-          example: '10001'
-        line1:
-          type: string
-          description: Primary street address
-          example: 123 Main St
-        line2:
-          type: string
-          description: Secondary address line (apt, suite, etc)
-          example: Apt 1
-        addressee:
-          type: string
-          description: Name of recipient/addressee
-          example: John Doe
-      required:
-      - externalId
-      - city
-      - state
-      - postalCode
-      - line1
-      - line2
-    MarkInvoiceAsVoidDto:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action to perform
-          example: SEND
-          enum:
-          - SEND
-          - MARK_INVOICE_TO_SENT_OFF_TABS
-          - MARK_INVOICE_AS_PENDING
-          - MARK_INVOICE_AS_SCHEDULED
-          - MARK_INVOICE_AS_VOID
-          - SEND_REMINDER_EMAIL
-        markInvoiceAsVoid:
-          type: boolean
-          description: Mark the invoice as void
-          example: true
-      required:
-      - action
-      - markInvoiceAsVoid
-    UpdateCustomerCCFeesExemptionV3Dto:
-      type: object
-      properties:
-        ccFeesExempt:
-          type: boolean
-          description: CC Fees Exemption updated
-          example: true
-      required:
-      - ccFeesExempt
-    UpdateInvoiceMemoResponseDto:
-      type: object
-      properties:
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
         invoiceId:
           type: string
           description: Invoice ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        customerId:
+        amountApplied:
+          type: number
+          description: Amount applied
+          example: 100
+        invoiceNumber:
+          type: string
+          description: Invoice number
+          example: INV-001
+        invoicePrefix:
+          type: string
+          description: Invoice prefix
+          example: INV
+        appliedAt:
+          format: date-time
+          type: string
+          description: Applied at
+          example: '2023-01-01T00:00:00.000Z'
+      required:
+      - id
+      - creditMemoId
+      - invoiceId
+      - amountApplied
+      - invoiceNumber
+      - invoicePrefix
+      - appliedAt
+    UpdateCustomerCustomFieldV3Dto:
+      type: object
+      properties:
+        manufacturerCustomFieldId:
+          type: string
+          description: Manufacturer custom field ID. Required when `isPurchaseOrder` is not true.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customFieldValue:
+          type: string
+          description: 'Custom field value. For purchase order entries (`isPurchaseOrder: true`), this is the new PO number. Pass an empty string to unset the PO. Max 48 characters apply to PO values.'
+          example: Sales
+        isPurchaseOrder:
+          type: boolean
+          description: Set to `true` to update the customer's active purchase order instead of a manufacturer-defined custom field. When `true`, `manufacturerCustomFieldId` is ignored and `customFieldValue` is used as the PO number.
+          example: false
+      required:
+      - customFieldValue
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    UpdateInvoiceMemoBodyDto:
+      type: object
+      properties:
+        memo:
+          type: string
+          description: Memo for the invoice
+          example: This is a memo
+          maxLength: 4095
+      required:
+      - memo
+    CreditMemoCustomerDto:
+      type: object
+      properties:
+        id:
           type: string
           description: Customer ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        manufacturerId:
+        name:
           type: string
-          description: Manufacturer ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        memo:
+          description: Customer name
+          example: Acme Corp
+        nameWithPrefix:
           type: string
-          description: Memo
-          example: This is a memo
+          description: Customer name with prefix
+          example: CUST-001 Acme Corp
       required:
-      - invoiceId
-      - customerId
-      - manufacturerId
-      - memo
-    UpsertCustomerExternalIdV3Dto:
-      type: object
-      properties:
-        externalId:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
-        sourceType:
-          description: Type of external ID source
-          example: SALESFORCE
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-      required:
-      - externalId
-      - sourceType
-    UpdateInvoiceExternalIdsDto:
-      type: object
-      properties:
-        externalIds:
-          description: List of external identifiers
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceExternalIdV3Dto'
-      required:
-      - externalIds
+      - id
+      - name
     CreditMemoLineItemDto:
       type: object
       properties:
@@ -2340,74 +2264,150 @@ components:
       - amount
       - salesTaxAmount
       - contraRevenueScheduleId
-    CreateContactV3Dto:
+    UpdateInvoicePODto:
       type: object
       properties:
-        firstName:
+        poNumber:
           type: string
-          description: Contact First Name
-          example: John
-        lastName:
-          type: string
-          description: Contact Last Name
-          example: Doe
-        email:
-          type: string
-          description: Contact Email
-          example: john.doe@example.com
+          description: Purchase Order number for the invoice
+          example: PO-12345
+          maxLength: 30
       required:
-      - email
-    SendReminderEmailDto:
+      - poNumber
+    CustomerTaxInfoV3Dto:
       type: object
       properties:
-        action:
+        vatId:
           type: string
-          description: Action to perform
-          example: SEND
-          enum:
-          - SEND
-          - MARK_INVOICE_TO_SENT_OFF_TABS
-          - MARK_INVOICE_AS_PENDING
-          - MARK_INVOICE_AS_SCHEDULED
-          - MARK_INVOICE_AS_VOID
-          - SEND_REMINDER_EMAIL
-        sendReminderEmail:
+          description: VAT identifier
+          example: DE123456789
+        ein:
+          type: string
+          description: EIN identifier
+          example: 12-3456789
+        isTaxExempt:
           type: boolean
-          description: Send the reminder email
-          example: true
+          description: Whether customer is tax exempt
+          example: false
       required:
-      - action
-      - sendReminderEmail
-    SendInvoiceDto:
+      - isTaxExempt
+    UpdateInvoiceMemoResponseDto:
       type: object
       properties:
-        action:
+        invoiceId:
           type: string
-          description: Action to perform
-          example: SEND
-          enum:
-          - SEND
-          - MARK_INVOICE_TO_SENT_OFF_TABS
-          - MARK_INVOICE_AS_PENDING
-          - MARK_INVOICE_AS_SCHEDULED
-          - MARK_INVOICE_AS_VOID
-          - SEND_REMINDER_EMAIL
-        sendToErp:
-          type: boolean
-          description: Send the invoice to the ERP
-          example: true
-        sendToCustomer:
-          type: boolean
-          description: Send the invoice to the customer
-          example: true
-        overrideInvoiceDate:
-          type: boolean
-          description: Override and update the invoice issue date to today. The due date will also be recalculated to preserve the original net payment terms. For example, if an invoice has Net 30 terms, the due date will be set to 30 days after today.
-          example: true
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        memo:
+          type: string
+          description: Memo
+          example: This is a memo
       required:
-      - action
-      - sendToErp
-      - sendToCustomer
+      - invoiceId
+      - customerId
+      - manufacturerId
+      - memo
+    CreditMemoDto:
+      type: object
+      properties:
+        creditMemoId:
+          type: string
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoNumber:
+          type: string
+          description: Credit memo number
+          example: CM-001
+        creditMemoPrefix:
+          type: string
+          description: Credit memo prefix
+          example: CM
+        customerId:
+          type: string
+          description: Customer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        manufacturerId:
+          type: string
+          description: Manufacturer ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        issueDate:
+          format: date-time
+          type: string
+          description: Issue date
+          example: '2023-01-01T00:00:00.000Z'
+        total:
+          type: number
+          description: Total amount
+          example: 100
+        memo:
+          type: string
+          description: Memo
+          example: Credit for defective product
+        reason:
+          type: string
+          description: Reason
+          example: Product defect
+        status:
+          type: string
+          description: Status
+          example: OPEN
+        customer:
+          description: Customer information
+          allOf:
+          - $ref: '#/components/schemas/CreditMemoCustomerDto'
+        items:
+          description: Line items
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoLineItemDto'
+        applications:
+          description: Applications
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoApplicationDto'
+        externalIds:
+          description: External IDs
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditMemoExternalIdDto'
+        createdAt:
+          format: date-time
+          type: string
+          description: Created at
+          example: '2023-01-01T00:00:00.000Z'
+        lastUpdatedAt:
+          format: date-time
+          type: string
+          description: Last updated at
+          example: '2023-01-01T00:00:00.000Z'
+        syncStatus:
+          type: string
+          description: Sync status
+          example: NOT_SYNCED
+      required:
+      - creditMemoId
+      - creditMemoNumber
+      - creditMemoPrefix
+      - customerId
+      - manufacturerId
+      - issueDate
+      - total
+      - status
+      - customer
+      - items
+      - applications
+      - externalIds
+      - createdAt
+      - lastUpdatedAt
+      - syncStatus
   securitySchemes:
     custom-header:
       type: apiKey

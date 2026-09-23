@@ -167,6 +167,79 @@ paths:
       - Products
 components:
   schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    UpdateProductV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: string
+        displayName:
+          type: string
+          description: Customer-facing display name of the product
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        description:
+          type: string
+          description: Product description
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        erpClassId:
+          type: string
+          description: ERP class ID
+    CreateProductV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: string
+        displayName:
+          type: string
+          description: Customer-facing display name. If omitted, defaults to `name`.
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        description:
+          type: string
+          description: Product description
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        erpClassId:
+          type: string
+          description: ERP class ID
+      required:
+      - name
+      - status
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     ProductV3Dto:
       type: object
       properties:
@@ -234,35 +307,6 @@ components:
       - status
       - createdAt
       - updatedAt
-    CreateProductV3Dto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Internal catalog name of the product
-          example: string
-        displayName:
-          type: string
-          description: Customer-facing display name. If omitted, defaults to `name`.
-        status:
-          type: string
-          description: Product status (active or inactive)
-          enum:
-          - ACTIVE
-          - INACTIVE
-          example: ACTIVE
-        description:
-          type: string
-          description: Product description
-        integrationItemId:
-          type: string
-          description: ERP integration item ID
-        erpClassId:
-          type: string
-          description: ERP class ID
-      required:
-      - name
-      - status
     IntegratorsApiResponse:
       type: object
       properties:
@@ -284,50 +328,6 @@ components:
       - success
       - message
       - error
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    UpdateProductV3Dto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Internal catalog name of the product
-          example: string
-        displayName:
-          type: string
-          description: Customer-facing display name of the product
-        status:
-          type: string
-          description: Product status (active or inactive)
-          enum:
-          - ACTIVE
-          - INACTIVE
-          example: ACTIVE
-        description:
-          type: string
-          description: Product description
-        integrationItemId:
-          type: string
-          description: ERP integration item ID
-        erpClassId:
-          type: string
-          description: ERP class ID
   securitySchemes:
     custom-header:
       type: apiKey

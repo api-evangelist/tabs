@@ -68,27 +68,6 @@ paths:
       - Invoices
 components:
   schemas:
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
     IntegratorsApiError:
       type: object
       properties:
@@ -104,35 +83,6 @@ components:
       required:
       - code
       - message
-    ItemV3Dto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the item
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the item
-          example: Item 1
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Display name of the item, as shown in the Tabs app. Null when not set.
-          example: Item 1 (Annual)
-        externalIds:
-          description: List of external identifiers associated with the item
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalIdV3Dto'
-      required:
-      - id
-      - name
-      - externalIds
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     InvoiceV3Dto:
       type: object
       properties:
@@ -342,6 +292,32 @@ components:
       - total
       - salesTaxRate
       - item
+    ItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the item
+          example: Item 1
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Display name of the item, as shown in the Tabs app. Null when not set.
+          example: Item 1 (Annual)
+        externalIds:
+          description: List of external identifiers associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+      required:
+      - id
+      - name
+      - externalIds
     ExternalIdV3Dto:
       type: object
       properties:
@@ -357,6 +333,30 @@ components:
       required:
       - type
       - id
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey

@@ -1,7 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Tabs External Billing Terms API
-  description: ''
+  title: Tabs Billing Terms API
   version: 1.0.0
   contact: {}
   x-apievangelist:
@@ -9,6 +8,7 @@ info:
     method: searched
     source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
     source_pages: 93
+  description: 'Operations tagged Billing Terms across 2 of this provider''s published API definitions: tabs-external-api-openapi.yml, tabs-billing-terms-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://integrators.prod.api.tabsplatform.com
 security:
@@ -66,29 +66,91 @@ paths:
       summary: List billing terms
       tags:
       - Billing Terms
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /billing-terms:
+    get:
+      tags:
+      - Billing Terms
+      summary: List billing terms
+      operationId: listBillingTerms
+      responses:
+        '200':
+          description: OK
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /contracts/{id}/billing-terms:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Billing Terms
+      summary: List contract billing terms
+      operationId: listContractBillingTerms
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+      - Billing Terms
+      summary: Create contract billing term
+      operationId: createContractBillingTerm
+      responses:
+        '201':
+          description: Created
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /contracts/{id}/billing-terms/{termId}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: termId
+      in: path
+      required: true
+      schema:
+        type: string
+    patch:
+      tags:
+      - Billing Terms
+      summary: Update billing term
+      operationId: updateContractBillingTerm
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+      - Billing Terms
+      summary: Delete billing term
+      operationId: deleteContractBillingTerm
+      responses:
+        '204':
+          description: Deleted
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
 components:
   schemas:
-    IntegratorsApiResponse:
+    IntegratorsApiError:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
     PricingTierDto:
       type: object
       properties:
@@ -116,42 +178,6 @@ components:
       - amount
       - amountType
       - tierMinimum
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    DiscountDto:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of discount
-          enum:
-          - PERCENTAGE
-          - FIXED
-          example: PERCENTAGE
-        amount:
-          type: string
-          description: The discount amount (stored as mantissa in database with exponent 0)
-          example: '10'
-        note:
-          type: string
-          description: Optional note about the discount
-          example: Early payment discount
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     GetBillingTermItemDto:
       type: object
       properties:
@@ -342,8 +368,58 @@ components:
       - commitmentId
       - commitmentBillingTermType
       - discounts
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    DiscountDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey
       name: Authorization
       in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Server-side API key issued from the Tabs dashboard for backend integrations.
+x-refined-from:
+- tabs-external-api-openapi.yml
+- tabs-billing-terms-api-openapi.yml

@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  title: Tabs Platform BillingTerms Event Types API
+  description: 'REST API for the Tabs revenue automation platform: customers, contracts, items, revenue categories, obligations, billing terms, invoices, payments, credit memos, usage events, and reports. Source: https://docs.tabsplatform.com/llms.txt'
+  version: '3'
+  contact:
+    name: Tabs
+    url: https://docs.tabsplatform.com/
+servers:
+- url: https://api.tabsplatform.com
+  description: Production (assumed; consult Tabs docs for exact base URL)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Event Types
+paths:
+  /event-types:
+    get:
+      tags:
+      - Event Types
+      summary: List event types
+      operationId: listEventTypes
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+      - Event Types
+      summary: Create event type
+      operationId: createEventType
+      responses:
+        '201':
+          description: Created
+  /event-types/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Event Types
+      summary: Get event type by ID
+      operationId: getEventType
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+      - Event Types
+      summary: Delete event type
+      operationId: deleteEventType
+      responses:
+        '204':
+          description: Deleted
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Server-side API key issued from the Tabs dashboard for backend integrations.

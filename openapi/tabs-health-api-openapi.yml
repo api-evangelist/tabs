@@ -186,6 +186,21 @@ components:
           description: Application description
           example: Event Ingestion API for usage in Tabs
       description: Application information response
+    DependencyStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the dependency
+          example: up
+          enum:
+          - up
+          - down
+        error:
+          type: string
+          description: Error message if the dependency is down
+          example: Connection refused
+      description: Status information for a dependency
     HealthResponse:
       type: object
       properties:
@@ -214,21 +229,6 @@ components:
             $ref: '#/components/schemas/DependencyStatus'
           description: Detailed health information for each dependency
       description: Health check response containing status of application and dependencies
-    DependencyStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Status of the dependency
-          example: up
-          enum:
-          - up
-          - down
-        error:
-          type: string
-          description: Error message if the dependency is down
-          example: Connection refused
-      description: Status information for a dependency
   securitySchemes:
     custom-header:
       type: apiKey

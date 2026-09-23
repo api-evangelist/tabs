@@ -96,27 +96,6 @@ paths:
       - Items
 components:
   schemas:
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
     IntegratorsApiError:
       type: object
       properties:
@@ -132,6 +111,18 @@ components:
       required:
       - code
       - message
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
     ItemV3Dto:
       type: object
       properties:
@@ -158,21 +149,6 @@ components:
       - id
       - name
       - externalIds
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    ExternalIdSourceType:
-      type: string
-      enum:
-      - QUICKBOOKS
-      - NETSUITE
-      - RILLET
-      - SAGE_INTACCT
-      - SALESFORCE
-      - HUBSPOT
-      - AVALARA
-      - ANROK
-      - STRIPE
     ExternalIdV3Dto:
       type: object
       properties:
@@ -188,6 +164,30 @@ components:
       required:
       - type
       - id
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey

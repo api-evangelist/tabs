@@ -1,7 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Tabs External Custom Fields API
-  description: ''
+  title: Tabs Custom Fields API
   version: 1.0.0
   contact: {}
   x-apievangelist:
@@ -9,6 +8,7 @@ info:
     method: searched
     source: https://docs.tabsplatform.com/reference (OpenAPI definitions embedded per-operation in the ReadMe reference pages, merged; index at https://docs.tabsplatform.com/llms.txt)
     source_pages: 93
+  description: 'Operations tagged Custom Fields across 2 of this provider''s published API definitions: tabs-external-api-openapi.yml, tabs-custom-fields-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://integrators.prod.api.tabsplatform.com
 security:
@@ -40,27 +40,36 @@ paths:
       summary: List custom fields
       tags:
       - Custom Fields
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
+  /custom-fields:
+    get:
+      tags:
+      - Custom Fields
+      summary: List custom fields
+      operationId: listCustomFields
+      responses:
+        '200':
+          description: OK
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
 components:
   schemas:
-    CustomFieldDto:
+    IntegratorsApiError:
       type: object
       properties:
-        id:
+        code:
+          type: number
+          description: API response code
+        message:
           type: string
-          description: The ID of the custom field
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: The name of the custom field
-          example: Custom Field 1
-        externalId:
-          type: string
-          description: The external ID of the custom field
-          example: '123'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - id
-      - name
-      - externalId
+      - code
+      - message
     IntegratorsApiResponse:
       type: object
       properties:
@@ -82,23 +91,35 @@ components:
       - success
       - message
       - error
-    IntegratorsApiError:
+    CustomFieldDto:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
-        message:
+        id:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: The ID of the custom field
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the custom field
+          example: Custom Field 1
+        externalId:
+          type: string
+          description: The external ID of the custom field
+          example: '123'
       required:
-      - code
-      - message
+      - id
+      - name
+      - externalId
   securitySchemes:
     custom-header:
       type: apiKey
       name: Authorization
       in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Server-side API key issued from the Tabs dashboard for backend integrations.
+x-refined-from:
+- tabs-external-api-openapi.yml
+- tabs-custom-fields-api-openapi.yml

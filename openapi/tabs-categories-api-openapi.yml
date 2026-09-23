@@ -139,6 +139,21 @@ paths:
       - Categories
 components:
   schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
     CreateCategoryV3Dto:
       type: object
       properties:
@@ -148,6 +163,23 @@ components:
           example: Premium Subscription
       required:
       - name
+    CategoriesV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the Category
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the Category
+          example: Premium Subscription
+      required:
+      - id
+      - name
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     IntegratorsApiResponse:
       type: object
       properties:
@@ -169,38 +201,6 @@ components:
       - success
       - message
       - error
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    CategoriesV3Dto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the Category
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the Category
-          example: Premium Subscription
-      required:
-      - id
-      - name
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
   securitySchemes:
     custom-header:
       type: apiKey
