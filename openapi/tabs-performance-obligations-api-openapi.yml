@@ -117,6 +117,8 @@ paths:
       required: true
       schema:
         type: string
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
     get:
       tags:
       - Performance Obligations
@@ -125,8 +127,6 @@ paths:
       responses:
         '200':
           description: OK
-    servers:
-    - url: https://integrators.prod.api.tabsplatform.com
   /contracts/{id}/performance-obligations/batch:
     parameters:
     - name: id
@@ -134,6 +134,8 @@ paths:
       required: true
       schema:
         type: string
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
     post:
       tags:
       - Performance Obligations
@@ -142,9 +144,9 @@ paths:
       responses:
         '200':
           description: OK
+  /performance-obligations:
     servers:
     - url: https://integrators.prod.api.tabsplatform.com
-  /performance-obligations:
     get:
       tags:
       - Performance Obligations
@@ -153,8 +155,6 @@ paths:
       responses:
         '200':
           description: OK
-    servers:
-    - url: https://integrators.prod.api.tabsplatform.com
   /performance-obligations/{id}:
     parameters:
     - name: id
@@ -162,6 +162,8 @@ paths:
       required: true
       schema:
         type: string
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
     patch:
       tags:
       - Performance Obligations
@@ -170,8 +172,6 @@ paths:
       responses:
         '200':
           description: OK
-    servers:
-    - url: https://integrators.prod.api.tabsplatform.com
 components:
   schemas:
     IntegratorsApiError:
@@ -189,6 +189,44 @@ components:
       required:
       - code
       - message
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    RecognizedRevenueAtomResponseDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Month in YYYY-MM format
+          example: 2024-01
+        total:
+          type: string
+          description: Recognized revenue amount as a decimal string
+          example: '1000.50'
+      required:
+      - timeframe
+      - total
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     GetPerformanceObligationItemDto:
       type: object
       properties:
@@ -346,44 +384,6 @@ components:
             $ref: '#/components/schemas/RecognizedRevenueEntryDto'
       required:
       - recognizedRevenue
-    RecognizedRevenueAtomResponseDto:
-      type: object
-      properties:
-        timeframe:
-          type: string
-          description: Month in YYYY-MM format
-          example: 2024-01
-        total:
-          type: string
-          description: Recognized revenue amount as a decimal string
-          example: '1000.50'
-      required:
-      - timeframe
-      - total
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
     RecognizedRevenueEntryDto:
       type: object
       properties:

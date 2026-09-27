@@ -68,51 +68,6 @@ paths:
       - Obligations
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    SeatBasedObligationConfigDto:
-      type: object
-      properties:
-        isMovingMinimum:
-          type: boolean
-          description: Whether we need to update minimums on a moving basis
-          example: false
-        minQuantity:
-          type: number
-          description: 'Minimum quantity to bill for, regardless of current # of seats'
-          example: 0
-        defaultProrationPolicy:
-          type: string
-          description: Default proration policy
-          enum:
-          - NONE
-          - DAY
-          - MONTH
-          - YEAR
-        defaultTrueUpTiming:
-          type: string
-          description: Default true up timing
-          enum:
-          - IMMEDIATE
-          - CO_TERM
-      required:
-      - isMovingMinimum
-      - minQuantity
-      - defaultProrationPolicy
-      - defaultTrueUpTiming
     RevenueScheduleDto:
       type: object
       properties:
@@ -146,33 +101,60 @@ components:
       - timeframe
       - total
       - booksClosed
-    PricingTierDto:
+    IntegratorsApiResponse:
       type: object
       properties:
-        tier:
-          type: number
-          description: Tier Number
-          example: 1
-        amount:
-          type: number
-          description: Amount
-          example: 100
-        amountType:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
           type: string
-          description: Amount Type
-          example: PER_ITEM
-          enum:
-          - PER_ITEM
-          - TOTAL_INVOICE
-        tierMinimum:
-          type: number
-          description: Tier Minimum
-          example: 0
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - tier
-      - amount
-      - amountType
-      - tierMinimum
+      - payload
+      - success
+      - message
+      - error
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    SeatBasedObligationConfigDto:
+      type: object
+      properties:
+        isMovingMinimum:
+          type: boolean
+          description: Whether we need to update minimums on a moving basis
+          example: false
+        minQuantity:
+          type: number
+          description: 'Minimum quantity to bill for, regardless of current # of seats'
+          example: 0
+        defaultProrationPolicy:
+          type: string
+          description: Default proration policy
+          enum:
+          - NONE
+          - DAY
+          - MONTH
+          - YEAR
+        defaultTrueUpTiming:
+          type: string
+          description: Default true up timing
+          enum:
+          - IMMEDIATE
+          - CO_TERM
+      required:
+      - isMovingMinimum
+      - minQuantity
+      - defaultProrationPolicy
+      - defaultTrueUpTiming
     ObligationDto:
       type: object
       properties:
@@ -222,9 +204,33 @@ components:
       - serviceEndDate
       - billingSchedule
       - revenueSchedule
-    PaginatedResponseDTO:
+    PricingTierDto:
       type: object
-      properties: {}
+      properties:
+        tier:
+          type: number
+          description: Tier Number
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        amountType:
+          type: string
+          description: Amount Type
+          example: PER_ITEM
+          enum:
+          - PER_ITEM
+          - TOTAL_INVOICE
+        tierMinimum:
+          type: number
+          description: Tier Minimum
+          example: 0
+      required:
+      - tier
+      - amount
+      - amountType
+      - tierMinimum
     BillingScheduleDto:
       type: object
       properties:
@@ -381,27 +387,21 @@ components:
           type: string
           description: Optional note about the discount
           example: Early payment discount
-    IntegratorsApiResponse:
+    IntegratorsApiError:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
   securitySchemes:
     custom-header:
       type: apiKey

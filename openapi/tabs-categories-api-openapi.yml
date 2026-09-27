@@ -139,30 +139,6 @@ paths:
       - Categories
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    CreateCategoryV3Dto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the Category to create
-          example: Premium Subscription
-      required:
-      - name
     CategoriesV3Dto:
       type: object
       properties:
@@ -177,9 +153,6 @@ components:
       required:
       - id
       - name
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     IntegratorsApiResponse:
       type: object
       properties:
@@ -201,6 +174,33 @@ components:
       - success
       - message
       - error
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    CreateCategoryV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Category to create
+          example: Premium Subscription
+      required:
+      - name
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
   securitySchemes:
     custom-header:
       type: apiKey

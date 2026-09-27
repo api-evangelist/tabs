@@ -121,21 +121,6 @@ paths:
       - Reports
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
     CashForecastingPerPeriodDto:
       type: object
       properties:
@@ -156,26 +141,30 @@ components:
       - dueTotal
       - paidTotal
       - total
-    CashForecastingReportDto:
+    IntegratorsApiResponse:
       type: object
       properties:
-        customerId:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
           type: string
-          description: ID of the customer
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        customerName:
-          type: string
-          description: Name of the customer
-        cashForecastingPerPeriod:
-          description: Array of cash forecasting data per period
-          type: array
-          items:
-            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - customerId
-      - customerName
-      - cashForecastingPerPeriod
+      - payload
+      - success
+      - message
+      - error
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     GetARR:
       type: object
       properties:
@@ -386,30 +375,41 @@ components:
       - timeframe
       - currency
       - total
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
+    CashForecastingReportDto:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        customerId:
+          type: string
+          description: ID of the customer
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerName:
+          type: string
+          description: Name of the customer
+        cashForecastingPerPeriod:
+          description: Array of cash forecasting data per period
+          type: array
+          items:
+            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
+      required:
+      - customerId
+      - customerName
+      - cashForecastingPerPeriod
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
   securitySchemes:
     custom-header:
       type: apiKey

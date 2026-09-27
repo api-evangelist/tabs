@@ -69,6 +69,8 @@ paths:
     servers:
     - url: https://integrators.prod.api.tabsplatform.com
   /billing-terms:
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
     get:
       tags:
       - Billing Terms
@@ -77,8 +79,6 @@ paths:
       responses:
         '200':
           description: OK
-    servers:
-    - url: https://integrators.prod.api.tabsplatform.com
   /contracts/{id}/billing-terms:
     parameters:
     - name: id
@@ -86,6 +86,8 @@ paths:
       required: true
       schema:
         type: string
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
     get:
       tags:
       - Billing Terms
@@ -102,8 +104,6 @@ paths:
       responses:
         '201':
           description: Created
-    servers:
-    - url: https://integrators.prod.api.tabsplatform.com
   /contracts/{id}/billing-terms/{termId}:
     parameters:
     - name: id
@@ -116,6 +116,8 @@ paths:
       required: true
       schema:
         type: string
+    servers:
+    - url: https://integrators.prod.api.tabsplatform.com
     patch:
       tags:
       - Billing Terms
@@ -132,25 +134,32 @@ paths:
       responses:
         '204':
           description: Deleted
-    servers:
-    - url: https://integrators.prod.api.tabsplatform.com
 components:
   schemas:
-    IntegratorsApiError:
+    IntegratorsApiResponse:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
         message:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - code
+      - payload
+      - success
       - message
+      - error
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     PricingTierDto:
       type: object
       properties:
@@ -368,9 +377,6 @@ components:
       - commitmentId
       - commitmentBillingTermType
       - discounts
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     DiscountDto:
       type: object
       properties:
@@ -389,27 +395,21 @@ components:
           type: string
           description: Optional note about the discount
           example: Early payment discount
-    IntegratorsApiResponse:
+    IntegratorsApiError:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
   securitySchemes:
     custom-header:
       type: apiKey

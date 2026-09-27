@@ -83,6 +83,82 @@ components:
       required:
       - code
       - message
+    InvoiceItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the invoice item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the invoice item
+          example: Item 1
+        description:
+          type: string
+          description: Description of the invoice item
+        quantity:
+          type: number
+          description: Quantity of items
+          example: 1
+        unitPrice:
+          type: number
+          description: Unit price in currency associated with the customer
+          example: 100
+        subtotal:
+          type: number
+          description: Subtotal before discounts in currency associated with the customer
+          example: 110
+        discountTotal:
+          type: number
+          description: Total discount amount for this line item in currency associated with the customer
+          example: 10
+        total:
+          type: number
+          description: Total in currency associated with the customer
+          example: 100
+        salesTaxRate:
+          type:
+          - string
+          - 'null'
+          description: Sales tax rate percentage for this line item
+          example: '8.5'
+        item:
+          description: Associated item details
+          allOf:
+          - $ref: '#/components/schemas/ItemV3Dto'
+      required:
+      - id
+      - name
+      - description
+      - quantity
+      - unitPrice
+      - subtotal
+      - discountTotal
+      - total
+      - salesTaxRate
+      - item
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
     InvoiceV3Dto:
       type: object
       properties:
@@ -225,73 +301,24 @@ components:
       - paidOn
       - uncollectibleOn
       - lastUpdatedAt
-    ExternalIdSourceType:
-      type: string
-      enum:
-      - QUICKBOOKS
-      - NETSUITE
-      - RILLET
-      - SAGE_INTACCT
-      - SALESFORCE
-      - HUBSPOT
-      - AVALARA
-      - ANROK
-      - STRIPE
-    InvoiceItemV3Dto:
+    ExternalIdV3Dto:
       type: object
       properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
         id:
           type: string
-          description: Unique identifier for the invoice item
+          description: External identifier value
           example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the invoice item
-          example: Item 1
-        description:
-          type: string
-          description: Description of the invoice item
-        quantity:
-          type: number
-          description: Quantity of items
-          example: 1
-        unitPrice:
-          type: number
-          description: Unit price in currency associated with the customer
-          example: 100
-        subtotal:
-          type: number
-          description: Subtotal before discounts in currency associated with the customer
-          example: 110
-        discountTotal:
-          type: number
-          description: Total discount amount for this line item in currency associated with the customer
-          example: 10
-        total:
-          type: number
-          description: Total in currency associated with the customer
-          example: 100
-        salesTaxRate:
-          type:
-          - string
-          - 'null'
-          description: Sales tax rate percentage for this line item
-          example: '8.5'
-        item:
-          description: Associated item details
-          allOf:
-          - $ref: '#/components/schemas/ItemV3Dto'
       required:
+      - type
       - id
-      - name
-      - description
-      - quantity
-      - unitPrice
-      - subtotal
-      - discountTotal
-      - total
-      - salesTaxRate
-      - item
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     ItemV3Dto:
       type: object
       properties:
@@ -318,45 +345,18 @@ components:
       - id
       - name
       - externalIds
-    ExternalIdV3Dto:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: NETSUITE
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
-      required:
-      - type
-      - id
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
   securitySchemes:
     custom-header:
       type: apiKey
