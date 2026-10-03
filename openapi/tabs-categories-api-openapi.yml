@@ -177,15 +177,6 @@ components:
     PaginatedResponseDTO:
       type: object
       properties: {}
-    CreateCategoryV3Dto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the Category to create
-          example: Premium Subscription
-      required:
-      - name
     IntegratorsApiError:
       type: object
       properties:
@@ -201,6 +192,15 @@ components:
       required:
       - code
       - message
+    CreateCategoryV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Category to create
+          example: Premium Subscription
+      required:
+      - name
   securitySchemes:
     custom-header:
       type: apiKey

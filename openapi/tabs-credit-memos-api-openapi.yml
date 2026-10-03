@@ -205,6 +205,67 @@ paths:
           description: OK
 components:
   schemas:
+    CreditMemoExternalIdDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+        sourceType:
+          type: string
+          description: Source type
+          example: NETSUITE
+      required:
+      - externalId
+      - sourceType
+    CreditMemoApplicationDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Application ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        creditMemoId:
+          type: string
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        amountApplied:
+          type: number
+          description: Amount applied
+          example: 100
+        invoiceNumber:
+          type: string
+          description: Invoice number
+          example: INV-001
+        invoicePrefix:
+          type: string
+          description: Invoice prefix
+          example: INV
+        appliedAt:
+          format: date-time
+          type: string
+          description: Applied at
+          example: '2023-01-01T00:00:00.000Z'
+      required:
+      - id
+      - creditMemoId
+      - invoiceId
+      - amountApplied
+      - invoiceNumber
+      - invoicePrefix
+      - appliedAt
+    ApplyOnCreateDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID to apply credit memo to
+          example: 123e4567-e89b-12d3-a456-426614174000
     CreditMemoLineItemDto:
       type: object
       properties:
@@ -251,67 +312,27 @@ components:
       - amount
       - salesTaxAmount
       - contraRevenueScheduleId
-    CreditMemoApplicationDto:
+    IntegratorsApiResponse:
       type: object
       properties:
-        id:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
           type: string
-          description: Application ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        creditMemoId:
-          type: string
-          description: Credit memo ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        invoiceId:
-          type: string
-          description: Invoice ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        amountApplied:
-          type: number
-          description: Amount applied
-          example: 100
-        invoiceNumber:
-          type: string
-          description: Invoice number
-          example: INV-001
-        invoicePrefix:
-          type: string
-          description: Invoice prefix
-          example: INV
-        appliedAt:
-          format: date-time
-          type: string
-          description: Applied at
-          example: '2023-01-01T00:00:00.000Z'
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - id
-      - creditMemoId
-      - invoiceId
-      - amountApplied
-      - invoiceNumber
-      - invoicePrefix
-      - appliedAt
-    CreditMemoErpClassDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ERP Class ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: ERP Class name
-          example: Revenue
-      required:
-      - id
-      - name
-    ApplyOnCreateDto:
-      type: object
-      properties:
-        invoiceId:
-          type: string
-          description: Invoice ID to apply credit memo to
-          example: 123e4567-e89b-12d3-a456-426614174000
+      - payload
+      - success
+      - message
+      - error
     CreateCreditMemoRequestDto:
       type: object
       properties:
@@ -345,27 +366,20 @@ components:
       - issueDate
       - reason
       - items
-    IntegratorsApiResponse:
+    CreditMemoErpClassDto:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
+        id:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: ERP Class ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: ERP Class name
+          example: Revenue
       required:
-      - payload
-      - success
-      - message
-      - error
+      - id
+      - name
     CreditMemoDto:
       type: object
       properties:
@@ -459,23 +473,6 @@ components:
       - createdAt
       - lastUpdatedAt
       - syncStatus
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    CreditMemoExternalIdDto:
-      type: object
-      properties:
-        externalId:
-          type: string
-          description: External ID
-          example: EXT-123
-        sourceType:
-          type: string
-          description: Source type
-          example: NETSUITE
-      required:
-      - externalId
-      - sourceType
     CreditMemoCustomerDto:
       type: object
       properties:
@@ -494,6 +491,42 @@ components:
       required:
       - id
       - name
+    CreditMemoItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Item ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Item name
+          example: Product A
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+      required:
+      - id
+      - name
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
     CreateCreditMemoItemDto:
       type: object
       properties:
@@ -516,24 +549,6 @@ components:
       required:
       - quantity
       - amount
-    CreditMemoItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Item ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Item name
-          example: Product A
-        externalId:
-          type: string
-          description: External ID
-          example: EXT-123
-      required:
-      - id
-      - name
     ApplyCreditMemoRequestDto:
       type: object
       properties:
@@ -547,21 +562,6 @@ components:
           example: 100
       required:
       - invoiceId
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
   securitySchemes:
     custom-header:
       type: apiKey

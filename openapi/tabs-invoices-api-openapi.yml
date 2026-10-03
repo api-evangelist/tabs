@@ -68,21 +68,21 @@ paths:
       - Invoices
 components:
   schemas:
-    IntegratorsApiError:
+    ExternalIdV3Dto:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
-        message:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
       required:
-      - code
-      - message
+      - type
+      - id
     InvoiceItemV3Dto:
       type: object
       properties:
@@ -159,6 +159,32 @@ components:
       - success
       - message
       - error
+    ItemV3Dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the item
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the item
+          example: Item 1
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Display name of the item, as shown in the Tabs app. Null when not set.
+          example: Item 1 (Annual)
+        externalIds:
+          description: List of external identifiers associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
+      required:
+      - id
+      - name
+      - externalIds
     InvoiceV3Dto:
       type: object
       properties:
@@ -301,50 +327,24 @@ components:
       - paidOn
       - uncollectibleOn
       - lastUpdatedAt
-    ExternalIdV3Dto:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: NETSUITE
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
-      required:
-      - type
-      - id
     PaginatedResponseDTO:
       type: object
       properties: {}
-    ItemV3Dto:
+    IntegratorsApiError:
       type: object
       properties:
-        id:
+        code:
+          type: number
+          description: API response code
+        message:
           type: string
-          description: Unique identifier for the item
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the item
-          example: Item 1
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Display name of the item, as shown in the Tabs app. Null when not set.
-          example: Item 1 (Annual)
-        externalIds:
-          description: List of external identifiers associated with the item
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalIdV3Dto'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - id
-      - name
-      - externalIds
+      - code
+      - message
     ExternalIdSourceType:
       type: string
       enum:

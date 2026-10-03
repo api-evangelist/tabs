@@ -134,25 +134,208 @@ paths:
       - Commitments
 components:
   schemas:
-    PeriodAmountsDto:
+    CreateUsageCommitmentsV3RequestDto:
       type: object
       properties:
-        cumulative:
+        contractId:
           type: string
-          description: Cumulative amount
-          example: '5000.00'
-        remaining:
-          type: string
-          description: Remaining amount
-          example: '5000.00'
-        trueUp:
-          type: string
-          description: True-up amount
-          example: '0.00'
+          description: The contract ID
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        commitments:
+          description: Array of commitments to create
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUsageCommitmentV3Dto'
       required:
+      - contractId
+      - commitments
+    UpdateUsageCommitmentV3RequestDto:
+      type: object
+      properties:
+        commitmentValue:
+          type: number
+          description: The commitment amount value
+          example: 1000
+        commitmentStartDate:
+          type: string
+          description: Commitment start date (YYYY-MM-DD)
+          example: '2025-01-01'
+        commitmentEndDate:
+          type: string
+          description: Commitment end date, inclusive (YYYY-MM-DD)
+          example: '2025-12-31'
+        isFullDuration:
+          type: boolean
+          description: Whether commitment lasts the full duration
+          example: true
+        commitmentInterval:
+          type: string
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - YEARLY
+          description: Commitment period interval
+          example: MONTHLY
+        billingTermsToAdd:
+          description: Billing term IDs to add to the commitment
+          type: array
+          items:
+            type: string
+        pricePriority:
+          type: string
+          enum:
+          - LOW
+          - HIGH
+          description: Price priority when multiple products are selected
+          example: LOW
+    MetricsDto:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount
+          example: '150.50'
+        units:
+          type: string
+          description: Units/quantity
+          example: '1000'
+      required:
+      - amount
+      - units
+    EventTypeOverageDto:
+      type: object
+      properties:
+        eventTypeId:
+          type: string
+          description: Event type ID
+          example: 550e8400-e29b-41d4-a716-446655440000
+        eventTypeName:
+          type: string
+          description: Event type name
+          example: API Calls
+        cumulative:
+          description: Cumulative metrics for this event type across all periods
+          allOf:
+          - $ref: '#/components/schemas/MetricsDto'
+        overages:
+          description: Overage metrics for this event type in this specific period
+          allOf:
+          - $ref: '#/components/schemas/MetricsDto'
+      required:
+      - eventTypeId
       - cumulative
-      - remaining
-      - trueUp
+      - overages
+    CreateUsageCommitmentV3Dto:
+      type: object
+      properties:
+        commitmentValue:
+          type: number
+          description: The commitment amount value
+          example: 1000
+        commitmentUnitType:
+          type: string
+          enum:
+          - DOLLARS
+          - UNITS
+          description: 'Unit type: DOLLARS or UNITS'
+          example: DOLLARS
+        prepaidEnabled:
+          type: boolean
+          description: Whether prepaid is enabled
+          example: true
+        prepaidValue:
+          type: number
+          description: Prepaid amount value (required if prepaidEnabled is true)
+          example: 500
+        prepaymentInvoiceLineName:
+          type: string
+          description: Name of prepayment invoice line item
+          example: Prepayment
+        prepaymentIntegrationItem:
+          type: string
+          description: Integration item ID for prepayment
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        revenueRecognitionPattern:
+          type: string
+          description: 'Revenue recognition pattern: straight-line or recognize-as-consumed'
+          example: straight-line
+        trueUpName:
+          type: string
+          description: Name of true-up invoice line item (for non-prepaid)
+          example: True up
+        trueUpIntegrationItem:
+          type: string
+          description: Integration item ID for true-up invoice line (non-prepaid)
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        billingTermIds:
+          description: Billing term IDs to link to this commitment
+          example:
+          - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+          type: array
+          items:
+            type: string
+        commitmentStartDate:
+          type: string
+          description: Commitment start date (YYYY-MM-DD)
+          example: '2025-01-01'
+        commitmentEndDate:
+          type: string
+          description: Commitment end date, inclusive (YYYY-MM-DD)
+          example: '2025-12-31'
+        isFullDuration:
+          type: boolean
+          description: Whether commitment lasts the full duration
+          example: true
+        commitmentInterval:
+          type: string
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - YEARLY
+          description: Commitment period interval
+          example: MONTHLY
+        isSequential:
+          type: boolean
+          description: Whether this is a sequential commitment
+          example: false
+        previousCommitmentId:
+          type: string
+          description: ID of the previous commitment if sequential
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        prePaidWholeCommitment:
+          type: boolean
+          description: 'Whether the whole commitment is prepaid upfront (pay-in-full). False means split-payment. Deprecated: use prepaymentScheduleType instead.'
+          example: true
+          deprecated: true
+        prepaymentScheduleType:
+          type: string
+          enum:
+          - FULL_UPFRONT
+          - PER_COMMITMENT_PERIOD
+          - SPLIT_ACROSS_BILLING_PERIODS
+          description: Prepayment schedule type. Takes precedence over prePaidWholeCommitment. Defaults to FULL_UPFRONT when omitted and prepaidEnabled is true.
+          example: FULL_UPFRONT
+        pricePriority:
+          type: string
+          enum:
+          - LOW
+          - HIGH
+          description: 'Price priority: LOW or HIGH'
+          example: LOW
+        overageConfigs:
+          description: Overage pricing configuration per billing term
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUsageCommitmentOverageConfigV3Dto'
+      required:
+      - commitmentValue
+      - commitmentUnitType
+      - prepaidEnabled
+      - billingTermIds
     CreateUsageCommitmentOverageConfigV3Dto:
       type: object
       properties:
@@ -413,174 +596,10 @@ components:
       - success
       - message
       - error
-    UpdateUsageCommitmentV3RequestDto:
-      type: object
-      properties:
-        commitmentValue:
-          type: number
-          description: The commitment amount value
-          example: 1000
-        commitmentStartDate:
-          type: string
-          description: Commitment start date (YYYY-MM-DD)
-          example: '2025-01-01'
-        commitmentEndDate:
-          type: string
-          description: Commitment end date, inclusive (YYYY-MM-DD)
-          example: '2025-12-31'
-        isFullDuration:
-          type: boolean
-          description: Whether commitment lasts the full duration
-          example: true
-        commitmentInterval:
-          type: string
-          enum:
-          - DAILY
-          - WEEKLY
-          - MONTHLY
-          - QUARTERLY
-          - YEARLY
-          description: Commitment period interval
-          example: MONTHLY
-        billingTermsToAdd:
-          description: Billing term IDs to add to the commitment
-          type: array
-          items:
-            type: string
-        pricePriority:
-          type: string
-          enum:
-          - LOW
-          - HIGH
-          description: Price priority when multiple products are selected
-          example: LOW
-    PaginatedResponseDTO:
+    TotalsDto:
       type: object
       properties: {}
-    MetricsDto:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Amount
-          example: '150.50'
-        units:
-          type: string
-          description: Units/quantity
-          example: '1000'
-      required:
-      - amount
-      - units
-    CreateUsageCommitmentV3Dto:
-      type: object
-      properties:
-        commitmentValue:
-          type: number
-          description: The commitment amount value
-          example: 1000
-        commitmentUnitType:
-          type: string
-          enum:
-          - DOLLARS
-          - UNITS
-          description: 'Unit type: DOLLARS or UNITS'
-          example: DOLLARS
-        prepaidEnabled:
-          type: boolean
-          description: Whether prepaid is enabled
-          example: true
-        prepaidValue:
-          type: number
-          description: Prepaid amount value (required if prepaidEnabled is true)
-          example: 500
-        prepaymentInvoiceLineName:
-          type: string
-          description: Name of prepayment invoice line item
-          example: Prepayment
-        prepaymentIntegrationItem:
-          type: string
-          description: Integration item ID for prepayment
-          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-        revenueRecognitionPattern:
-          type: string
-          description: 'Revenue recognition pattern: straight-line or recognize-as-consumed'
-          example: straight-line
-        trueUpName:
-          type: string
-          description: Name of true-up invoice line item (for non-prepaid)
-          example: True up
-        trueUpIntegrationItem:
-          type: string
-          description: Integration item ID for true-up invoice line (non-prepaid)
-          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-        billingTermIds:
-          description: Billing term IDs to link to this commitment
-          example:
-          - a1b2c3d4-e5f6-7890-abcd-ef1234567890
-          type: array
-          items:
-            type: string
-        commitmentStartDate:
-          type: string
-          description: Commitment start date (YYYY-MM-DD)
-          example: '2025-01-01'
-        commitmentEndDate:
-          type: string
-          description: Commitment end date, inclusive (YYYY-MM-DD)
-          example: '2025-12-31'
-        isFullDuration:
-          type: boolean
-          description: Whether commitment lasts the full duration
-          example: true
-        commitmentInterval:
-          type: string
-          enum:
-          - DAILY
-          - WEEKLY
-          - MONTHLY
-          - QUARTERLY
-          - YEARLY
-          description: Commitment period interval
-          example: MONTHLY
-        isSequential:
-          type: boolean
-          description: Whether this is a sequential commitment
-          example: false
-        previousCommitmentId:
-          type: string
-          description: ID of the previous commitment if sequential
-          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-        prePaidWholeCommitment:
-          type: boolean
-          description: 'Whether the whole commitment is prepaid upfront (pay-in-full). False means split-payment. Deprecated: use prepaymentScheduleType instead.'
-          example: true
-          deprecated: true
-        prepaymentScheduleType:
-          type: string
-          enum:
-          - FULL_UPFRONT
-          - PER_COMMITMENT_PERIOD
-          - SPLIT_ACROSS_BILLING_PERIODS
-          description: Prepayment schedule type. Takes precedence over prePaidWholeCommitment. Defaults to FULL_UPFRONT when omitted and prepaidEnabled is true.
-          example: FULL_UPFRONT
-        pricePriority:
-          type: string
-          enum:
-          - LOW
-          - HIGH
-          description: 'Price priority: LOW or HIGH'
-          example: LOW
-        overageConfigs:
-          description: Overage pricing configuration per billing term
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUsageCommitmentOverageConfigV3Dto'
-      required:
-      - commitmentValue
-      - commitmentUnitType
-      - prepaidEnabled
-      - billingTermIds
-    TotalsDto:
+    PaginatedResponseDTO:
       type: object
       properties: {}
     CommitmentDto:
@@ -707,44 +726,40 @@ components:
       - currentCumulative
       - createdAt
       - updatedAt
-    CreateUsageCommitmentsV3RequestDto:
+    IntegratorsApiError:
       type: object
       properties:
-        contractId:
+        code:
+          type: number
+          description: API response code
+        message:
           type: string
-          description: The contract ID
-          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-        commitments:
-          description: Array of commitments to create
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUsageCommitmentV3Dto'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - contractId
-      - commitments
-    EventTypeOverageDto:
+      - code
+      - message
+    PeriodAmountsDto:
       type: object
       properties:
-        eventTypeId:
-          type: string
-          description: Event type ID
-          example: 550e8400-e29b-41d4-a716-446655440000
-        eventTypeName:
-          type: string
-          description: Event type name
-          example: API Calls
         cumulative:
-          description: Cumulative metrics for this event type across all periods
-          allOf:
-          - $ref: '#/components/schemas/MetricsDto'
-        overages:
-          description: Overage metrics for this event type in this specific period
-          allOf:
-          - $ref: '#/components/schemas/MetricsDto'
+          type: string
+          description: Cumulative amount
+          example: '5000.00'
+        remaining:
+          type: string
+          description: Remaining amount
+          example: '5000.00'
+        trueUp:
+          type: string
+          description: True-up amount
+          example: '0.00'
       required:
-      - eventTypeId
       - cumulative
-      - overages
+      - remaining
+      - trueUp
     CommitmentPeriodDto:
       type: object
       properties:
@@ -790,21 +805,6 @@ components:
       - eventTypes
       - createdAt
       - updatedAt
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
   securitySchemes:
     custom-header:
       type: apiKey

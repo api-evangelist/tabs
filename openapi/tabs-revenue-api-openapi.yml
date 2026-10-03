@@ -89,23 +89,24 @@ components:
       - success
       - message
       - error
-    CategoryRevenue:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Revenue category name
-          example: Platform
-        revenue:
-          type: number
-          description: Revenue amount for this category
-          example: 5861.5
-      required:
-      - name
-      - revenue
     PaginatedResponseDTO:
       type: object
       properties: {}
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
     GetRevenueV31:
       type: object
       properties:
@@ -335,21 +336,20 @@ components:
       - categories
       - currency
       - total
-    IntegratorsApiError:
+    CategoryRevenue:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
-        message:
+        name:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: Revenue category name
+          example: Platform
+        revenue:
+          type: number
+          description: Revenue amount for this category
+          example: 5861.5
       required:
-      - code
-      - message
+      - name
+      - revenue
   securitySchemes:
     custom-header:
       type: apiKey

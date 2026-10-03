@@ -89,9 +89,6 @@ components:
       - success
       - message
       - error
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     RenewalDto:
       type: object
       properties:
@@ -220,6 +217,9 @@ components:
       required:
       - code
       - message
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
   securitySchemes:
     custom-header:
       type: apiKey

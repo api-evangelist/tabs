@@ -174,59 +174,6 @@ paths:
           description: OK
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
-    RecognizedRevenueAtomResponseDto:
-      type: object
-      properties:
-        timeframe:
-          type: string
-          description: Month in YYYY-MM format
-          example: 2024-01
-        total:
-          type: string
-          description: Recognized revenue amount as a decimal string
-          example: '1000.50'
-      required:
-      - timeframe
-      - total
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     GetPerformanceObligationItemDto:
       type: object
       properties:
@@ -374,16 +321,27 @@ components:
       - recognizedRevenue
       - createdAt
       - updatedAt
-    UpsertRecognizedRevenueDto:
+    IntegratorsApiResponse:
       type: object
       properties:
-        recognizedRevenue:
-          description: Array of recognized revenue entries
-          type: array
-          items:
-            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - recognizedRevenue
+      - payload
+      - success
+      - message
+      - error
     RecognizedRevenueEntryDto:
       type: object
       properties:
@@ -395,6 +353,48 @@ components:
           type: number
           description: The total revenue amount
           example: 1000
+      required:
+      - timeframe
+      - total
+    UpsertRecognizedRevenueDto:
+      type: object
+      properties:
+        recognizedRevenue:
+          description: Array of recognized revenue entries
+          type: array
+          items:
+            $ref: '#/components/schemas/RecognizedRevenueEntryDto'
+      required:
+      - recognizedRevenue
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    RecognizedRevenueAtomResponseDto:
+      type: object
+      properties:
+        timeframe:
+          type: string
+          description: Month in YYYY-MM format
+          example: 2024-01
+        total:
+          type: string
+          description: Recognized revenue amount as a decimal string
+          example: '1000.50'
       required:
       - timeframe
       - total

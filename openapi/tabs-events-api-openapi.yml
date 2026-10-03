@@ -748,6 +748,15 @@ components:
       required:
       - id
       - name
+    CreateEventTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the event type
+          example: Event Type Name
+      required:
+      - name
     IntegratorsApiResponse:
       type: object
       properties:
@@ -769,6 +778,71 @@ components:
       - success
       - message
       - error
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    BulkCreateEventDto:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEventDto'
+      required:
+      - events
+    CreateEventDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer
+          example: 123e4567-e89b-12d3-a456-426614174000
+        datetime:
+          format: date-time
+          type: string
+          description: The date and time of the event
+          example: '2021-01-01T00:00:00.000Z'
+        eventTypeId:
+          type: string
+          description: The type of event
+          example: 123e4567-e89b-12d3-a456-426614174000
+        value:
+          type: string
+          description: The value of the event, usually a number
+          example: '123'
+        differentiator:
+          type: string
+          description: The differentiator of the event
+          example: DIFF
+        metadata:
+          type: object
+          description: event metadata
+          example: '{"key":"value"}'
+        invoiceGroup:
+          type: string
+          description: The invoice group for split invoicing
+          example: '123'
+      required:
+      - customerId
+      - datetime
+      - eventTypeId
+      - value
+      - metadata
     CreatedEventsDto:
       type: object
       properties:
@@ -812,80 +886,6 @@ components:
       - value
       - metadata
       - id
-    CreateEventDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The ID of the customer
-          example: 123e4567-e89b-12d3-a456-426614174000
-        datetime:
-          format: date-time
-          type: string
-          description: The date and time of the event
-          example: '2021-01-01T00:00:00.000Z'
-        eventTypeId:
-          type: string
-          description: The type of event
-          example: 123e4567-e89b-12d3-a456-426614174000
-        value:
-          type: string
-          description: The value of the event, usually a number
-          example: '123'
-        differentiator:
-          type: string
-          description: The differentiator of the event
-          example: DIFF
-        metadata:
-          type: object
-          description: event metadata
-          example: '{"key":"value"}'
-        invoiceGroup:
-          type: string
-          description: The invoice group for split invoicing
-          example: '123'
-      required:
-      - customerId
-      - datetime
-      - eventTypeId
-      - value
-      - metadata
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    BulkCreateEventDto:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateEventDto'
-      required:
-      - events
-    CreateEventTypeDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the event type
-          example: Event Type Name
-      required:
-      - name
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
     EventCreateRequest:
       required:
       - customerId
@@ -939,58 +939,28 @@ components:
           example:
             key: value
       description: Event data to be ingested
-    EventDeleteResponse:
+    ErrorDetail:
       type: object
       properties:
-        success:
-          type: boolean
-          description: Indicates if the operation was successful
-          example: true
+        code:
+          type: integer
+          description: Error code
+          format: int32
+          example: 400
         message:
           type: string
-          description: Human-readable message about the operation result
-          example: Event deleted successfully
-        data:
-          $ref: '#/components/schemas/EventData'
-      description: Response for successful event deletion
-    EventsQueryResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          description: List of events
-          items:
-            $ref: '#/components/schemas/EventDto'
-        count:
-          type: integer
-          description: Total count of events
-          format: int32
-          example: 100
-        nextCursor:
-          type: string
-          description: Cursor for the next page of results
-          example: next-page-cursor
-        hasMore:
-          type: boolean
-          description: Whether there are more results available
-          example: true
-      description: Response containing a list of events with pagination information
-    VersionResponse:
-      type: object
-      properties:
-        version:
-          type: string
-          description: API version
-          example: v1
-        api:
-          type: string
-          description: API name
-          example: Events API
-        description:
-          type: string
-          description: API description
-          example: Event Ingestion API for usage in Tabs
-      description: API version information response
+          description: Error message
+          example: Validation failed
+        details:
+          type: object
+          additionalProperties:
+            type: array
+            description: Map of field names to array of error messages
+            items:
+              type: string
+              description: Map of field names to array of error messages
+          description: Map of field names to array of error messages
+      description: Detailed error information
     UnauthorizedResponse:
       type: object
       properties:
@@ -1016,68 +986,20 @@ components:
           description: HTTP method
           example: POST
       description: Unauthorized error response
-    RateLimitResponse:
+    EventDeleteResponse:
       type: object
       properties:
-        statusCode:
-          type: integer
-          description: HTTP status code
-          format: int32
-          example: 429
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: true
         message:
           type: string
-          description: Error message
-          example: Rate limit exceeded. Maximum 10000 requests per minute allowed.
-        timestamp:
-          type: string
-          description: Timestamp when the error occurred
-          example: '2024-01-15T10:30:00Z'
-        path:
-          type: string
-          description: Request path
-          example: /v1/events
-        method:
-          type: string
-          description: HTTP method
-          example: POST
-        retryAfter:
-          type: integer
-          description: Number of seconds to wait before retrying
-          format: int32
-          example: 30
-      description: Rate limit exceeded error response
-    EventDto:
-      type: object
-      properties:
-        manufacturerId:
-          type: string
-        eventTypeId:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: object
-        value:
-          type: string
-        differentiator:
-          type: string
-        invoiceGroup:
-          type: string
-        idempotencyKey:
-          type: string
-        datetime:
-          type: string
-        customerId:
-          type: string
-        parentEventId:
-          type: string
-        source:
-          type: string
-        deleted:
-          type: boolean
-          description: Whether the event is deleted
-          example: true
-      description: Event data transfer object
+          description: Human-readable message about the operation result
+          example: Event deleted successfully
+        data:
+          $ref: '#/components/schemas/EventData'
+      description: Response for successful event deletion
     EventResponse:
       type: object
       properties:
@@ -1144,28 +1066,6 @@ components:
         error:
           $ref: '#/components/schemas/ErrorDetail'
       description: Error response for validation failures
-    ErrorDetail:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int32
-          example: 400
-        message:
-          type: string
-          description: Error message
-          example: Validation failed
-        details:
-          type: object
-          additionalProperties:
-            type: array
-            description: Map of field names to array of error messages
-            items:
-              type: string
-              description: Map of field names to array of error messages
-          description: Map of field names to array of error messages
-      description: Detailed error information
     EventData:
       type: object
       properties:
@@ -1186,6 +1086,106 @@ components:
         data:
           $ref: '#/components/schemas/EventData'
       description: Response for successful event creation
+    RateLimitResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code
+          format: int32
+          example: 429
+        message:
+          type: string
+          description: Error message
+          example: Rate limit exceeded. Maximum 10000 requests per minute allowed.
+        timestamp:
+          type: string
+          description: Timestamp when the error occurred
+          example: '2024-01-15T10:30:00Z'
+        path:
+          type: string
+          description: Request path
+          example: /v1/events
+        method:
+          type: string
+          description: HTTP method
+          example: POST
+        retryAfter:
+          type: integer
+          description: Number of seconds to wait before retrying
+          format: int32
+          example: 30
+      description: Rate limit exceeded error response
+    VersionResponse:
+      type: object
+      properties:
+        version:
+          type: string
+          description: API version
+          example: v1
+        api:
+          type: string
+          description: API name
+          example: Events API
+        description:
+          type: string
+          description: API description
+          example: Event Ingestion API for usage in Tabs
+      description: API version information response
+    EventsQueryResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          description: List of events
+          items:
+            $ref: '#/components/schemas/EventDto'
+        count:
+          type: integer
+          description: Total count of events
+          format: int32
+          example: 100
+        nextCursor:
+          type: string
+          description: Cursor for the next page of results
+          example: next-page-cursor
+        hasMore:
+          type: boolean
+          description: Whether there are more results available
+          example: true
+      description: Response containing a list of events with pagination information
+    EventDto:
+      type: object
+      properties:
+        manufacturerId:
+          type: string
+        eventTypeId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+        value:
+          type: string
+        differentiator:
+          type: string
+        invoiceGroup:
+          type: string
+        idempotencyKey:
+          type: string
+        datetime:
+          type: string
+        customerId:
+          type: string
+        parentEventId:
+          type: string
+        source:
+          type: string
+        deleted:
+          type: boolean
+          description: Whether the event is deleted
+          example: true
+      description: Event data transfer object
   securitySchemes:
     custom-header:
       type: apiKey
