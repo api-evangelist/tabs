@@ -205,67 +205,24 @@ paths:
           description: OK
 components:
   schemas:
-    CreditMemoExternalIdDto:
-      type: object
-      properties:
-        externalId:
-          type: string
-          description: External ID
-          example: EXT-123
-        sourceType:
-          type: string
-          description: Source type
-          example: NETSUITE
-      required:
-      - externalId
-      - sourceType
-    CreditMemoApplicationDto:
+    CreditMemoItemDto:
       type: object
       properties:
         id:
           type: string
-          description: Application ID
+          description: Item ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        creditMemoId:
+        name:
           type: string
-          description: Credit memo ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        invoiceId:
+          description: Item name
+          example: Product A
+        externalId:
           type: string
-          description: Invoice ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        amountApplied:
-          type: number
-          description: Amount applied
-          example: 100
-        invoiceNumber:
-          type: string
-          description: Invoice number
-          example: INV-001
-        invoicePrefix:
-          type: string
-          description: Invoice prefix
-          example: INV
-        appliedAt:
-          format: date-time
-          type: string
-          description: Applied at
-          example: '2023-01-01T00:00:00.000Z'
+          description: External ID
+          example: EXT-123
       required:
       - id
-      - creditMemoId
-      - invoiceId
-      - amountApplied
-      - invoiceNumber
-      - invoicePrefix
-      - appliedAt
-    ApplyOnCreateDto:
-      type: object
-      properties:
-        invoiceId:
-          type: string
-          description: Invoice ID to apply credit memo to
-          example: 123e4567-e89b-12d3-a456-426614174000
+      - name
     CreditMemoLineItemDto:
       type: object
       properties:
@@ -312,74 +269,82 @@ components:
       - amount
       - salesTaxAmount
       - contraRevenueScheduleId
-    IntegratorsApiResponse:
+    IntegratorsApiError:
       type: object
       properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
+        code:
+          type: number
+          description: API response code
         message:
           type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - payload
-      - success
+      - code
       - message
-      - error
-    CreateCreditMemoRequestDto:
+    ApplyOnCreateDto:
       type: object
       properties:
-        customerId:
+        invoiceId:
           type: string
-          description: Customer ID
+          description: Invoice ID to apply credit memo to
           example: 123e4567-e89b-12d3-a456-426614174000
-        issueDate:
-          type: string
-          description: Issue date
-          example: '2023-01-10'
-        memo:
-          type: string
-          description: Memo
-          example: Credit for defective product
-        reason:
-          type: string
-          description: Reason
-          example: Product defect
-        items:
-          description: Credit memo items
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateCreditMemoItemDto'
-        applyOnCreate:
-          description: Apply on create parameters. Do not include if you want to apply the credit memo to an invoice later.
-          allOf:
-          - $ref: '#/components/schemas/ApplyOnCreateDto'
-      required:
-      - customerId
-      - issueDate
-      - reason
-      - items
-    CreditMemoErpClassDto:
+    CreditMemoApplicationDto:
       type: object
       properties:
         id:
           type: string
-          description: ERP Class ID
+          description: Application ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        name:
+        creditMemoId:
           type: string
-          description: ERP Class name
-          example: Revenue
+          description: Credit memo ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        amountApplied:
+          type: number
+          description: Amount applied
+          example: 100
+        invoiceNumber:
+          type: string
+          description: Invoice number
+          example: INV-001
+        invoicePrefix:
+          type: string
+          description: Invoice prefix
+          example: INV
+        appliedAt:
+          format: date-time
+          type: string
+          description: Applied at
+          example: '2023-01-01T00:00:00.000Z'
       required:
       - id
-      - name
+      - creditMemoId
+      - invoiceId
+      - amountApplied
+      - invoiceNumber
+      - invoicePrefix
+      - appliedAt
+    CreditMemoExternalIdDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID
+          example: EXT-123
+        sourceType:
+          type: string
+          description: Source type
+          example: NETSUITE
+      required:
+      - externalId
+      - sourceType
     CreditMemoDto:
       type: object
       properties:
@@ -473,60 +438,90 @@ components:
       - createdAt
       - lastUpdatedAt
       - syncStatus
-    CreditMemoCustomerDto:
+    CreateCreditMemoRequestDto:
       type: object
       properties:
-        id:
+        customerId:
           type: string
           description: Customer ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        name:
+        issueDate:
           type: string
-          description: Customer name
-          example: Acme Corp
-        nameWithPrefix:
+          description: Issue date
+          example: '2023-01-10'
+        memo:
           type: string
-          description: Customer name with prefix
-          example: CUST-001 Acme Corp
+          description: Memo
+          example: Credit for defective product
+        reason:
+          type: string
+          description: Reason
+          example: Product defect
+        items:
+          description: Credit memo items
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateCreditMemoItemDto'
+        applyOnCreate:
+          description: Apply on create parameters. Do not include if you want to apply the credit memo to an invoice later.
+          allOf:
+          - $ref: '#/components/schemas/ApplyOnCreateDto'
       required:
-      - id
-      - name
-    CreditMemoItemDto:
+      - customerId
+      - issueDate
+      - reason
+      - items
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    ApplyCreditMemoRequestDto:
+      type: object
+      properties:
+        invoiceId:
+          type: string
+          description: Invoice ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        amount:
+          type: number
+          description: Amount to apply. Required for all integrations except Rillet; Rillet does not support partial credit memo applications.
+          example: 100
+      required:
+      - invoiceId
+    CreditMemoErpClassDto:
       type: object
       properties:
         id:
           type: string
-          description: Item ID
+          description: ERP Class ID
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
-          description: Item name
-          example: Product A
-        externalId:
-          type: string
-          description: External ID
-          example: EXT-123
+          description: ERP Class name
+          example: Revenue
       required:
       - id
       - name
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiError:
+    IntegratorsApiResponse:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
         message:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
       required:
-      - code
+      - payload
+      - success
       - message
+      - error
     CreateCreditMemoItemDto:
       type: object
       properties:
@@ -549,19 +544,24 @@ components:
       required:
       - quantity
       - amount
-    ApplyCreditMemoRequestDto:
+    CreditMemoCustomerDto:
       type: object
       properties:
-        invoiceId:
+        id:
           type: string
-          description: Invoice ID
+          description: Customer ID
           example: 123e4567-e89b-12d3-a456-426614174000
-        amount:
-          type: number
-          description: Amount to apply. Required for all integrations except Rillet; Rillet does not support partial credit memo applications.
-          example: 100
+        name:
+          type: string
+          description: Customer name
+          example: Acme Corp
+        nameWithPrefix:
+          type: string
+          description: Customer name with prefix
+          example: CUST-001 Acme Corp
       required:
-      - invoiceId
+      - id
+      - name
   securitySchemes:
     custom-header:
       type: apiKey

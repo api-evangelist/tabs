@@ -136,6 +136,51 @@ paths:
           description: Deleted
 components:
   schemas:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    PricingTierDto:
+      type: object
+      properties:
+        tier:
+          type: number
+          description: Tier Number
+          example: 1
+        amount:
+          type: number
+          description: Amount
+          example: 100
+        amountType:
+          type: string
+          description: Amount Type
+          example: PER_ITEM
+          enum:
+          - PER_ITEM
+          - TOTAL_INVOICE
+        tierMinimum:
+          type: number
+          description: Tier Minimum
+          example: 0
+      required:
+      - tier
+      - amount
+      - amountType
+      - tierMinimum
     IntegratorsApiResponse:
       type: object
       properties:
@@ -175,51 +220,6 @@ components:
           type: string
           description: Optional note about the discount
           example: Early payment discount
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    PricingTierDto:
-      type: object
-      properties:
-        tier:
-          type: number
-          description: Tier Number
-          example: 1
-        amount:
-          type: number
-          description: Amount
-          example: 100
-        amountType:
-          type: string
-          description: Amount Type
-          example: PER_ITEM
-          enum:
-          - PER_ITEM
-          - TOTAL_INVOICE
-        tierMinimum:
-          type: number
-          description: Tier Minimum
-          example: 0
-      required:
-      - tier
-      - amount
-      - amountType
-      - tierMinimum
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
     GetBillingTermItemDto:
       type: object
       properties:

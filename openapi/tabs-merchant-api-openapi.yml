@@ -125,22 +125,6 @@ components:
       required:
       - code
       - message
-    BookCloseDateDto:
-      type: object
-      properties:
-        isSet:
-          type: boolean
-          description: Whether a book close date is set for the merchant.
-          example: true
-        bookCloseDate:
-          type:
-          - string
-          - 'null'
-          description: The merchant's book close date. Null when no accounting period is enforced or closed.
-          format: date-time
-          example: '2025-12-31T00:00:00.000Z'
-      required:
-      - isSet
     MerchantInfoDto:
       type: object
       properties:
@@ -196,6 +180,22 @@ components:
       - success
       - message
       - error
+    BookCloseDateDto:
+      type: object
+      properties:
+        isSet:
+          type: boolean
+          description: Whether a book close date is set for the merchant.
+          example: true
+        bookCloseDate:
+          type:
+          - string
+          - 'null'
+          description: The merchant's book close date. Null when no accounting period is enforced or closed.
+          format: date-time
+          example: '2025-12-31T00:00:00.000Z'
+      required:
+      - isSet
   securitySchemes:
     custom-header:
       type: apiKey
