@@ -151,9 +151,24 @@ components:
       required:
       - code
       - message
-    PaginatedResponseDTO:
+    DiscountDto:
       type: object
-      properties: {}
+      properties:
+        type:
+          type: string
+          description: The type of discount
+          enum:
+          - PERCENTAGE
+          - FIXED
+          example: PERCENTAGE
+        amount:
+          type: string
+          description: The discount amount (stored as mantissa in database with exponent 0)
+          example: '10'
+        note:
+          type: string
+          description: Optional note about the discount
+          example: Early payment discount
     PricingTierDto:
       type: object
       properties:
@@ -181,45 +196,6 @@ components:
       - amount
       - amountType
       - tierMinimum
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
-    DiscountDto:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of discount
-          enum:
-          - PERCENTAGE
-          - FIXED
-          example: PERCENTAGE
-        amount:
-          type: string
-          description: The discount amount (stored as mantissa in database with exponent 0)
-          example: '10'
-        note:
-          type: string
-          description: Optional note about the discount
-          example: Early payment discount
     GetBillingTermItemDto:
       type: object
       properties:
@@ -410,6 +386,30 @@ components:
       - commitmentId
       - commitmentBillingTermType
       - discounts
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
   securitySchemes:
     custom-header:
       type: apiKey

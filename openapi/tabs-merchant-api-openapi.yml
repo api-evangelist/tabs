@@ -110,55 +110,6 @@ paths:
       - Merchant
 components:
   schemas:
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    MerchantInfoDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Merchant ID
-          example: 123e4567-e89b-12d3-a456-426614174000
-        preferredName:
-          type: string
-          description: Merchant Preferred Name
-          example: Merchant 1
-        internalName:
-          type: string
-          description: Merchant Internal Name
-          example: Merchant 1
-        billingContact:
-          type: object
-          description: Merchant Billing Contact
-          example:
-            email: billing@merchant.com
-            phone: +1-555-123-4567
-          properties:
-            email:
-              type: string
-              example: billing@merchant.com
-            phone:
-              type: string
-              example: +1-555-123-4567
-        logo:
-          type: string
-          description: Merchant Logo as Data URL
-          example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
-      required:
-      - id
     IntegratorsApiResponse:
       type: object
       properties:
@@ -196,6 +147,55 @@ components:
           example: '2025-12-31T00:00:00.000Z'
       required:
       - isSet
+    MerchantInfoDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Merchant ID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        preferredName:
+          type: string
+          description: Merchant Preferred Name
+          example: Merchant 1
+        internalName:
+          type: string
+          description: Merchant Internal Name
+          example: Merchant 1
+        billingContact:
+          type: object
+          description: Merchant Billing Contact
+          example:
+            email: billing@merchant.com
+            phone: +1-555-123-4567
+          properties:
+            email:
+              type: string
+              example: billing@merchant.com
+            phone:
+              type: string
+              example: +1-555-123-4567
+        logo:
+          type: string
+          description: Merchant Logo as Data URL
+          example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+      required:
+      - id
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
   securitySchemes:
     custom-header:
       type: apiKey

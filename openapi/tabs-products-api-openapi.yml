@@ -182,61 +182,6 @@ components:
       required:
       - code
       - message
-    CreateProductV3Dto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Internal catalog name of the product
-          example: string
-        displayName:
-          type: string
-          description: Customer-facing display name. If omitted, defaults to `name`.
-        status:
-          type: string
-          description: Product status (active or inactive)
-          enum:
-          - ACTIVE
-          - INACTIVE
-          example: ACTIVE
-        description:
-          type: string
-          description: Product description
-        integrationItemId:
-          type: string
-          description: ERP integration item ID
-        erpClassId:
-          type: string
-          description: ERP class ID
-      required:
-      - name
-      - status
-    UpdateProductV3Dto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Internal catalog name of the product
-          example: string
-        displayName:
-          type: string
-          description: Customer-facing display name of the product
-        status:
-          type: string
-          description: Product status (active or inactive)
-          enum:
-          - ACTIVE
-          - INACTIVE
-          example: ACTIVE
-        description:
-          type: string
-          description: Product description
-        integrationItemId:
-          type: string
-          description: ERP integration item ID
-        erpClassId:
-          type: string
-          description: ERP class ID
     ProductV3Dto:
       type: object
       properties:
@@ -304,6 +249,32 @@ components:
       - status
       - createdAt
       - updatedAt
+    UpdateProductV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: string
+        displayName:
+          type: string
+          description: Customer-facing display name of the product
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        description:
+          type: string
+          description: Product description
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        erpClassId:
+          type: string
+          description: ERP class ID
     PaginatedResponseDTO:
       type: object
       properties: {}
@@ -328,6 +299,35 @@ components:
       - success
       - message
       - error
+    CreateProductV3Dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Internal catalog name of the product
+          example: string
+        displayName:
+          type: string
+          description: Customer-facing display name. If omitted, defaults to `name`.
+        status:
+          type: string
+          description: Product status (active or inactive)
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        description:
+          type: string
+          description: Product description
+        integrationItemId:
+          type: string
+          description: ERP integration item ID
+        erpClassId:
+          type: string
+          description: ERP class ID
+      required:
+      - name
+      - status
   securitySchemes:
     custom-header:
       type: apiKey

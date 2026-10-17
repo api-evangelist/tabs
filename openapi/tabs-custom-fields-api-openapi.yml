@@ -55,21 +55,25 @@ paths:
           description: OK
 components:
   schemas:
-    IntegratorsApiError:
+    CustomFieldDto:
       type: object
       properties:
-        code:
-          type: number
-          description: API response code
-        message:
+        id:
           type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
+          description: The ID of the custom field
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the custom field
+          example: Custom Field 1
+        externalId:
+          type: string
+          description: The external ID of the custom field
+          example: '123'
       required:
-      - code
-      - message
+      - id
+      - name
+      - externalId
     IntegratorsApiResponse:
       type: object
       properties:
@@ -91,25 +95,21 @@ components:
       - success
       - message
       - error
-    CustomFieldDto:
+    IntegratorsApiError:
       type: object
       properties:
-        id:
+        code:
+          type: number
+          description: API response code
+        message:
           type: string
-          description: The ID of the custom field
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: The name of the custom field
-          example: Custom Field 1
-        externalId:
-          type: string
-          description: The external ID of the custom field
-          example: '123'
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
       required:
-      - id
-      - name
-      - externalId
+      - code
+      - message
   securitySchemes:
     custom-header:
       type: apiKey

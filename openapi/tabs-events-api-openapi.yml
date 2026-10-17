@@ -734,38 +734,6 @@ paths:
       description: Production Environment
 components:
   schemas:
-    BulkCreateEventDto:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateEventDto'
-      required:
-      - events
-    CreateEventTypeDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the event type
-          example: Event Type Name
-      required:
-      - name
-    EventTypeDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The id of the event type
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: The name of the event type
-          example: Event Type Name
-      required:
-      - id
-      - name
     IntegratorsApiError:
       type: object
       properties:
@@ -781,6 +749,91 @@ components:
       required:
       - code
       - message
+    CreateEventTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the event type
+          example: Event Type Name
+      required:
+      - name
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    CreateEventDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer
+          example: 123e4567-e89b-12d3-a456-426614174000
+        datetime:
+          format: date-time
+          type: string
+          description: The date and time of the event
+          example: '2021-01-01T00:00:00.000Z'
+        eventTypeId:
+          type: string
+          description: The type of event
+          example: 123e4567-e89b-12d3-a456-426614174000
+        value:
+          type: string
+          description: The value of the event, usually a number
+          example: '123'
+        differentiator:
+          type: string
+          description: The differentiator of the event
+          example: DIFF
+        metadata:
+          type: object
+          description: event metadata
+          example: '{"key":"value"}'
+        invoiceGroup:
+          type: string
+          description: The invoice group for split invoicing
+          example: '123'
+      required:
+      - customerId
+      - datetime
+      - eventTypeId
+      - value
+      - metadata
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    EventTypeDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the event type
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the event type
+          example: Event Type Name
+      required:
+      - id
+      - name
     CreatedEventsDto:
       type: object
       properties:
@@ -824,68 +877,15 @@ components:
       - value
       - metadata
       - id
-    CreateEventDto:
+    BulkCreateEventDto:
       type: object
       properties:
-        customerId:
-          type: string
-          description: The ID of the customer
-          example: 123e4567-e89b-12d3-a456-426614174000
-        datetime:
-          format: date-time
-          type: string
-          description: The date and time of the event
-          example: '2021-01-01T00:00:00.000Z'
-        eventTypeId:
-          type: string
-          description: The type of event
-          example: 123e4567-e89b-12d3-a456-426614174000
-        value:
-          type: string
-          description: The value of the event, usually a number
-          example: '123'
-        differentiator:
-          type: string
-          description: The differentiator of the event
-          example: DIFF
-        metadata:
-          type: object
-          description: event metadata
-          example: '{"key":"value"}'
-        invoiceGroup:
-          type: string
-          description: The invoice group for split invoicing
-          example: '123'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEventDto'
       required:
-      - customerId
-      - datetime
-      - eventTypeId
-      - value
-      - metadata
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
+      - events
     RateLimitResponse:
       type: object
       properties:
@@ -916,184 +916,6 @@ components:
           format: int32
           example: 30
       description: Rate limit exceeded error response
-    EventCreateRequest:
-      required:
-      - customerId
-      - datetime
-      - eventTypeId
-      - idempotencyKey
-      - value
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: Tabs Customer ID - must be a valid UUID v4
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        eventTypeId:
-          type: string
-          description: Type of event being recorded - must be a valid UUID v4
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        datetime:
-          type: string
-          description: 'Timestamp when the event occurred (UTC) (format: ISO-8601 datetime string)'
-          format: date-time
-          example: '2024-01-15T10:30:00Z'
-        idempotencyKey:
-          type: string
-          description: Unique key to prevent duplicate event processing - must be a valid UUID v4
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        value:
-          type: number
-          description: Numeric value of the event
-          format: double
-          example: 1.5
-        differentiator:
-          type: string
-          description: Optional key to separate events with the same event type and customer into different invoice line items; differentiator will be appended to the description of the new invoice line item
-          example: mobile
-        invoiceSplitKey:
-          type: string
-          description: Optional key to split events into a new invoice; the split key will be appended to the new invoice number
-          example: invoice-123
-        metadata:
-          type: object
-          additionalProperties:
-            type: object
-            description: Optional metadata in JSON format
-            example:
-              key: value
-          description: Optional metadata in JSON format
-          example:
-            key: value
-      description: Event data to be ingested
-    EventResponse:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: Tabs Customer ID - must be a valid UUID v4
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        eventTypeId:
-          type: string
-          description: Type of event being recorded - must be a valid UUID v4
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        datetime:
-          type: string
-          description: 'Timestamp when the event occurred (UTC) (format: ISO-8601 datetime string)'
-          format: date-time
-          example: '2024-01-15T10:30:00Z'
-        idempotencyKey:
-          type: string
-          description: Unique key to prevent duplicate event processing - must be a valid UUID v4
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        value:
-          type: number
-          description: Numeric value of the event
-          format: double
-          example: 1.5
-        differentiator:
-          type: string
-          description: Optional key to separate events with the same event type and customer into different invoice line items; differentiator will be appended to the description of the new invoice line item
-          example: mobile
-        invoiceSplitKey:
-          type: string
-          description: Optional key to split events into a new invoice; the split key will be appended to the new invoice number
-          example: invoice-123
-        parentEventId:
-          type: string
-          description: Parent event ID - the idempotency key of the original event that was deleted (only present in DELETE responses)
-          format: uuid
-          example: 018c1234-5678-7abc-def0-123456789000
-        metadata:
-          type: object
-          additionalProperties:
-            type: object
-            description: Optional metadata in JSON format
-            example:
-              key: value
-          description: Optional metadata in JSON format
-          example:
-            key: value
-      description: Event response data
-    EventDeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the operation was successful
-          example: true
-        message:
-          type: string
-          description: Human-readable message about the operation result
-          example: Event deleted successfully
-        data:
-          $ref: '#/components/schemas/EventData'
-      description: Response for successful event deletion
-    EventCreateResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the operation was successful
-          example: true
-        message:
-          type: string
-          description: Human-readable message about the operation result
-          example: Event created successfully
-        data:
-          $ref: '#/components/schemas/EventData'
-      description: Response for successful event creation
-    UnauthorizedResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          description: HTTP status code
-          format: int32
-          example: 401
-        message:
-          type: string
-          description: Error message
-          example: 'Invalid or missing API key. Use ''Authorization: Bearer <your-key>'''
-        timestamp:
-          type: string
-          description: Timestamp when the error occurred
-          example: '2024-01-15T10:30:00Z'
-        path:
-          type: string
-          description: Request path
-          example: /v1/events
-        method:
-          type: string
-          description: HTTP method
-          example: POST
-      description: Unauthorized error response
-    ValidationErrorResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the operation was successful
-          example: false
-        message:
-          type: string
-          description: Human-readable error message
-          example: Validation failed
-        error:
-          $ref: '#/components/schemas/ErrorDetail'
-      description: Error response for validation failures
-    EventData:
-      type: object
-      properties:
-        events:
-          $ref: '#/components/schemas/EventResponse'
-      description: Event data wrapper
     EventDto:
       type: object
       properties:
@@ -1126,6 +948,34 @@ components:
           description: Whether the event is deleted
           example: true
       description: Event data transfer object
+    EventDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: true
+        message:
+          type: string
+          description: Human-readable message about the operation result
+          example: Event deleted successfully
+        data:
+          $ref: '#/components/schemas/EventData'
+      description: Response for successful event deletion
+    ValidationErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: false
+        message:
+          type: string
+          description: Human-readable error message
+          example: Validation failed
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+      description: Error response for validation failures
     VersionResponse:
       type: object
       properties:
@@ -1186,6 +1036,156 @@ components:
           description: Whether there are more results available
           example: true
       description: Response containing a list of events with pagination information
+    EventData:
+      type: object
+      properties:
+        events:
+          $ref: '#/components/schemas/EventResponse'
+      description: Event data wrapper
+    EventResponse:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Tabs Customer ID - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        eventTypeId:
+          type: string
+          description: Type of event being recorded - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        datetime:
+          type: string
+          description: 'Timestamp when the event occurred (UTC) (format: ISO-8601 datetime string)'
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        idempotencyKey:
+          type: string
+          description: Unique key to prevent duplicate event processing - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        value:
+          type: number
+          description: Numeric value of the event
+          format: double
+          example: 1.5
+        differentiator:
+          type: string
+          description: Optional key to separate events with the same event type and customer into different invoice line items; differentiator will be appended to the description of the new invoice line item
+          example: mobile
+        invoiceSplitKey:
+          type: string
+          description: Optional key to split events into a new invoice; the split key will be appended to the new invoice number
+          example: invoice-123
+        parentEventId:
+          type: string
+          description: Parent event ID - the idempotency key of the original event that was deleted (only present in DELETE responses)
+          format: uuid
+          example: 018c1234-5678-7abc-def0-123456789000
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+            description: Optional metadata in JSON format
+            example:
+              key: value
+          description: Optional metadata in JSON format
+          example:
+            key: value
+      description: Event response data
+    EventCreateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the operation was successful
+          example: true
+        message:
+          type: string
+          description: Human-readable message about the operation result
+          example: Event created successfully
+        data:
+          $ref: '#/components/schemas/EventData'
+      description: Response for successful event creation
+    EventCreateRequest:
+      required:
+      - customerId
+      - datetime
+      - eventTypeId
+      - idempotencyKey
+      - value
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Tabs Customer ID - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        eventTypeId:
+          type: string
+          description: Type of event being recorded - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        datetime:
+          type: string
+          description: 'Timestamp when the event occurred (UTC) (format: ISO-8601 datetime string)'
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        idempotencyKey:
+          type: string
+          description: Unique key to prevent duplicate event processing - must be a valid UUID v4
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        value:
+          type: number
+          description: Numeric value of the event
+          format: double
+          example: 1.5
+        differentiator:
+          type: string
+          description: Optional key to separate events with the same event type and customer into different invoice line items; differentiator will be appended to the description of the new invoice line item
+          example: mobile
+        invoiceSplitKey:
+          type: string
+          description: Optional key to split events into a new invoice; the split key will be appended to the new invoice number
+          example: invoice-123
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+            description: Optional metadata in JSON format
+            example:
+              key: value
+          description: Optional metadata in JSON format
+          example:
+            key: value
+      description: Event data to be ingested
+    UnauthorizedResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code
+          format: int32
+          example: 401
+        message:
+          type: string
+          description: Error message
+          example: 'Invalid or missing API key. Use ''Authorization: Bearer <your-key>'''
+        timestamp:
+          type: string
+          description: Timestamp when the error occurred
+          example: '2024-01-15T10:30:00Z'
+        path:
+          type: string
+          description: Request path
+          example: /v1/events
+        method:
+          type: string
+          description: HTTP method
+          example: POST
+      description: Unauthorized error response
   securitySchemes:
     custom-header:
       type: apiKey

@@ -68,61 +68,98 @@ paths:
       - Invoices
 components:
   schemas:
-    InvoiceItemV3Dto:
+    IntegratorsApiError:
+      type: object
+      properties:
+        code:
+          type: number
+          description: API response code
+        message:
+          type: string
+          description: API response message
+        details:
+          type: object
+          description: Additional details about the error
+      required:
+      - code
+      - message
+    ExternalIdV3Dto:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: NETSUITE
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - type
+      - id
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
+    ItemV3Dto:
       type: object
       properties:
         id:
           type: string
-          description: Unique identifier for the invoice item
+          description: Unique identifier for the item
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
-          description: Name of the invoice item
+          description: Name of the item
           example: Item 1
-        description:
-          type: string
-          description: Description of the invoice item
-        quantity:
-          type: number
-          description: Quantity of items
-          example: 1
-        unitPrice:
-          type: number
-          description: Unit price in currency associated with the customer
-          example: 100
-        subtotal:
-          type: number
-          description: Subtotal before discounts in currency associated with the customer
-          example: 110
-        discountTotal:
-          type: number
-          description: Total discount amount for this line item in currency associated with the customer
-          example: 10
-        total:
-          type: number
-          description: Total in currency associated with the customer
-          example: 100
-        salesTaxRate:
+        displayName:
           type:
           - string
           - 'null'
-          description: Sales tax rate percentage for this line item
-          example: '8.5'
-        item:
-          description: Associated item details
-          allOf:
-          - $ref: '#/components/schemas/ItemV3Dto'
+          description: Display name of the item, as shown in the Tabs app. Null when not set.
+          example: Item 1 (Annual)
+        externalIds:
+          description: List of external identifiers associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalIdV3Dto'
       required:
       - id
       - name
-      - description
-      - quantity
-      - unitPrice
-      - subtotal
-      - discountTotal
-      - total
-      - salesTaxRate
-      - item
+      - externalIds
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
     InvoiceV3Dto:
       type: object
       properties:
@@ -265,98 +302,61 @@ components:
       - paidOn
       - uncollectibleOn
       - lastUpdatedAt
-    IntegratorsApiError:
-      type: object
-      properties:
-        code:
-          type: number
-          description: API response code
-        message:
-          type: string
-          description: API response message
-        details:
-          type: object
-          description: Additional details about the error
-      required:
-      - code
-      - message
-    ExternalIdSourceType:
-      type: string
-      enum:
-      - QUICKBOOKS
-      - NETSUITE
-      - RILLET
-      - SAGE_INTACCT
-      - SALESFORCE
-      - HUBSPOT
-      - AVALARA
-      - ANROK
-      - STRIPE
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    ExternalIdV3Dto:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: NETSUITE
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: 123e4567-e89b-12d3-a456-426614174000
-      required:
-      - type
-      - id
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
-    ItemV3Dto:
+    InvoiceItemV3Dto:
       type: object
       properties:
         id:
           type: string
-          description: Unique identifier for the item
+          description: Unique identifier for the invoice item
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
-          description: Name of the item
+          description: Name of the invoice item
           example: Item 1
-        displayName:
+        description:
+          type: string
+          description: Description of the invoice item
+        quantity:
+          type: number
+          description: Quantity of items
+          example: 1
+        unitPrice:
+          type: number
+          description: Unit price in currency associated with the customer
+          example: 100
+        subtotal:
+          type: number
+          description: Subtotal before discounts in currency associated with the customer
+          example: 110
+        discountTotal:
+          type: number
+          description: Total discount amount for this line item in currency associated with the customer
+          example: 10
+        total:
+          type: number
+          description: Total in currency associated with the customer
+          example: 100
+        salesTaxRate:
           type:
           - string
           - 'null'
-          description: Display name of the item, as shown in the Tabs app. Null when not set.
-          example: Item 1 (Annual)
-        externalIds:
-          description: List of external identifiers associated with the item
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalIdV3Dto'
+          description: Sales tax rate percentage for this line item
+          example: '8.5'
+        item:
+          description: Associated item details
+          allOf:
+          - $ref: '#/components/schemas/ItemV3Dto'
       required:
       - id
       - name
-      - externalIds
+      - description
+      - quantity
+      - unitPrice
+      - subtotal
+      - discountTotal
+      - total
+      - salesTaxRate
+      - item
   securitySchemes:
     custom-header:
       type: apiKey

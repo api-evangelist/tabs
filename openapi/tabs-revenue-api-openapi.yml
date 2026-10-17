@@ -68,20 +68,6 @@ paths:
       - Revenue
 components:
   schemas:
-    CategoryRevenue:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Revenue category name
-          example: Platform
-        revenue:
-          type: number
-          description: Revenue amount for this category
-          example: 5861.5
-      required:
-      - name
-      - revenue
     IntegratorsApiError:
       type: object
       properties:
@@ -100,6 +86,41 @@ components:
     PaginatedResponseDTO:
       type: object
       properties: {}
+    CategoryRevenue:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Revenue category name
+          example: Platform
+        revenue:
+          type: number
+          description: Revenue amount for this category
+          example: 5861.5
+      required:
+      - name
+      - revenue
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
     GetRevenueV31:
       type: object
       properties:
@@ -329,27 +350,6 @@ components:
       - categories
       - currency
       - total
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
   securitySchemes:
     custom-header:
       type: apiKey

@@ -83,57 +83,6 @@ components:
       required:
       - code
       - message
-    IntegrationsExternalId:
-      type: object
-      properties:
-        type:
-          description: Type of external ID source
-          example: QUICKBOOKS
-          allOf:
-          - $ref: '#/components/schemas/ExternalIdSourceType'
-        id:
-          type: string
-          description: External identifier value
-          example: pi_1234567890
-      required:
-      - type
-      - id
-    ExternalIdSourceType:
-      type: string
-      enum:
-      - QUICKBOOKS
-      - NETSUITE
-      - RILLET
-      - SAGE_INTACCT
-      - SALESFORCE
-      - HUBSPOT
-      - AVALARA
-      - ANROK
-      - STRIPE
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
-    IntegratorsApiResponse:
-      type: object
-      properties:
-        payload:
-          type: object
-          description: Response payload, will be empty when success is false
-        success:
-          type: boolean
-          description: Boolean with true=success, false=failure
-        message:
-          type: string
-          description: Plain-text description of the result
-        error:
-          description: json element with any error messages or warnings
-          allOf:
-          - $ref: '#/components/schemas/IntegratorsApiError'
-      required:
-      - payload
-      - success
-      - message
-      - error
     PaymentsV3Dto:
       type: object
       properties:
@@ -207,6 +156,57 @@ components:
       - type
       - method
       - externalIds
+    ExternalIdSourceType:
+      type: string
+      enum:
+      - QUICKBOOKS
+      - NETSUITE
+      - RILLET
+      - SAGE_INTACCT
+      - SALESFORCE
+      - HUBSPOT
+      - AVALARA
+      - ANROK
+      - STRIPE
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
+    IntegratorsApiResponse:
+      type: object
+      properties:
+        payload:
+          type: object
+          description: Response payload, will be empty when success is false
+        success:
+          type: boolean
+          description: Boolean with true=success, false=failure
+        message:
+          type: string
+          description: Plain-text description of the result
+        error:
+          description: json element with any error messages or warnings
+          allOf:
+          - $ref: '#/components/schemas/IntegratorsApiError'
+      required:
+      - payload
+      - success
+      - message
+      - error
+    IntegrationsExternalId:
+      type: object
+      properties:
+        type:
+          description: Type of external ID source
+          example: QUICKBOOKS
+          allOf:
+          - $ref: '#/components/schemas/ExternalIdSourceType'
+        id:
+          type: string
+          description: External identifier value
+          example: pi_1234567890
+      required:
+      - type
+      - id
   securitySchemes:
     custom-header:
       type: apiKey

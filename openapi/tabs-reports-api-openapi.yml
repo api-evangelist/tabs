@@ -121,46 +121,6 @@ paths:
       - Reports
 components:
   schemas:
-    CashForecastingPerPeriodDto:
-      type: object
-      properties:
-        period:
-          type: string
-          description: The time period for the forecast
-        dueTotal:
-          type: number
-          description: Total amount due for the period
-        paidTotal:
-          type: number
-          description: Total amount paid for the period
-        total:
-          type: number
-          description: Total amount (due + paid) for the period
-      required:
-      - period
-      - dueTotal
-      - paidTotal
-      - total
-    CashForecastingReportDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: ID of the customer
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        customerName:
-          type: string
-          description: Name of the customer
-        cashForecastingPerPeriod:
-          description: Array of cash forecasting data per period
-          type: array
-          items:
-            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
-      required:
-      - customerId
-      - customerName
-      - cashForecastingPerPeriod
     IntegratorsApiError:
       type: object
       properties:
@@ -176,9 +136,6 @@ components:
       required:
       - code
       - message
-    PaginatedResponseDTO:
-      type: object
-      properties: {}
     GetARR:
       type: object
       properties:
@@ -389,6 +346,29 @@ components:
       - timeframe
       - currency
       - total
+    CashForecastingPerPeriodDto:
+      type: object
+      properties:
+        period:
+          type: string
+          description: The time period for the forecast
+        dueTotal:
+          type: number
+          description: Total amount due for the period
+        paidTotal:
+          type: number
+          description: Total amount paid for the period
+        total:
+          type: number
+          description: Total amount (due + paid) for the period
+      required:
+      - period
+      - dueTotal
+      - paidTotal
+      - total
+    PaginatedResponseDTO:
+      type: object
+      properties: {}
     IntegratorsApiResponse:
       type: object
       properties:
@@ -410,6 +390,26 @@ components:
       - success
       - message
       - error
+    CashForecastingReportDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: ID of the customer
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        customerName:
+          type: string
+          description: Name of the customer
+        cashForecastingPerPeriod:
+          description: Array of cash forecasting data per period
+          type: array
+          items:
+            $ref: '#/components/schemas/CashForecastingPerPeriodDto'
+      required:
+      - customerId
+      - customerName
+      - cashForecastingPerPeriod
   securitySchemes:
     custom-header:
       type: apiKey
